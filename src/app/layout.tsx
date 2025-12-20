@@ -14,7 +14,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "tofu blog | 学びと個人開発を綴るブログ",
-  description: "tofuの個人ブログ。日々の学習内容や個人開発を通して得た気づきや知見を、エンジニア視点でまとめています。",
+  description:
+    "tofuの個人ブログ。日々の学習内容や個人開発を通して得た気づきや知見を、エンジニア視点でまとめています。",
 };
 
 export default function RootLayout({

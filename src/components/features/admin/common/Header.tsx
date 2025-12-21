@@ -8,25 +8,25 @@ import {
 import { SearchIcon } from 'lucide-react';
 import logoutIcon from '@/assets/images/logout-icon.png';
 import menuIcon from '@/assets/images/menu-icon.png';
+import useHeader from '@/hooks/admin/common/useHeader';
 
 interface HeaderProps {
   loginFlag: boolean;
 }
 
 function Header({ loginFlag = false }: HeaderProps) {
+  const { handleClickLogo, handleClickMenu } = useHeader();
+
   return (
     <header className="w-full h-16 bg-white">
       <div className="h-full flex justify-between items-center px-4">
         <div
           className="flex items-center cursor-pointer gap-4"
-          onClick={() => console.log('click')}
+          onClick={handleClickLogo}
         >
           <span className="text-2xl font-bold">Tofu Blog</span>
           {loginFlag && (
-            <div
-              className="flex items-center"
-              onClick={() => console.log('click')}
-            >
+            <div className="flex items-center" onClick={handleClickMenu}>
               <img
                 src={menuIcon.src}
                 alt="menu"

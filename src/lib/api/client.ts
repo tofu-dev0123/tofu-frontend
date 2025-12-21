@@ -4,17 +4,26 @@ export const apiClient = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
   timeout: 10000,
   withCredentials: true,
+  headers: {
+    'Content-Type': 'application/json',
+  },
 });
 
-// レスポンス共通処理
-apiClient.interceptors.response.use(
-  (response) => response,
+// リクエストインターセプターを追加
+apiClient.interceptors.request.use(
+  (config) => {
+    // リクエストヘッダーを確実に設定
+    if (!config.headers['Content-Type']) {
+      config.headers['Content-Type'] = 'application/json';
+    }
+    return config;
+  },
   (error) => {
-    // 401 / 403 / 500 などの共通ハンドリング
     return Promise.reject(error);
   }
 );
 
+// レスポンス共通処理
 apiClient.interceptors.response.use(
   (response) => response,
   (error) => {

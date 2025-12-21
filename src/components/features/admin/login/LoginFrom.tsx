@@ -8,7 +8,7 @@ import loginIcon from '@/assets/images/login-icon.png';
 import useLoginForm from '@/hooks/admin/login/useLoginForm';
 
 function LoginFrom() {
-  const { formHook } = useLoginForm();
+  const { formHook, onSubmit } = useLoginForm();
 
   return (
     <div className="flex justify-center items-center flex-1">
@@ -16,9 +16,7 @@ function LoginFrom() {
         <div className="flex justify-center items-center my-16">
           <img src={loginIcon.src} alt="login icon" width={100} height={100} />
         </div>
-        <form
-          onSubmit={formHook.handleSubmit(() => console.log('送信しました'))}
-        >
+        <form onSubmit={formHook.handleSubmit(onSubmit)}>
           <CardContent>
             <div className="flex flex-col gap-4">
               <Input

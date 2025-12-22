@@ -13,13 +13,14 @@ import useHeader from '@/hooks/admin/common/useHeader';
 
 interface HeaderProps {
   loginFlag: boolean;
+  handleClickMenu: () => void;
 }
 
-function Header({ loginFlag = false }: HeaderProps) {
-  const { handleClickLogo, handleClickMenu } = useHeader();
+function Header({ loginFlag = false, handleClickMenu }: HeaderProps) {
+  const { handleClickLogo } = useHeader();
 
   return (
-    <header className="w-full h-16 bg-white">
+    <header className="w-full h-16 bg-white shadow">
       <div className="h-full flex justify-between items-center px-4">
         <div
           className="flex items-center cursor-pointer gap-4"

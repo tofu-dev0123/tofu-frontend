@@ -6,9 +6,11 @@ import { Button } from '@/components/ui/button';
 import { AlertCircle } from 'lucide-react';
 import loginIcon from '@/assets/images/login-icon.png';
 import useLoginForm from '@/hooks/admin/login/useLoginForm';
+import { MESSAGES } from '@/constants/messages';
+import ErrorMessage from '../common/ErrorMessage';
 
 function LoginFrom() {
-  const { formHook, onSubmit } = useLoginForm();
+  const { formHook, onSubmit, errorMessage } = useLoginForm();
 
   return (
     <div className="flex justify-center items-center flex-1">
@@ -16,6 +18,9 @@ function LoginFrom() {
         <div className="flex justify-center items-center my-16">
           <img src={loginIcon.src} alt="login icon" width={100} height={100} />
         </div>
+        {errorMessage.length > 0 && (
+          <ErrorMessage errorMessage={errorMessage} />
+        )}
         <form onSubmit={formHook.handleSubmit(onSubmit)}>
           <CardContent>
             <div className="flex flex-col gap-4">
@@ -25,10 +30,10 @@ function LoginFrom() {
                 placeholder="admin@example.com"
                 className="border-white bg-white rounded-full"
                 {...formHook.register('username', {
-                  required: 'ユーザー名の入力は必須です',
+                  required: MESSAGES.validation.username.required,
                   maxLength: {
                     value: 50,
-                    message: '50文字以内で入力してください',
+                    message: MESSAGES.validation.username.maxLength,
                   },
                 })}
               />
@@ -44,11 +49,14 @@ function LoginFrom() {
                 placeholder="password"
                 className="border-white bg-white rounded-full"
                 {...formHook.register('password', {
-                  required: 'パスワードの入力は必須です',
-                  minLength: { value: 8, message: '8文字以上入力してください' },
+                  required: MESSAGES.validation.password.required,
+                  minLength: {
+                    value: 8,
+                    message: MESSAGES.validation.password.minLength,
+                  },
                   maxLength: {
                     value: 20,
-                    message: '20文字以内で入力してください',
+                    message: MESSAGES.validation.password.maxLength,
                   },
                 })}
               />

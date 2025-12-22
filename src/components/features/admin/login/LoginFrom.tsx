@@ -12,6 +12,11 @@ import ErrorMessage from '../common/ErrorMessage';
 function LoginFrom() {
   const { formHook, onSubmit, errorMessage } = useLoginForm();
 
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    onSubmit(e);
+  };
+
   return (
     <div className="flex justify-center items-center flex-1">
       <Card className="w-100 bg-gray-100/50">
@@ -21,7 +26,7 @@ function LoginFrom() {
         {errorMessage.length > 0 && (
           <ErrorMessage errorMessage={errorMessage} />
         )}
-        <form onSubmit={formHook.handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit}>
           <CardContent>
             <div className="flex flex-col gap-4">
               <Input

@@ -22,12 +22,14 @@ function useLoginForm() {
   const [errorMessage, setErrorMessage] = useState<string[]>([]);
 
   // ログイン処理
-  const onSubmit = async (data: LoginForm) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
     setErrorMessage([]);
     setIsLoading(true);
     const request: LoginRequest = {
-      username: data.username,
-      password: data.password,
+      username: formHook.getValues('username'),
+      password: formHook.getValues('password'),
     };
     try {
       await post<LoginResponse>(API_ENDPOINTS.login, request);

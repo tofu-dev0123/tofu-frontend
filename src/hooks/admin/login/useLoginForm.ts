@@ -3,7 +3,6 @@ import { useForm } from 'react-hook-form';
 import { post } from '@/lib/api/http';
 import { API_ENDPOINTS } from '@/lib/api/endpoint';
 import { LoginRequest, LoginResponse } from '@/types/api/login';
-import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { MESSAGES } from '@/constants/messages';
 import axios from 'axios';
@@ -15,10 +14,8 @@ interface LoginForm {
 }
 
 function useLoginForm() {
-  const router = useRouter();
   const formHook = useForm<LoginForm>();
 
-  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string[]>([]);
 
   // ログイン処理
@@ -26,7 +23,6 @@ function useLoginForm() {
     e.preventDefault();
 
     setErrorMessage([]);
-    setIsLoading(true);
     const request: LoginRequest = {
       username: formHook.getValues('username'),
       password: formHook.getValues('password'),
@@ -41,8 +37,6 @@ function useLoginForm() {
       } else {
         setErrorMessage([MESSAGES.errors.login.failed]);
       }
-    } finally {
-      setIsLoading(false);
     }
   };
 

@@ -4,10 +4,11 @@ import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { AlertCircle } from 'lucide-react';
+import Image from 'next/image';
 import loginIcon from '@/assets/images/login-icon.png';
 import useLoginForm from '@/hooks/admin/login/useLoginForm';
 import { MESSAGES } from '@/constants/messages';
-import ErrorMessage from '../common/ErrorMessage';
+import ErrorMessage from '@/components/features/admin/common/ErrorMessage';
 
 function LoginFrom() {
   const { formHook, onSubmit, errorMessage } = useLoginForm();
@@ -21,7 +22,7 @@ function LoginFrom() {
     <div className="flex justify-center items-center flex-1">
       <Card className="w-100 bg-gray-100/50">
         <div className="flex justify-center items-center my-16">
-          <img src={loginIcon.src} alt="login icon" width={100} height={100} />
+          <Image src={loginIcon} alt="login icon" width={100} height={100} />
         </div>
         {errorMessage.length > 0 && (
           <ErrorMessage errorMessage={errorMessage} />

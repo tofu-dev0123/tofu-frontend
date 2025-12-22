@@ -6,6 +6,7 @@ import {
   InputGroupAddon,
 } from '@/components/ui/input-group';
 import { SearchIcon } from 'lucide-react';
+import Image from 'next/image';
 import logoutIcon from '@/assets/images/logout-icon.png';
 import menuIcon from '@/assets/images/menu-icon.png';
 import useHeader from '@/hooks/admin/common/useHeader';
@@ -27,8 +28,8 @@ function Header({ loginFlag = false }: HeaderProps) {
           <span className="text-2xl font-bold">Tofu Blog</span>
           {loginFlag && (
             <div className="flex items-center" onClick={handleClickMenu}>
-              <img
-                src={menuIcon.src}
+              <Image
+                src={menuIcon}
                 alt="menu"
                 width={20}
                 height={20}
@@ -54,7 +55,7 @@ function Header({ loginFlag = false }: HeaderProps) {
               className="flex items-center"
               onClick={() => console.log('click')}
             >
-              <img src={logoutIcon.src} alt="logout" width={20} height={20} />
+              <Image src={logoutIcon} alt="logout" width={20} height={20} />
             </div>
           </div>
         )}

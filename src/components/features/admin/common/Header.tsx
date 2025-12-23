@@ -14,10 +14,15 @@ import useHeader from '@/hooks/admin/common/useHeader';
 interface HeaderProps {
   loginFlag: boolean;
   handleClickMenu: () => void;
+  handleClickLogout: () => void;
 }
 
-function Header({ loginFlag = false, handleClickMenu }: HeaderProps) {
-  const { handleClickLogo, handleClickLogout } = useHeader();
+function Header({
+  loginFlag = false,
+  handleClickMenu,
+  handleClickLogout,
+}: HeaderProps) {
+  const { handleClickLogo } = useHeader();
 
   return (
     <header className="w-full h-16 bg-white shadow">

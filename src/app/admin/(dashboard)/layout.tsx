@@ -36,7 +36,11 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
         {/* メインコンテンツ: 右側、残りのスペース */}
         <main className="row-start-2 overflow-auto">{children}</main>
       </div>
-      <ErrorModal isOpen={isErrorModalOpen} errorMessage={errorMessage} />
+      <ErrorModal
+        isOpen={isErrorModalOpen}
+        errorMessage={errorMessage}
+        onClose={() => setIsErrorModalOpen(false)}
+      />
     </>
   );
 }

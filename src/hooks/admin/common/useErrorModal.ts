@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 interface ErrorModalProps {
   isOpen: boolean;
@@ -8,23 +8,16 @@ interface ErrorModalProps {
 
 export default function useErrorModal(props: ErrorModalProps) {
   const { isOpen, title, errorMessage } = props;
-  const [errorModalIsOpen, setErrorModalIsOpen] = useState(false);
-  const [errorModalTitle, setErrorModalTitle] = useState('エラー');
-  const [errorModalErrorMessage, setErrorModalErrorMessage] = useState<
-    string[]
-  >([]);
+  const [errorModalIsOpen, setErrorModalIsOpen] = useState(isOpen);
+  const [errorModalTitle, setErrorModalTitle] = useState(title || 'エラー');
+  const [errorModalErrorMessage, setErrorModalErrorMessage] =
+    useState<string[]>(errorMessage);
 
   const onClose = () => {
     setErrorModalIsOpen(false);
     setErrorModalTitle('エラー');
     setErrorModalErrorMessage([]);
   };
-
-  useEffect(() => {
-    setErrorModalIsOpen(isOpen);
-    setErrorModalTitle(title || 'エラー');
-    setErrorModalErrorMessage(errorMessage);
-  }, [isOpen, title, errorMessage]);
 
   return {
     errorModalIsOpen,

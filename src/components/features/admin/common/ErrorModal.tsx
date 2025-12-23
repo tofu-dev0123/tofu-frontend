@@ -7,16 +7,26 @@ interface ErrorModalProps {
   isOpen: boolean;
   title?: string;
   errorMessage: string[];
+  onClose?: () => void;
 }
 
 function ErrorModal(props: ErrorModalProps) {
-  const { errorModalIsOpen, errorModalTitle, errorModalErrorMessage, onClose } =
-    useErrorModal(props);
+  const {
+    errorModalIsOpen,
+    errorModalTitle,
+    errorModalErrorMessage,
+    onClose: internalOnClose,
+  } = useErrorModal(props);
+
+  const handleClose = () => {
+    internalOnClose();
+    props.onClose?.();
+  };
 
   return (
     <div
       className={`${errorModalIsOpen ? 'block' : 'hidden'} fixed top-0 left-0 w-full h-full flex justify-center items-center`}
-      onClick={onClose}
+      onClick={handleClose}
     >
       <Alert
         variant="destructive"

@@ -8,12 +8,15 @@ import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import { getErrorMessage } from '@/lib/utils/getErrorMessage';
 import { MESSAGES } from '@/constants/messages';
+import useErrorModal from './useErrorModal';
 
 function useDashboard() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [errorMessage, setErrorMessage] = useState<string[]>([]);
-  const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
+
   const router = useRouter();
+
+  // エラーモーダル状態管理フック
+  const errorModalHook = useErrorModal();
 
   const handleClickMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -24,17 +27,17 @@ function useDashboard() {
     try {
       const result = await confirm('ログアウトしますか？');
       if (result) {
-        await post<LogoutResponse>(API_ENDPOINTS.logout);
+        await post<LogoutResponse>(API_ENDPOINTS.logout.post);
         router.push('/admin/login');
       }
     } catch (error) {
-      setIsErrorModalOpen(true);
+      errorModalHook.setIsOpen(true);
       if (axios.isAxiosError(error) && error.response) {
         // APIからエラーレスポンスが返ってきた場合
         const errorMessage = getErrorMessage(error.response.data);
-        setErrorMessage(errorMessage);
+        errorModalHook.setErrorMessage(errorMessage);
       } else {
-        setErrorMessage([MESSAGES.errors.common.failed]);
+        errorModalHook.setErrorMessage([MESSAGES.errors.common.failed]);
       }
     }
   };
@@ -43,9 +46,7 @@ function useDashboard() {
     isMenuOpen,
     handleClickMenu,
     handleClickLogout,
-    errorMessage,
-    isErrorModalOpen,
-    setIsErrorModalOpen,
+    errorModalHook,
   };
 }
 

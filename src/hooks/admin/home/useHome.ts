@@ -1,18 +1,29 @@
 'use client';
 
 import useSummary from '@/hooks/admin/home/useSummary';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import useErrorModal from '../common/useErrorModal';
 
 function useHome() {
-  const { totalPosts, publishedPosts, draftPosts, errorMessage, getSummary } =
-    useSummary();
+  // エラーモーダル状態管理フック
+  const errorModalHook = useErrorModal();
+
+  // サマリの状態管理フック
+  const { totalPosts, publishedPosts, draftPosts, getSummary } = useSummary({
+    setErrorMessage: errorModalHook.setErrorMessage,
+  });
 
   useEffect(() => {
     // 初期処理
     getSummary();
   }, []);
 
-  return { totalPosts, publishedPosts, draftPosts, errorMessage };
+  return {
+    totalPosts,
+    publishedPosts,
+    draftPosts,
+    errorModalHook,
+  };
 }
 
 export default useHome;

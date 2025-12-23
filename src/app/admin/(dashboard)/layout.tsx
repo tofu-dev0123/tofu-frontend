@@ -7,14 +7,8 @@ import useDashboard from '@/hooks/admin/common/useDashboard';
 import ErrorModal from '@/components/features/admin/common/ErrorModal';
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
-  const {
-    isMenuOpen,
-    handleClickMenu,
-    handleClickLogout,
-    errorMessage,
-    isErrorModalOpen,
-    setIsErrorModalOpen,
-  } = useDashboard();
+  const { isMenuOpen, handleClickMenu, handleClickLogout, errorModalHook } =
+    useDashboard();
 
   return (
     <>
@@ -37,9 +31,9 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
         <main className="row-start-2 overflow-auto">{children}</main>
       </div>
       <ErrorModal
-        isOpen={isErrorModalOpen}
-        errorMessage={errorMessage}
-        onClose={() => setIsErrorModalOpen(false)}
+        isOpen={errorModalHook.isOpen}
+        errorMessage={errorModalHook.errorMessage}
+        onClose={errorModalHook.onClose}
       />
     </>
   );

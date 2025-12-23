@@ -1,31 +1,22 @@
 import { useState } from 'react';
 
-interface ErrorModalProps {
-  isOpen: boolean;
-  title?: string;
-  errorMessage: string[];
-}
-
-export default function useErrorModal(props: ErrorModalProps) {
-  const { isOpen, title, errorMessage } = props;
-  const [errorModalIsOpen, setErrorModalIsOpen] = useState(isOpen);
-  const [errorModalTitle, setErrorModalTitle] = useState(title || 'エラー');
-  const [errorModalErrorMessage, setErrorModalErrorMessage] =
-    useState<string[]>(errorMessage);
+export default function useErrorModal() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [title, setTitle] = useState('エラー');
+  const [errorMessage, setErrorMessage] = useState<string[]>([]);
 
   const onClose = () => {
-    setErrorModalIsOpen(false);
-    setErrorModalTitle('エラー');
-    setErrorModalErrorMessage([]);
+    setIsOpen(false);
+    setTitle('エラー');
+    setErrorMessage([]);
   };
 
   return {
-    errorModalIsOpen,
-    setErrorModalIsOpen,
-    errorModalTitle,
-    setErrorModalTitle,
-    errorModalErrorMessage,
-    setErrorModalErrorMessage,
+    isOpen,
+    title,
+    errorMessage,
+    setErrorMessage,
+    setIsOpen,
     onClose,
   };
 }

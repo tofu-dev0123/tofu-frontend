@@ -1,11 +1,13 @@
 'use client';
 
 import Title from '@/components/features/admin/common/Title';
+import ErrorModal from '@/components/features/admin/common/ErrorModal';
 import SummaryArea from '@/components/features/admin/home/SummaryArea';
 import useHome from '@/hooks/admin/home/useHome';
 
 function HomeMain() {
-  const { totalPosts, publishedPosts, draftPosts, errorMessage } = useHome();
+  const { totalPosts, publishedPosts, draftPosts, errorModalHook } = useHome();
+
   return (
     <div className="h-full flex flex-col">
       <Title title="ホーム" />
@@ -21,6 +23,11 @@ function HomeMain() {
         <div className="col-span-4">2</div>
         <div className="col-span-12">3</div>
       </div>
+      <ErrorModal
+        isOpen={errorModalHook.isOpen}
+        errorMessage={errorModalHook.errorMessage}
+        onClose={errorModalHook.onClose}
+      />
     </div>
   );
 }

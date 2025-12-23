@@ -8,11 +8,16 @@ import axios from 'axios';
 import { getErrorMessage } from '@/lib/utils/getErrorMessage';
 import { MESSAGES } from '@/constants/messages';
 
-function useSummary() {
+interface SummaryState {
+  setErrorMessage: (errorMessage: string[]) => void;
+}
+
+function useSummary(props: SummaryState) {
+  const { setErrorMessage } = props;
   const [totalPosts, setTotalPosts] = useState(0);
   const [publishedPosts, setPublishedPosts] = useState(0);
   const [draftPosts, setDraftPosts] = useState(0);
-  const [errorMessage, setErrorMessage] = useState<string[]>([]);
+
   const getSummary = async () => {
     try {
       const response = await get<SummaryResponse>(API_ENDPOINTS.summary.get);
@@ -33,7 +38,6 @@ function useSummary() {
     totalPosts,
     publishedPosts,
     draftPosts,
-    errorMessage,
     getSummary,
   };
 }

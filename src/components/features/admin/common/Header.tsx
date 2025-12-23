@@ -13,8 +13,8 @@ import useHeader from '@/hooks/admin/common/useHeader';
 
 interface HeaderProps {
   loginFlag: boolean;
-  handleClickMenu: () => void;
-  handleClickLogout: () => void;
+  handleClickMenu?: () => void;
+  handleClickLogout?: () => void;
 }
 
 function Header({

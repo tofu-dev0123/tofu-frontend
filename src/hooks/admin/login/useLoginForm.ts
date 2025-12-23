@@ -30,7 +30,7 @@ function useLoginForm() {
       password: formHook.getValues('password'),
     };
     try {
-      await post<LoginResponse>(API_ENDPOINTS.login, request);
+      await post<LoginResponse>(API_ENDPOINTS.login.post, request);
       router.push('/admin/home');
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {

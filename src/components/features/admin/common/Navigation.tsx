@@ -1,12 +1,14 @@
 import Image from 'next/image';
 import { NAVIGATION_ITEMS } from '@/constants/admin/navigationItem';
+import { useRouter } from 'next/navigation';
 
 interface NavigationProps {
   isOpen: boolean;
 }
 
 function Navigation({ isOpen }: NavigationProps) {
-  const navigationClass = isOpen ? 'w-60' : 'w-16';
+  const router = useRouter();
+  const navigationClass = isOpen ? 'w-60' : 'w-20';
 
   return (
     <nav
@@ -17,6 +19,7 @@ function Navigation({ isOpen }: NavigationProps) {
           <div
             key={item.href}
             className="h-12 mx-auto p-2 hover:bg-gray-500/50 rounded-full duration-100 cursor-pointer"
+            onClick={() => router.push(`/admin/${item.href}`)}
           >
             <div key={item.href} className="flex items-center px-4">
               {/* icon */}

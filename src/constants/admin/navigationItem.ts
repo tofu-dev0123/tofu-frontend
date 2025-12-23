@@ -6,16 +6,16 @@ export const NAVIGATION_ITEMS = [
   {
     icon: homeIcon,
     label: 'ホーム',
-    href: '/admin',
+    href: '/home',
   },
   {
     icon: articleIcon,
     label: '記事一覧',
-    href: '/admin/articles',
+    href: '/articles',
   },
   {
     icon: createIcon,
     label: '記事作成',
-    href: '/admin/create',
+    href: '/create',
   },
 ];

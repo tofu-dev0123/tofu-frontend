@@ -17,7 +17,7 @@ interface HeaderProps {
 }
 
 function Header({ loginFlag = false, handleClickMenu }: HeaderProps) {
-  const { handleClickLogo } = useHeader();
+  const { handleClickLogo, handleClickLogout } = useHeader();
 
   return (
     <header className="w-full h-16 bg-white shadow">
@@ -53,8 +53,8 @@ function Header({ loginFlag = false, handleClickMenu }: HeaderProps) {
               </InputGroup>
             </div>
             <div
-              className="flex items-center"
-              onClick={() => console.log('click')}
+              className="flex items-center cursor-pointer"
+              onClick={handleClickLogout}
             >
               <Image src={logoutIcon} alt="logout" width={20} height={20} />
             </div>

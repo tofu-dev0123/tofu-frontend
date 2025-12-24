@@ -17,7 +17,7 @@ function SummaryArea({
   draftPosts = 0,
 }: SummaryAreaProps) {
   return (
-    <Card className="h-full flex justify-between px-10">
+    <Card className="h-full flex justify-between px-10 border-none shadow">
       <CardContent className="flex flex-col items-center justify-end">
         <CardTitle className="text-3xl font-bold py-4">投稿数</CardTitle>
         <CardDescription className="text-2xl mb-4">

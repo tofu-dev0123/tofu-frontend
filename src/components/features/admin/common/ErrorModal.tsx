@@ -10,23 +10,11 @@ interface ErrorModalProps {
   onClose?: () => void;
 }
 
-function ErrorModal(props: ErrorModalProps) {
-  const {
-    errorModalIsOpen,
-    errorModalTitle,
-    errorModalErrorMessage,
-    onClose: internalOnClose,
-  } = useErrorModal(props);
-
-  const handleClose = () => {
-    internalOnClose();
-    props.onClose?.();
-  };
-
+function ErrorModal({ isOpen, title, errorMessage, onClose }: ErrorModalProps) {
   return (
     <div
-      className={`${errorModalIsOpen ? 'block' : 'hidden'} fixed top-0 left-0 w-full h-full flex justify-center items-center`}
-      onClick={handleClose}
+      className={`${isOpen ? 'block' : 'hidden'} fixed top-0 left-0 w-full h-full flex justify-center items-center`}
+      onClick={onClose}
     >
       <Alert
         variant="destructive"
@@ -34,13 +22,11 @@ function ErrorModal(props: ErrorModalProps) {
       >
         <div className="flex items-center gap-2">
           <AlertCircleIcon className="w-6 h-6" />
-          <AlertTitle className="text-lg font-bold m-0">
-            {errorModalTitle}
-          </AlertTitle>
+          <AlertTitle className="text-lg font-bold m-0">{title}</AlertTitle>
         </div>
         <AlertDescription className="px-4">
           <ul className="list-inside list-disc text-base">
-            {errorModalErrorMessage.map((message) => (
+            {errorMessage.map((message) => (
               <li key={message}>{message}</li>
             ))}
           </ul>

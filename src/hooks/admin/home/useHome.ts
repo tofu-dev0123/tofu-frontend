@@ -13,6 +13,10 @@ function useHome() {
     setErrorMessage: errorModalHook.setErrorMessage,
   });
 
+  const handleClickCreate = () => {
+    console.log('create');
+  };
+
   useEffect(() => {
     // 初期処理
     getSummary();
@@ -23,6 +27,7 @@ function useHome() {
     publishedPosts,
     draftPosts,
     errorModalHook,
+    handleClickCreate,
   };
 }
 

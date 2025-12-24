@@ -28,7 +28,9 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
         </aside>
 
         {/* メインコンテンツ: 右側、残りのスペース */}
-        <main className="row-start-2 overflow-auto">{children}</main>
+        <main className="row-start-2 overflow-auto bg-gray-100">
+          {children}
+        </main>
       </div>
       <ErrorModal
         isOpen={errorModalHook.isOpen}

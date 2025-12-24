@@ -32,11 +32,7 @@ function useLoginForm() {
     try {
       await post<LoginResponse>(API_ENDPOINTS.login.post, request);
 
-      // クッキーが反映されるまで少し待機
-      await new Promise((resolve) => setTimeout(resolve, 5000)); // 5秒待機
-
-      // ログイン成功後にホームページにリダイレクト
-      window.location.href = '/admin/home';
+      router.push('/admin/home');
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
         // APIからエラーレスポンスが返ってきた場合

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { get } from '@/lib/api/http';
 import { API_ENDPOINTS } from '@/lib/api/endpoint';
 import { SummaryResponse } from '@/types/api/summary';
@@ -16,7 +16,7 @@ function useSummary(props: SummaryState) {
   const [publishedPosts, setPublishedPosts] = useState(0);
   const [draftPosts, setDraftPosts] = useState(0);
 
-  const getSummary = async () => {
+  const getSummary = useCallback(async () => {
     try {
       const response = await get<SummaryResponse>(API_ENDPOINTS.summary.get);
       setTotalPosts(response.total_count);
@@ -25,7 +25,7 @@ function useSummary(props: SummaryState) {
     } catch (error) {
       exceptErrorHandling(error, setErrorMessage);
     }
-  };
+  }, [setErrorMessage]);
 
   return {
     totalPosts,

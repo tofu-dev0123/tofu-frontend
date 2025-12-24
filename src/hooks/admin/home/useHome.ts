@@ -27,7 +27,7 @@ function useHome() {
     // 初期処理
     getSummary();
     getPostList({ limit: 6 });
-  }, []);
+  }, [getSummary, getPostList]);
 
   return {
     totalPosts,

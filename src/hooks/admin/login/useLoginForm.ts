@@ -32,6 +32,9 @@ function useLoginForm() {
     try {
       await post<LoginResponse>(API_ENDPOINTS.login.post, request);
 
+      // クッキーが反映されるまで少し待機
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
       // ログイン成功後にホームページにリダイレクト
       window.location.href = '/admin/home';
     } catch (error) {

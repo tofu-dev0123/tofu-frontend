@@ -13,13 +13,19 @@ import useHeader from '@/hooks/admin/common/useHeader';
 
 interface HeaderProps {
   loginFlag: boolean;
+  handleClickMenu?: () => void;
+  handleClickLogout?: () => void;
 }
 
-function Header({ loginFlag = false }: HeaderProps) {
-  const { handleClickLogo, handleClickMenu } = useHeader();
+function Header({
+  loginFlag = false,
+  handleClickMenu,
+  handleClickLogout,
+}: HeaderProps) {
+  const { handleClickLogo } = useHeader();
 
   return (
-    <header className="w-full h-16 bg-white">
+    <header className="w-full h-16 bg-white shadow">
       <div className="h-full flex justify-between items-center px-4">
         <div
           className="flex items-center cursor-pointer gap-4"
@@ -52,8 +58,8 @@ function Header({ loginFlag = false }: HeaderProps) {
               </InputGroup>
             </div>
             <div
-              className="flex items-center"
-              onClick={() => console.log('click')}
+              className="flex items-center cursor-pointer"
+              onClick={handleClickLogout}
             >
               <Image src={logoutIcon} alt="logout" width={20} height={20} />
             </div>

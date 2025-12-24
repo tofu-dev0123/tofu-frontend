@@ -1,9 +1,9 @@
+import HomeMain from '@/components/features/admin/home/HomeMain';
+
 export default function Page() {
   return (
     <>
-      <div>
-        <h1>Home</h1>
-      </div>
+      <HomeMain />
     </>
   );
 }

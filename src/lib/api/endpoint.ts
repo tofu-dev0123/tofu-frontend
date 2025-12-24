@@ -1,5 +1,17 @@
 export const API_ENDPOINTS = {
-  login: '/admin/auth/login',
-  posts: '/admin/posts',
-  post: (id: number) => `/admin/posts/${id}`,
+  login: {
+    post: '/admin/auth/login',
+  },
+  logout: {
+    post: '/admin/auth/logout',
+  },
+  posts: {
+    get: '/admin/posts',
+    post: '/admin/posts',
+    put: (id: number) => `/admin/posts/${id}`,
+    delete: (id: number) => `/admin/posts/${id}`,
+  },
+  summary: {
+    get: '/admin/posts/summary',
+  },
 };

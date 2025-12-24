@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { MESSAGES } from '@/constants/messages';
 import axios from 'axios';
 import { getErrorMessage } from '@/lib/utils/getErrorMessage';
+import { useRouter } from 'next/navigation';
 
 interface LoginForm {
   username: string;
@@ -14,6 +15,7 @@ interface LoginForm {
 }
 
 function useLoginForm() {
+  const router = useRouter();
   const formHook = useForm<LoginForm>();
 
   const [errorMessage, setErrorMessage] = useState<string[]>([]);
@@ -28,7 +30,8 @@ function useLoginForm() {
       password: formHook.getValues('password'),
     };
     try {
-      await post<LoginResponse>(API_ENDPOINTS.login, request);
+      await post<LoginResponse>(API_ENDPOINTS.login.post, request);
+      router.push('/admin/home');
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
         // APIからエラーレスポンスが返ってきた場合

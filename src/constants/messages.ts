@@ -1,5 +1,8 @@
 export const MESSAGES = {
   errors: {
+    common: {
+      failed: 'エラーが発生しました',
+    },
     login: {
       failed: 'ログインに失敗しました',
     },

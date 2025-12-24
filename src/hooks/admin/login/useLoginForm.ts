@@ -31,7 +31,9 @@ function useLoginForm() {
     };
     try {
       await post<LoginResponse>(API_ENDPOINTS.login.post, request);
-      router.push('/admin/home');
+
+      // ログイン成功後にホームページにリダイレクト
+      window.location.href = '/admin/home';
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
         // APIからエラーレスポンスが返ってきた場合

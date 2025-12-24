@@ -1,7 +1,8 @@
 'use client';
 
 import useSummary from '@/hooks/admin/home/useSummary';
-import { useEffect, useState } from 'react';
+import usePostList from '@/hooks/admin/home/usePostList';
+import { useEffect } from 'react';
 import useErrorModal from '../common/useErrorModal';
 
 function useHome() {
@@ -13,6 +14,11 @@ function useHome() {
     setErrorMessage: errorModalHook.setErrorMessage,
   });
 
+  // 投稿一覧の状態管理フック
+  const { postList, totalCount, totalPages, getPostList } = usePostList({
+    setErrorMessage: errorModalHook.setErrorMessage,
+  });
+
   const handleClickCreate = () => {
     console.log('create');
   };
@@ -20,6 +26,7 @@ function useHome() {
   useEffect(() => {
     // 初期処理
     getSummary();
+    getPostList({ limit: 6 });
   }, []);
 
   return {
@@ -28,6 +35,9 @@ function useHome() {
     draftPosts,
     errorModalHook,
     handleClickCreate,
+    postList,
+    totalCount,
+    totalPages,
   };
 }
 

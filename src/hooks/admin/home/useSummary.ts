@@ -4,9 +4,7 @@ import { useState } from 'react';
 import { get } from '@/lib/api/http';
 import { API_ENDPOINTS } from '@/lib/api/endpoint';
 import { SummaryResponse } from '@/types/api/summary';
-import axios from 'axios';
-import { getErrorMessage } from '@/lib/utils/getErrorMessage';
-import { MESSAGES } from '@/constants/messages';
+import { exceptErrorHandling } from '@/lib/utils/exceptErrorHandling';
 
 interface SummaryState {
   setErrorMessage: (errorMessage: string[]) => void;
@@ -25,12 +23,7 @@ function useSummary(props: SummaryState) {
       setPublishedPosts(response.published_count);
       setDraftPosts(response.draft_count);
     } catch (error) {
-      if (axios.isAxiosError(error) && error.response) {
-        const errorMessage = getErrorMessage(error.response.data);
-        setErrorMessage(errorMessage);
-      } else {
-        setErrorMessage([MESSAGES.errors.common.failed]);
-      }
+      exceptErrorHandling(error, setErrorMessage);
     }
   };
 

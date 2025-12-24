@@ -14,6 +14,9 @@ function HomeMain() {
     draftPosts,
     errorModalHook,
     handleClickCreate,
+    postList,
+    totalCount,
+    totalPages,
   } = useHome();
 
   return (
@@ -32,7 +35,7 @@ function HomeMain() {
           <CreateArea handleClickCreate={handleClickCreate} />
         </div>
         <div className="col-span-12">
-          <PostsListArea />
+          <PostsListArea postList={postList} />
         </div>
       </div>
       <ErrorModal

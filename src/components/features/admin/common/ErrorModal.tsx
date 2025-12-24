@@ -1,7 +1,6 @@
 import React from 'react';
 import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert';
 import { AlertCircleIcon } from 'lucide-react';
-import useErrorModal from '@/hooks/admin/common/useErrorModal';
 
 interface ErrorModalProps {
   isOpen: boolean;

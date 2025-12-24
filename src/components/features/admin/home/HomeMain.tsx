@@ -15,8 +15,6 @@ function HomeMain() {
     errorModalHook,
     handleClickCreate,
     postList,
-    totalCount,
-    totalPages,
   } = useHome();
 
   return (

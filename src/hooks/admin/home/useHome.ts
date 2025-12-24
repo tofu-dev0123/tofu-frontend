@@ -3,7 +3,7 @@
 import useSummary from '@/hooks/admin/home/useSummary';
 import usePostList from '@/hooks/admin/home/usePostList';
 import { useEffect } from 'react';
-import useErrorModal from '../common/useErrorModal';
+import useErrorModal from '@/hooks/admin/common/useErrorModal';
 
 function useHome() {
   // エラーモーダル状態管理フック
@@ -15,7 +15,7 @@ function useHome() {
   });
 
   // 投稿一覧の状態管理フック
-  const { postList, totalCount, totalPages, getPostList } = usePostList({
+  const { postList, getPostList } = usePostList({
     setErrorMessage: errorModalHook.setErrorMessage,
   });
 
@@ -36,8 +36,6 @@ function useHome() {
     errorModalHook,
     handleClickCreate,
     postList,
-    totalCount,
-    totalPages,
   };
 }
 

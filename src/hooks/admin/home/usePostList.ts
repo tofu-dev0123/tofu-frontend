@@ -15,29 +15,28 @@ function usePostList({ setErrorMessage }: UsePostListProps) {
   const [totalCount, setTotalCount] = useState<number>(0);
   const [totalPages, setTotalPages] = useState<number>(0);
 
-  const getPostList = useCallback(async (params: {
-    offset?: number;
-    limit?: number;
-    keyword?: string;
-  }) => {
-    const { offset, limit, keyword } = params;
-    const queryParams = new URLSearchParams();
+  const getPostList = useCallback(
+    async (params: { offset?: number; limit?: number; keyword?: string }) => {
+      const { offset, limit, keyword } = params;
+      const queryParams = new URLSearchParams();
 
-    if (offset) queryParams.append('offset', offset.toString());
-    if (limit) queryParams.append('limit', limit.toString());
-    if (keyword) queryParams.append('keyword', keyword);
+      if (offset) queryParams.append('offset', offset.toString());
+      if (limit) queryParams.append('limit', limit.toString());
+      if (keyword) queryParams.append('keyword', keyword);
 
-    try {
-      const response = await get<PostResponse>(
-        `${API_ENDPOINTS.posts.get}?${queryParams.toString()}`
-      );
-      setPostList(response.posts);
-      setTotalCount(response.total_count);
-      setTotalPages(response.total_pages);
-    } catch (error) {
-      exceptErrorHandling(error, setErrorMessage);
-    }
-  }, [setErrorMessage]);
+      try {
+        const response = await get<PostResponse>(
+          `${API_ENDPOINTS.posts.get}?${queryParams.toString()}`
+        );
+        setPostList(response.posts);
+        setTotalCount(response.total_count);
+        setTotalPages(response.total_pages);
+      } catch (error) {
+        exceptErrorHandling(error, setErrorMessage);
+      }
+    },
+    [setErrorMessage]
+  );
 
   return {
     postList,

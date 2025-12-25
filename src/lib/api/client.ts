@@ -1,9 +1,9 @@
 import axios from 'axios';
+import { getToken, removeToken } from '@/lib/utils/token';
 
 export const apiClient = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
   timeout: 10000,
-  withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -15,6 +15,11 @@ apiClient.interceptors.request.use(
     // リクエストヘッダーを確実に設定
     if (!config.headers['Content-Type']) {
       config.headers['Content-Type'] = 'application/json';
+    }
+    // localStorageからトークンを取得してヘッダーに追加
+    const token = getToken();
+    if (token) {
+      config.headers['Authorization'] = `Bearer ${token}`;
     }
     return config;
   },
@@ -31,6 +36,7 @@ apiClient.interceptors.response.use(
 
     if (status === 401) {
       // セッション切れ or 未ログイン
+      removeToken();
       window.location.href = '/admin/login';
     }
 

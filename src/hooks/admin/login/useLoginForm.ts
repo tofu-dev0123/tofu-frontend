@@ -8,6 +8,7 @@ import { MESSAGES } from '@/constants/messages';
 import axios from 'axios';
 import { getErrorMessage } from '@/lib/utils/getErrorMessage';
 import { useRouter } from 'next/navigation';
+import { saveToken } from '@/lib/utils/token';
 
 interface LoginForm {
   username: string;
@@ -30,7 +31,15 @@ function useLoginForm() {
       password: formHook.getValues('password'),
     };
     try {
-      await post<LoginResponse>(API_ENDPOINTS.login.post, request);
+      const response = await post<LoginResponse>(
+        API_ENDPOINTS.login.post,
+        request
+      );
+
+      // トークンをlocalStorageに保存
+      if (response.token) {
+        saveToken(response.token);
+      }
 
       router.push('/admin/home');
     } catch (error) {

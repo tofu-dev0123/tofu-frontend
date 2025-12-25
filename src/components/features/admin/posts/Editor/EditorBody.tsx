@@ -3,7 +3,7 @@ import { CardContent } from '@/components/ui/card';
 import Thumbnail from '@/components/features/admin/posts/Editor/Thumbnail';
 import PostTitle from '@/components/features/admin/posts/Editor/PostTitle';
 import Tag from '@/components/features/admin/posts/Editor/Tag';
-import Content from '@/components/features/admin/posts/Editor/Content';
+import MDContent from '@/components/features/admin/posts/Editor/MDContent';
 
 function EditorBody() {
   const handleUpload = () => {
@@ -14,7 +14,7 @@ function EditorBody() {
       <Thumbnail onUpload={handleUpload} />
       <PostTitle />
       <Tag onAddTag={() => {}} tags={[]} />
-      <Content />
+      <MDContent />
     </CardContent>
   );
 }

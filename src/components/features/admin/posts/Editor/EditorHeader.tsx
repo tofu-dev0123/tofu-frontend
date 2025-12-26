@@ -2,25 +2,18 @@
 
 import { CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { usePostEditor } from '@/contexts/admin/posts/PostEditorContext';
 
-interface EditorHeaderProps {
-  onPreview: () => void;
-  onSaveDraft: () => void;
-  onPublish: () => void;
-}
+function EditorHeader() {
+  const { actions } = usePostEditor();
 
-function EditorHeader({
-  onPreview,
-  onSaveDraft,
-  onPublish,
-}: EditorHeaderProps) {
   return (
-    <CardContent className="h-20 p-4 flex items-center justify-between gap-4">
+    <CardContent className="w-full h-20 p-4 flex items-center justify-between gap-4">
       <div className="flex items-center justify-start pl-10">
         <Button
           variant="outline"
           className="w-30 rounded-full cursor-pointer"
-          onClick={onPreview}
+          onClick={actions.togglePreview}
         >
           preview
         </Button>
@@ -29,14 +22,14 @@ function EditorHeader({
         <Button
           variant="outline"
           className="w-30 rounded-full cursor-pointer"
-          onClick={onSaveDraft}
+          onClick={actions.saveDraft}
         >
           下書き保存
         </Button>
         <Button
           variant="outline"
           className="w-30 rounded-full bg-admin-main text-white cursor-pointer hover:bg-admin-main/90 hover:text-white"
-          onClick={onPublish}
+          onClick={actions.publish}
         >
           公開
         </Button>

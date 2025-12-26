@@ -15,10 +15,11 @@ function Thumbnail() {
         {state.thumbnailUrl ? (
           <Image
             src={state.thumbnailUrl}
-            alt="thumbnail"
-            fill
+            alt={state.altText ?? 'thumbnail'}
             unoptimized
-            className="object-cover rounded-lg"
+            fill
+            className="object-contain rounded-lg"
+            onClick={actions.handleDeleteThumbnail}
           />
         ) : (
           <Image

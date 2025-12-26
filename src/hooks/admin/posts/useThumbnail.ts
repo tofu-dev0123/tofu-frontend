@@ -1,9 +1,10 @@
 'use client';
 
 import { useState, useCallback, useRef } from 'react';
-import { uploadFile } from '@/lib/api/http';
+import { uploadFile, del } from '@/lib/api/http';
 import { API_ENDPOINTS } from '@/lib/api/endpoint';
 import { ImagesUploadResponse } from '@/types/api/imagesUpload';
+import { ImagesDeleteResponse } from '@/types/api/imagesDelete';
 import { exceptErrorHandling } from '@/lib/utils/exceptErrorHandling';
 
 interface UseThumbnailProps {
@@ -11,7 +12,9 @@ interface UseThumbnailProps {
 }
 
 export function useThumbnail({ setErrorMessage }: UseThumbnailProps) {
+  const [imageId, setImageId] = useState<number | null>(null);
   const [thumbnailUrl, setThumbnailUrlState] = useState<string | null>(null);
+  const [altText, setAltText] = useState<string | null>(null);
 
   const thumbnailInputRef = useRef<HTMLInputElement>(null);
 
@@ -19,6 +22,7 @@ export function useThumbnail({ setErrorMessage }: UseThumbnailProps) {
     thumbnailInputRef.current?.click();
   };
 
+  // ファイル選択で画像をアップロードする
   const handleFileChange = useCallback(
     async (e: React.ChangeEvent<HTMLInputElement>) => {
       const file = e.target.files?.[0];
@@ -33,6 +37,8 @@ export function useThumbnail({ setErrorMessage }: UseThumbnailProps) {
           formData
         );
         setThumbnailUrl(response.url);
+        setImageId(response.image_id);
+        setAltText(response.alt_text);
       } catch (error) {
         exceptErrorHandling(error, setErrorMessage);
       }
@@ -44,11 +50,34 @@ export function useThumbnail({ setErrorMessage }: UseThumbnailProps) {
     setThumbnailUrlState(url);
   }, []);
 
+  // 画像を削除する
+  const handleDeleteThumbnail = useCallback(async () => {
+    if (!imageId) return;
+    try {
+      await del<ImagesDeleteResponse>(API_ENDPOINTS.images.delete(imageId));
+
+      setThumbnailUrl(null);
+      setImageId(null);
+      setAltText(null);
+      // ファイル入力の値をリセット
+      if (thumbnailInputRef.current) {
+        thumbnailInputRef.current.value = '';
+      }
+    } catch (error) {
+      exceptErrorHandling(error, setErrorMessage);
+    }
+  }, [imageId, setErrorMessage]);
+
   return {
     thumbnailUrl,
-    setThumbnailUrl,
-    handleThumbnailClick,
+    altText,
+    imageId,
     thumbnailInputRef,
+    handleThumbnailClick,
     handleFileChange,
+    handleDeleteThumbnail,
+    setThumbnailUrl,
+    setImageId,
+    setAltText,
   };
 }

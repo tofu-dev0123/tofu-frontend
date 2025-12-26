@@ -28,16 +28,16 @@ export function usePostState() {
       title,
       content,
       thumbnailUrl: thumbnailHooks.thumbnailUrl,
+      imageId: thumbnailHooks.imageId,
+      altText: thumbnailHooks.altText,
       tags,
-      isPreview: onClickPreviewHooks.isPreview,
-      category: undefined,
-      publishedAt: null,
-      status: 'draft',
     }),
     [
       title,
       content,
       thumbnailHooks.thumbnailUrl,
+      thumbnailHooks.imageId,
+      thumbnailHooks.altText,
       tags,
       onClickPreviewHooks.isPreview,
     ]
@@ -64,8 +64,11 @@ export function usePostState() {
     () => ({
       // サムネイル関連
       setThumbnailUrl: thumbnailHooks.setThumbnailUrl,
+      setImageId: thumbnailHooks.setImageId,
+      setAltText: thumbnailHooks.setAltText,
       handleThumbnailClick: thumbnailHooks.handleThumbnailClick,
       handleFileChange: thumbnailHooks.handleFileChange,
+      handleDeleteThumbnail: thumbnailHooks.handleDeleteThumbnail,
       // 基本情報関連
       setTitle,
       setContent,
@@ -80,6 +83,8 @@ export function usePostState() {
       setTitle,
       setContent,
       thumbnailHooks.setThumbnailUrl,
+      thumbnailHooks.setImageId,
+      thumbnailHooks.setAltText,
       addTag,
       removeTag,
       onClickPreviewHooks.togglePreview,
@@ -93,9 +98,10 @@ export function usePostState() {
 
   const ui: PostEditorUI = useMemo(
     () => ({
+      isPreview: onClickPreviewHooks.isPreview,
       thumbnailInputRef: thumbnailHooks.thumbnailInputRef,
     }),
-    [thumbnailHooks.thumbnailInputRef]
+    [thumbnailHooks.thumbnailInputRef, onClickPreviewHooks.isPreview]
   );
 
   return {

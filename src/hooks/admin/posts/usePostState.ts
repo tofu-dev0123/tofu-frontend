@@ -30,6 +30,9 @@ export function usePostState() {
       thumbnailUrl: thumbnailHooks.thumbnailUrl,
       imageId: thumbnailHooks.imageId,
       altText: thumbnailHooks.altText,
+      isLoading: thumbnailHooks.isLoading,
+      progress: thumbnailHooks.progress,
+      loadingType: thumbnailHooks.loadingType,
       tags,
     }),
     [
@@ -38,6 +41,9 @@ export function usePostState() {
       thumbnailHooks.thumbnailUrl,
       thumbnailHooks.imageId,
       thumbnailHooks.altText,
+      thumbnailHooks.isLoading,
+      thumbnailHooks.progress,
+      thumbnailHooks.loadingType,
       tags,
       onClickPreviewHooks.isPreview,
     ]

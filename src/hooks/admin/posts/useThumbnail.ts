@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import { uploadFile, del } from '@/lib/api/http';
 import { API_ENDPOINTS } from '@/lib/api/endpoint';
 import { ImagesUploadResponse } from '@/types/api/imagesUpload';
@@ -12,11 +12,37 @@ interface UseThumbnailProps {
 }
 
 export function useThumbnail({ setErrorMessage }: UseThumbnailProps) {
+  const [isLoading, setIsLoading] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [loadingType, setLoadingType] = useState<'upload' | 'delete' | null>(
+    null
+  );
   const [imageId, setImageId] = useState<number | null>(null);
   const [thumbnailUrl, setThumbnailUrlState] = useState<string | null>(null);
   const [altText, setAltText] = useState<string | null>(null);
 
   const thumbnailInputRef = useRef<HTMLInputElement>(null);
+
+  // プログレスバーのアニメーション
+  useEffect(() => {
+    if (!isLoading) {
+      setProgress(0);
+      return;
+    }
+
+    setProgress(0);
+    const interval = setInterval(() => {
+      setProgress((prev) => {
+        if (prev >= 100) {
+          clearInterval(interval);
+          return 100;
+        }
+        return prev + 2.5; // 50msごとに2.5%増加（50ms × 40回 = 2秒で100%）
+      });
+    }, 50);
+
+    return () => clearInterval(interval);
+  }, [isLoading]);
 
   const handleThumbnailClick = () => {
     thumbnailInputRef.current?.click();
@@ -27,6 +53,11 @@ export function useThumbnail({ setErrorMessage }: UseThumbnailProps) {
     async (e: React.ChangeEvent<HTMLInputElement>) => {
       const file = e.target.files?.[0];
       if (!file) return;
+      setIsLoading(true);
+      setLoadingType('upload');
+      const startTime = Date.now();
+      const MIN_LOADING_TIME = 2000; // 最低2秒間
+
       try {
         const formData = new FormData();
         formData.append('image_file', file);
@@ -41,9 +72,15 @@ export function useThumbnail({ setErrorMessage }: UseThumbnailProps) {
         setAltText(response.alt_text);
       } catch (error) {
         exceptErrorHandling(error, setErrorMessage);
+      } finally {
+        const elapsedTime = Date.now() - startTime;
+        const remainingTime = Math.max(0, MIN_LOADING_TIME - elapsedTime);
+        await new Promise((resolve) => setTimeout(resolve, remainingTime));
+        setIsLoading(false);
+        setLoadingType(null);
       }
     },
-    []
+    [setErrorMessage]
   );
 
   const setThumbnailUrl = useCallback((url: string | null) => {
@@ -53,6 +90,11 @@ export function useThumbnail({ setErrorMessage }: UseThumbnailProps) {
   // 画像を削除する
   const handleDeleteThumbnail = useCallback(async () => {
     if (!imageId) return;
+    setIsLoading(true);
+    setLoadingType('delete');
+    const startTime = Date.now();
+    const MIN_LOADING_TIME = 2000; // 最低2秒間
+
     try {
       await del<ImagesDeleteResponse>(API_ENDPOINTS.images.delete(imageId));
 
@@ -65,6 +107,12 @@ export function useThumbnail({ setErrorMessage }: UseThumbnailProps) {
       }
     } catch (error) {
       exceptErrorHandling(error, setErrorMessage);
+    } finally {
+      const elapsedTime = Date.now() - startTime;
+      const remainingTime = Math.max(0, MIN_LOADING_TIME - elapsedTime);
+      await new Promise((resolve) => setTimeout(resolve, remainingTime));
+      setIsLoading(false);
+      setLoadingType(null);
     }
   }, [imageId, setErrorMessage]);
 
@@ -72,6 +120,9 @@ export function useThumbnail({ setErrorMessage }: UseThumbnailProps) {
     thumbnailUrl,
     altText,
     imageId,
+    isLoading,
+    progress,
+    loadingType,
     thumbnailInputRef,
     handleThumbnailClick,
     handleFileChange,

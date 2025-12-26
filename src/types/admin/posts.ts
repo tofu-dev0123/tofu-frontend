@@ -9,6 +9,9 @@ export interface PostEditorState {
   thumbnailUrl: string | null;
   imageId: number | null;
   altText: string | null;
+  isLoading: boolean;
+  progress: number;
+  loadingType: 'upload' | 'delete' | null;
 
   // タグ情報
   tags: string[];

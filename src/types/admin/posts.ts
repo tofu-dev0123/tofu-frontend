@@ -1,3 +1,5 @@
+import type { RefObject } from 'react';
+
 export interface PostEditorState {
   // 基本情報
   title: string;
@@ -24,9 +26,16 @@ export interface PostEditorActions {
   saveDraft: () => void;
   publish: () => void;
   reset: () => void;
+  handleThumbnailClick: () => void;
+  handleFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
+export interface PostEditorUI {
+  thumbnailInputRef: RefObject<HTMLInputElement | null>;
 }
 
 export interface PostEditorContextValue {
   state: PostEditorState;
   actions: PostEditorActions;
+  ui: PostEditorUI;
 }

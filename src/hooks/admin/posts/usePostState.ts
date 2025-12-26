@@ -1,7 +1,11 @@
 'use client';
 
 import { useCallback, useMemo } from 'react';
-import type { PostEditorState, PostEditorActions } from '@/types/admin/posts';
+import type {
+  PostEditorState,
+  PostEditorActions,
+  PostEditorUI,
+} from '@/types/admin/posts';
 import { useOnClickPreview } from './useOnClickPreview';
 import { usePostTitle } from './usePostTitle';
 import { usePostContent } from './usePostContent';
@@ -9,24 +13,30 @@ import { useThumbnail } from './useThumbnail';
 import { useTags } from './useTags';
 
 export function usePostState() {
-  const { isPreview, togglePreview } = useOnClickPreview();
+  const onClickPreviewHooks = useOnClickPreview();
   const { title, setTitle } = usePostTitle();
   const { content, setContent } = usePostContent();
-  const { thumbnailUrl, setThumbnailUrl } = useThumbnail();
+  const thumbnailHooks = useThumbnail();
   const { tags, addTag, removeTag } = useTags();
 
   const state: PostEditorState = useMemo(
     () => ({
       title,
       content,
-      thumbnailUrl,
+      thumbnailUrl: thumbnailHooks.thumbnailUrl,
       tags,
-      isPreview,
+      isPreview: onClickPreviewHooks.isPreview,
       category: undefined,
       publishedAt: null,
       status: 'draft',
     }),
-    [title, content, thumbnailUrl, tags, isPreview]
+    [
+      title,
+      content,
+      thumbnailHooks.thumbnailUrl,
+      tags,
+      onClickPreviewHooks.isPreview,
+    ]
   );
 
   const saveDraft = useCallback(() => {
@@ -42,18 +52,22 @@ export function usePostState() {
   const reset = useCallback(() => {
     setTitle('');
     setContent('');
-    setThumbnailUrl(null);
+    thumbnailHooks.setThumbnailUrl(null);
     // tagsとisPreviewのリセットは、必要に応じて各フックにリセット機能を追加
-  }, [setTitle, setContent, setThumbnailUrl]);
+  }, [setTitle, setContent, thumbnailHooks.setThumbnailUrl]);
 
   const actions: PostEditorActions = useMemo(
     () => ({
+      // サムネイル関連
+      setThumbnailUrl: thumbnailHooks.setThumbnailUrl,
+      handleThumbnailClick: thumbnailHooks.handleThumbnailClick,
+      handleFileChange: thumbnailHooks.handleFileChange,
+      // 基本情報関連
       setTitle,
       setContent,
-      setThumbnailUrl,
       addTag,
       removeTag,
-      togglePreview,
+      togglePreview: onClickPreviewHooks.togglePreview,
       saveDraft,
       publish,
       reset,
@@ -61,19 +75,28 @@ export function usePostState() {
     [
       setTitle,
       setContent,
-      setThumbnailUrl,
+      thumbnailHooks.setThumbnailUrl,
       addTag,
       removeTag,
-      togglePreview,
+      onClickPreviewHooks.togglePreview,
       saveDraft,
       publish,
       reset,
+      thumbnailHooks.handleThumbnailClick,
+      thumbnailHooks.handleFileChange,
     ]
+  );
+
+  const ui: PostEditorUI = useMemo(
+    () => ({
+      thumbnailInputRef: thumbnailHooks.thumbnailInputRef,
+    }),
+    [thumbnailHooks.thumbnailInputRef]
   );
 
   return {
     state,
     actions,
+    ui,
   };
 }
-

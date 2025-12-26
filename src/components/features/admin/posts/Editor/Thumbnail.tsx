@@ -7,7 +7,7 @@ import thumbnailIcon from '@/assets/images/thumbnail-icon.png';
 import { usePostEditor } from '@/contexts/admin/posts/PostEditorContext';
 
 function Thumbnail() {
-  const { state, actions } = usePostEditor();
+  const { state, actions, ui } = usePostEditor();
 
   const handleUpload = () => {
     // TODO: 実際のアップロード処理を実装
@@ -33,9 +33,15 @@ function Thumbnail() {
             width={40}
             height={40}
             className="absolute top-1/2 left-30 -translate-y-1/2 hover:cursor-pointer hover:opacity-60 duration-200"
-            onClick={handleUpload}
+            onClick={actions.handleThumbnailClick}
           />
         )}
+        <input
+          ref={ui.thumbnailInputRef}
+          type="file"
+          className="hidden"
+          onChange={actions.handleFileChange}
+        />
       </div>
     </CardContent>
   );

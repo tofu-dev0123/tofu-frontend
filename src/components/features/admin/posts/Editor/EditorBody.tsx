@@ -12,7 +12,7 @@ function EditorBody() {
       <Thumbnail />
       <PostTitle />
       <Tag />
-      <MDContent />
+      <MDContent className="flex-1" />
     </CardContent>
   );
 }

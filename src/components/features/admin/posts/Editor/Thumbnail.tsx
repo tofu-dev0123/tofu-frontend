@@ -9,13 +9,6 @@ import { usePostEditor } from '@/contexts/admin/posts/PostEditorContext';
 function Thumbnail() {
   const { state, actions, ui } = usePostEditor();
 
-  const handleUpload = () => {
-    // TODO: 実際のアップロード処理を実装
-    console.log('upload thumbnail');
-    // 仮のURLを設定（実際の実装ではファイルアップロード後にURLを設定）
-    // actions.setThumbnailUrl('uploaded-url');
-  };
-
   return (
     <CardContent className="w-full h-80 p-4 flex items-center justify-center">
       <div className="w-full h-full rounded-lg relative">
@@ -24,6 +17,7 @@ function Thumbnail() {
             src={state.thumbnailUrl}
             alt="thumbnail"
             fill
+            unoptimized
             className="object-cover rounded-lg"
           />
         ) : (

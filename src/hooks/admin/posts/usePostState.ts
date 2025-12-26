@@ -11,12 +11,16 @@ import { usePostTitle } from './usePostTitle';
 import { usePostContent } from './usePostContent';
 import { useThumbnail } from './useThumbnail';
 import { useTags } from './useTags';
+import useErrorModal from '@/hooks/admin/common/useErrorModal';
 
 export function usePostState() {
+  const errorModalHooks = useErrorModal();
   const onClickPreviewHooks = useOnClickPreview();
   const { title, setTitle } = usePostTitle();
   const { content, setContent } = usePostContent();
-  const thumbnailHooks = useThumbnail();
+  const thumbnailHooks = useThumbnail({
+    setErrorMessage: errorModalHooks.setErrorMessage,
+  });
   const { tags, addTag, removeTag } = useTags();
 
   const state: PostEditorState = useMemo(

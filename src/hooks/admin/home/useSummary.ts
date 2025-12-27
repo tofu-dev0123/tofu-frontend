@@ -7,11 +7,11 @@ import { SummaryResponse } from '@/types/api/summary';
 import { exceptErrorHandling } from '@/lib/utils/exceptErrorHandling';
 
 interface SummaryState {
-  setErrorMessage: (errorMessage: string[]) => void;
+  showError: (errorMessage: string[]) => void;
 }
 
 function useSummary(props: SummaryState) {
-  const { setErrorMessage } = props;
+  const { showError } = props;
   const [totalPosts, setTotalPosts] = useState(0);
   const [publishedPosts, setPublishedPosts] = useState(0);
   const [draftPosts, setDraftPosts] = useState(0);
@@ -23,9 +23,9 @@ function useSummary(props: SummaryState) {
       setPublishedPosts(response.published_count);
       setDraftPosts(response.draft_count);
     } catch (error) {
-      exceptErrorHandling(error, setErrorMessage);
+      exceptErrorHandling(error, showError);
     }
-  }, [setErrorMessage]);
+  }, [showError]);
 
   return {
     totalPosts,

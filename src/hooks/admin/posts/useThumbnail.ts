@@ -12,13 +12,10 @@ import { THUMBNAIL_MAX_FILE_SIZE } from '@/constants/admin/fileFormats';
 
 interface UseThumbnailProps {
   setIsOpen: (open: boolean) => void;
-  setErrorMessage: (message: string[]) => void;
+  showError: (message: string[]) => void;
 }
 
-export function useThumbnail({
-  setIsOpen,
-  setErrorMessage,
-}: UseThumbnailProps) {
+export function useThumbnail({ setIsOpen, showError }: UseThumbnailProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [isAlertOpen, setIsAlertOpen] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -71,13 +68,12 @@ export function useThumbnail({
       });
 
       if (fileSizeError) {
-        // エラーメッセージを設定
-        setErrorMessage([fileSizeError]);
+        // エラーメッセージを設定してモーダルを開く
+        showError([fileSizeError]);
         // ファイル入力をリセット
         if (thumbnailInputRef.current) {
           thumbnailInputRef.current.value = '';
         }
-        setIsOpen(true);
         return; // エラーがある場合は処理を中断
       }
 
@@ -92,7 +88,7 @@ export function useThumbnail({
       pendingFileRef.current = file;
       setIsAlertOpen(true);
     },
-    [previewImageUrl, setErrorMessage]
+    [previewImageUrl, showError]
   );
 
   const setThumbnailUrl = useCallback((url: string | null) => {
@@ -118,7 +114,11 @@ export function useThumbnail({
         thumbnailInputRef.current.value = '';
       }
     } catch (error) {
-      exceptErrorHandling(error, setErrorMessage);
+      // エラー時は先にローディング状態をリセットしてからエラーモーダルを表示
+      setIsLoading(false);
+      setLoadingType(null);
+      exceptErrorHandling(error, showError);
+      return; // エラー時は finally ブロックの処理をスキップ
     } finally {
       const elapsedTime = Date.now() - startTime;
       const remainingTime = Math.max(0, MIN_LOADING_TIME - elapsedTime);
@@ -126,7 +126,7 @@ export function useThumbnail({
       setIsLoading(false);
       setLoadingType(null);
     }
-  }, [imageId, setErrorMessage, setThumbnailUrl]);
+  }, [imageId, showError, setThumbnailUrl]);
 
   // アラートの保存ボタン押下時にアップロード処理を実行
   const handleConfirmUpload = useCallback(async () => {
@@ -162,7 +162,10 @@ export function useThumbnail({
         setPreviewImageUrl(null);
       }
     } catch (error) {
-      exceptErrorHandling(error, setErrorMessage);
+      // エラー時は先にローディング状態をリセットしてからエラーモーダルを表示
+      setIsLoading(false);
+      setLoadingType(null);
+      exceptErrorHandling(error, showError);
       pendingFileRef.current = null;
 
       // エラー時もプレビューURLを解放
@@ -170,7 +173,7 @@ export function useThumbnail({
         URL.revokeObjectURL(previewImageUrl);
         setPreviewImageUrl(null);
       }
-      setIsOpen(true);
+      return; // エラー時は finally ブロックの処理をスキップ
     } finally {
       const elapsedTime = Date.now() - startTime;
       const remainingTime = Math.max(0, MIN_LOADING_TIME - elapsedTime);
@@ -178,7 +181,7 @@ export function useThumbnail({
       setIsLoading(false);
       setLoadingType(null);
     }
-  }, [setErrorMessage, setThumbnailUrl, previewImageUrl, setIsOpen]);
+  }, [showError, setThumbnailUrl, previewImageUrl]);
 
   // アラートのキャンセルボタン押下時の処理
   const handleCancelUpload = useCallback(() => {

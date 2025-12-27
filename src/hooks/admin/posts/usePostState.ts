@@ -20,7 +20,7 @@ export function usePostState() {
   const { content, setContent } = usePostContent();
   const thumbnailHooks = useThumbnail({
     setIsOpen: errorModalHooks.setIsOpen,
-    setErrorMessage: errorModalHooks.setErrorMessage,
+    showError: errorModalHooks.showError,
   });
   const { tags, addTag, removeTag } = useTags();
 
@@ -98,7 +98,7 @@ export function usePostState() {
       publish,
       reset,
       // エラーモーダル関連
-      setErrorMessage: errorModalHooks.setErrorMessage,
+      showError: errorModalHooks.showError,
       setIsOpen: errorModalHooks.setIsOpen,
       onClose: errorModalHooks.onClose,
     }),
@@ -121,7 +121,7 @@ export function usePostState() {
       thumbnailHooks.handleCancelUpload,
       thumbnailHooks.handleAlertOpenChange,
       // エラーモーダル関連
-      errorModalHooks.setErrorMessage,
+      errorModalHooks.showError,
       errorModalHooks.setIsOpen,
       errorModalHooks.onClose,
     ]

@@ -7,10 +7,10 @@ import { API_ENDPOINTS } from '@/lib/api/endpoint';
 import { exceptErrorHandling } from '@/lib/utils/exceptErrorHandling';
 
 interface UsePostListProps {
-  setErrorMessage: (message: string[]) => void;
+  showError: (message: string[]) => void;
 }
 
-function usePostList({ setErrorMessage }: UsePostListProps) {
+function usePostList({ showError }: UsePostListProps) {
   const [postList, setPostList] = useState<Post[]>([]);
   const [totalCount, setTotalCount] = useState<number>(0);
   const [totalPages, setTotalPages] = useState<number>(0);
@@ -32,10 +32,10 @@ function usePostList({ setErrorMessage }: UsePostListProps) {
         setTotalCount(response.total_count);
         setTotalPages(response.total_pages);
       } catch (error) {
-        exceptErrorHandling(error, setErrorMessage);
+        exceptErrorHandling(error, showError);
       }
     },
-    [setErrorMessage]
+    [showError]
   );
 
   return {

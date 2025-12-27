@@ -14,12 +14,12 @@ function useHome() {
 
   // サマリの状態管理フック
   const { totalPosts, publishedPosts, draftPosts, getSummary } = useSummary({
-    setErrorMessage: errorModalHook.setErrorMessage,
+    showError: errorModalHook.showError,
   });
 
   // 投稿一覧の状態管理フック
   const { postList, getPostList } = usePostList({
-    setErrorMessage: errorModalHook.setErrorMessage,
+    showError: errorModalHook.showError,
   });
 
   const handleClickCreate = () => {

@@ -43,7 +43,7 @@ export interface PostEditorActions {
   handleConfirmUpload: () => void;
   handleCancelUpload: () => void;
   handleAlertOpenChange: (open: boolean) => void;
-  setErrorMessage: (message: string[]) => void;
+  showError: (message: string[]) => void;
   setIsOpen: (open: boolean) => void;
   onClose: () => void;
 }

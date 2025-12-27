@@ -11,12 +11,18 @@ export default function useErrorModal() {
     setErrorMessage([]);
   }, []);
 
+  const showError = useCallback((message: string[]) => {
+    setErrorMessage(message);
+    setIsOpen(true);
+  }, []);
+
   return {
     isOpen,
     title,
     errorMessage,
     setErrorMessage,
     setIsOpen,
+    showError,
     onClose,
   };
 }

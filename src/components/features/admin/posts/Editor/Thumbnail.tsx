@@ -6,6 +6,7 @@ import thumbnailIcon from '@/assets/images/thumbnail-icon.png';
 import { usePostEditor } from '@/contexts/admin/posts/PostEditorContext';
 import { Progress } from '@/components/ui/progress';
 import addGreyIcon from '@/assets/images/add-grey-icon.png';
+import Alert from '../../common/Alert';
 
 function Thumbnail() {
   const { state, actions, ui } = usePostEditor();
@@ -60,6 +61,14 @@ function Thumbnail() {
           disabled={state.isLoading}
         />
       </div>
+      <Alert
+        open={state.isAlertOpen}
+        onOpenChange={actions.handleAlertOpenChange}
+        onAction={actions.handleConfirmUpload}
+        onCancel={actions.handleCancelUpload}
+        title="サムネイルを保存しますか？"
+        actionText="保存"
+      />
     </CardContent>
   );
 }

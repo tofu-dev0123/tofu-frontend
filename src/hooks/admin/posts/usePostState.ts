@@ -33,6 +33,7 @@ export function usePostState() {
       isLoading: thumbnailHooks.isLoading,
       progress: thumbnailHooks.progress,
       loadingType: thumbnailHooks.loadingType,
+      isAlertOpen: thumbnailHooks.isAlertOpen,
       tags,
     }),
     [
@@ -44,6 +45,7 @@ export function usePostState() {
       thumbnailHooks.isLoading,
       thumbnailHooks.progress,
       thumbnailHooks.loadingType,
+      thumbnailHooks.isAlertOpen,
       tags,
       onClickPreviewHooks.isPreview,
     ]
@@ -75,6 +77,9 @@ export function usePostState() {
       handleThumbnailClick: thumbnailHooks.handleThumbnailClick,
       handleFileChange: thumbnailHooks.handleFileChange,
       handleDeleteThumbnail: thumbnailHooks.handleDeleteThumbnail,
+      handleConfirmUpload: thumbnailHooks.handleConfirmUpload,
+      handleCancelUpload: thumbnailHooks.handleCancelUpload,
+      handleAlertOpenChange: thumbnailHooks.handleAlertOpenChange,
       // 基本情報関連
       setTitle,
       setContent,
@@ -99,6 +104,9 @@ export function usePostState() {
       reset,
       thumbnailHooks.handleThumbnailClick,
       thumbnailHooks.handleFileChange,
+      thumbnailHooks.handleConfirmUpload,
+      thumbnailHooks.handleCancelUpload,
+      thumbnailHooks.handleAlertOpenChange,
     ]
   );
 

@@ -12,6 +12,7 @@ export interface PostEditorState {
   isLoading: boolean;
   progress: number;
   loadingType: 'upload' | 'delete' | null;
+  isAlertOpen: boolean;
 
   // タグ情報
   tags: string[];
@@ -32,6 +33,9 @@ export interface PostEditorActions {
   handleThumbnailClick: () => void;
   handleFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleDeleteThumbnail: () => void;
+  handleConfirmUpload: () => void;
+  handleCancelUpload: () => void;
+  handleAlertOpenChange: (open: boolean) => void;
 }
 
 export interface PostEditorUI {

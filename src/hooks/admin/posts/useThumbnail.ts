@@ -98,7 +98,7 @@ export function useThumbnail({
         thumbnailInputRef.current.value = '';
       }
     } catch (error) {
-      exceptErrorHandling(error, setIsOpen, setErrorMessage);
+      exceptErrorHandling(error, setErrorMessage);
     } finally {
       const elapsedTime = Date.now() - startTime;
       const remainingTime = Math.max(0, MIN_LOADING_TIME - elapsedTime);
@@ -142,7 +142,7 @@ export function useThumbnail({
         setPreviewImageUrl(null);
       }
     } catch (error) {
-      exceptErrorHandling(error, setIsOpen, setErrorMessage);
+      exceptErrorHandling(error, setErrorMessage);
       pendingFileRef.current = null;
 
       // エラー時もプレビューURLを解放
@@ -156,6 +156,7 @@ export function useThumbnail({
       await new Promise((resolve) => setTimeout(resolve, remainingTime));
       setIsLoading(false);
       setLoadingType(null);
+      setIsOpen(true);
     }
   }, [setErrorMessage, setThumbnailUrl, previewImageUrl]);
 

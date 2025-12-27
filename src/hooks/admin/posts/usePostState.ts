@@ -16,8 +16,8 @@ import useErrorModal from '@/hooks/admin/common/useErrorModal';
 export function usePostState() {
   const errorModalHooks = useErrorModal();
   const onClickPreviewHooks = useOnClickPreview();
-  const { title, setTitle } = usePostTitle();
-  const { content, setContent } = usePostContent();
+  const postTitleHooks = usePostTitle();
+  const postContentHooks = usePostContent();
   const thumbnailHooks = useThumbnail({
     showError: errorModalHooks.showError,
   });
@@ -28,8 +28,8 @@ export function usePostState() {
       // UI状態
       isPreview: onClickPreviewHooks.isPreview,
       // 基本情報
-      title,
-      content,
+      title: postTitleHooks.title,
+      content: postContentHooks.content,
       // サムネイル情報
       thumbnailUrl: thumbnailHooks.thumbnailUrl,
       imageId: thumbnailHooks.imageId,
@@ -47,8 +47,8 @@ export function usePostState() {
       errorMessage: errorModalHooks.errorMessage,
     }),
     [
-      title,
-      content,
+      postTitleHooks.title,
+      postContentHooks.content,
       thumbnailHooks.thumbnailUrl,
       thumbnailHooks.imageId,
       thumbnailHooks.altText,
@@ -76,11 +76,11 @@ export function usePostState() {
   }, [state]);
 
   const reset = useCallback(() => {
-    setTitle('');
-    setContent('');
+    postTitleHooks.setTitle('');
+    postContentHooks.setContent('');
     thumbnailHooks.setThumbnailUrl(null);
     // tagsとisPreviewのリセットは、必要に応じて各フックにリセット機能を追加
-  }, [setTitle, setContent, thumbnailHooks]);
+  }, [postTitleHooks.setTitle, postContentHooks.setContent, thumbnailHooks]);
 
   const actions: PostEditorActions = useMemo(
     () => ({
@@ -100,8 +100,9 @@ export function usePostState() {
       handleCancelUpload: thumbnailHooks.handleCancelUpload,
       handleAlertOpenChange: thumbnailHooks.handleAlertOpenChange,
       // 基本情報関連
-      setTitle,
-      setContent,
+      setTitle: postTitleHooks.setTitle,
+      setContent: postContentHooks.setContent,
+      handleContentKeyDown: postContentHooks.handleKeyDown,
       togglePreview: onClickPreviewHooks.togglePreview,
       saveDraft,
       publish,
@@ -112,8 +113,9 @@ export function usePostState() {
       onClose: errorModalHooks.onClose,
     }),
     [
-      setTitle,
-      setContent,
+      postTitleHooks.setTitle,
+      postContentHooks.setContent,
+      postContentHooks.handleKeyDown,
       thumbnailHooks.setThumbnailUrl,
       thumbnailHooks.setImageId,
       thumbnailHooks.setAltText,

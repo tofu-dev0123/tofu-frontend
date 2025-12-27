@@ -24,6 +24,7 @@ function MDContent({ className }: { className?: string }) {
           className="w-full h-full text-md font-bold border-none focus:outline-none resize-none placeholder:text-gray-400"
           value={state.content}
           onChange={(e) => actions.setContent(e.target.value)}
+          onKeyDown={actions.handleContentKeyDown}
         />
       )}
     </div>

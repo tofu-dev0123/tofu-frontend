@@ -1,6 +1,8 @@
 import type { RefObject } from 'react';
 
 export interface PostEditorState {
+  // UI状態
+  isPreview: boolean;
   // 基本情報
   title: string;
   content: string;
@@ -47,9 +49,6 @@ export interface PostEditorActions {
 }
 
 export interface PostEditorUI {
-  // UI状態
-  isPreview: boolean;
-
   // サムネイル情報
   thumbnailInputRef: RefObject<HTMLInputElement | null>;
 }

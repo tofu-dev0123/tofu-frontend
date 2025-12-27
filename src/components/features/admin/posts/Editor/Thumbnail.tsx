@@ -6,7 +6,7 @@ import thumbnailIcon from '@/assets/images/thumbnail-icon.png';
 import { usePostEditor } from '@/contexts/admin/posts/PostEditorContext';
 import { Progress } from '@/components/ui/progress';
 import addGreyIcon from '@/assets/images/add-grey-icon.png';
-import Alert from '../../common/Alert';
+import Alert from '@/components/features/admin/common/Alert';
 
 function Thumbnail() {
   const { state, actions, ui } = usePostEditor();
@@ -54,6 +54,7 @@ function Thumbnail() {
           </div>
         )}
         <input
+          // eslint-disable-next-line react-hooks/refs
           ref={ui.thumbnailInputRef}
           type="file"
           className="hidden"

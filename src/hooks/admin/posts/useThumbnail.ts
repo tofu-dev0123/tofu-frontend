@@ -106,7 +106,7 @@ export function useThumbnail({
       setIsLoading(false);
       setLoadingType(null);
     }
-  }, [imageId, setErrorMessage]);
+  }, [imageId, setErrorMessage, setThumbnailUrl]);
 
   // アラートの保存ボタン押下時にアップロード処理を実行
   const handleConfirmUpload = useCallback(async () => {
@@ -158,7 +158,7 @@ export function useThumbnail({
       setLoadingType(null);
       setIsOpen(true);
     }
-  }, [setErrorMessage, setThumbnailUrl, previewImageUrl]);
+  }, [setErrorMessage, setThumbnailUrl, previewImageUrl, setIsOpen]);
 
   // アラートのキャンセルボタン押下時の処理
   const handleCancelUpload = useCallback(() => {

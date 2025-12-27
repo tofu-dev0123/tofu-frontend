@@ -26,6 +26,7 @@ export function usePostState() {
 
   const state: PostEditorState = useMemo(
     () => ({
+      isPreview: onClickPreviewHooks.isPreview,
       title,
       content,
       thumbnailUrl: thumbnailHooks.thumbnailUrl,
@@ -73,7 +74,7 @@ export function usePostState() {
     setContent('');
     thumbnailHooks.setThumbnailUrl(null);
     // tagsとisPreviewのリセットは、必要に応じて各フックにリセット機能を追加
-  }, [setTitle, setContent, thumbnailHooks.setThumbnailUrl]);
+  }, [setTitle, setContent, thumbnailHooks]);
 
   const actions: PostEditorActions = useMemo(
     () => ({
@@ -115,6 +116,7 @@ export function usePostState() {
       reset,
       thumbnailHooks.handleThumbnailClick,
       thumbnailHooks.handleFileChange,
+      thumbnailHooks.handleDeleteThumbnail,
       thumbnailHooks.handleConfirmUpload,
       thumbnailHooks.handleCancelUpload,
       thumbnailHooks.handleAlertOpenChange,
@@ -127,10 +129,9 @@ export function usePostState() {
 
   const ui: PostEditorUI = useMemo(
     () => ({
-      isPreview: onClickPreviewHooks.isPreview,
       thumbnailInputRef: thumbnailHooks.thumbnailInputRef,
     }),
-    [thumbnailHooks.thumbnailInputRef, onClickPreviewHooks.isPreview]
+    [thumbnailHooks.thumbnailInputRef]
   );
 
   return {

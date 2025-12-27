@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 import { usePostEditor } from '@/contexts/admin/posts/PostEditorContext';
 
@@ -14,6 +13,7 @@ function PostTitle() {
         placeholder="タイトル"
         className="w-full text-4xl font-bold border-none focus:outline-none resize-none placeholder:text-gray-400"
         value={state.title}
+        maxLength={50}
         onChange={(e) => actions.setTitle(e.target.value)}
       />
     </div>

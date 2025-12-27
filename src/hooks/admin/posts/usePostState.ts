@@ -21,13 +21,16 @@ export function usePostState() {
   const thumbnailHooks = useThumbnail({
     showError: errorModalHooks.showError,
   });
-  const { tags, addTag, removeTag } = useTags();
+  const tagsHooks = useTags();
 
   const state: PostEditorState = useMemo(
     () => ({
+      // UI状態
       isPreview: onClickPreviewHooks.isPreview,
+      // 基本情報
       title,
       content,
+      // サムネイル情報
       thumbnailUrl: thumbnailHooks.thumbnailUrl,
       imageId: thumbnailHooks.imageId,
       altText: thumbnailHooks.altText,
@@ -36,7 +39,10 @@ export function usePostState() {
       loadingType: thumbnailHooks.loadingType,
       isAlertOpen: thumbnailHooks.isAlertOpen,
       previewImageUrl: thumbnailHooks.previewImageUrl,
-      tags,
+      // タグ情報
+      tags: tagsHooks.tags,
+      inputValue: tagsHooks.inputValue,
+      // エラーモーダル情報
       isErrorModalOpen: errorModalHooks.isOpen,
       errorMessage: errorModalHooks.errorMessage,
     }),
@@ -51,7 +57,8 @@ export function usePostState() {
       thumbnailHooks.loadingType,
       thumbnailHooks.isAlertOpen,
       thumbnailHooks.previewImageUrl,
-      tags,
+      tagsHooks.tags,
+      tagsHooks.inputValue,
       onClickPreviewHooks.isPreview,
       errorModalHooks.isOpen,
       errorModalHooks.errorMessage,
@@ -81,6 +88,11 @@ export function usePostState() {
       setThumbnailUrl: thumbnailHooks.setThumbnailUrl,
       setImageId: thumbnailHooks.setImageId,
       setAltText: thumbnailHooks.setAltText,
+      // タグ関連
+      addTag: tagsHooks.addTag,
+      removeTag: tagsHooks.removeTag,
+      setInputValue: tagsHooks.setInputValue,
+      // UI状態関連
       handleThumbnailClick: thumbnailHooks.handleThumbnailClick,
       handleFileChange: thumbnailHooks.handleFileChange,
       handleDeleteThumbnail: thumbnailHooks.handleDeleteThumbnail,
@@ -90,8 +102,6 @@ export function usePostState() {
       // 基本情報関連
       setTitle,
       setContent,
-      addTag,
-      removeTag,
       togglePreview: onClickPreviewHooks.togglePreview,
       saveDraft,
       publish,
@@ -107,12 +117,15 @@ export function usePostState() {
       thumbnailHooks.setThumbnailUrl,
       thumbnailHooks.setImageId,
       thumbnailHooks.setAltText,
-      addTag,
-      removeTag,
       onClickPreviewHooks.togglePreview,
       saveDraft,
       publish,
       reset,
+      // タグ関連
+      tagsHooks.addTag,
+      tagsHooks.removeTag,
+      tagsHooks.setInputValue,
+      // UI状態関連
       thumbnailHooks.handleThumbnailClick,
       thumbnailHooks.handleFileChange,
       thumbnailHooks.handleDeleteThumbnail,

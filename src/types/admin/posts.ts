@@ -19,6 +19,7 @@ export interface PostEditorState {
 
   // タグ情報
   tags: string[];
+  inputValue: string;
 
   // エラーモーダル情報
   isErrorModalOpen: boolean;
@@ -31,8 +32,9 @@ export interface PostEditorActions {
   setThumbnailUrl: (url: string | null) => void;
   setImageId: (id: number | null) => void;
   setAltText: (text: string | null) => void;
-  addTag: (tag: string) => void;
+  addTag: () => void;
   removeTag: (tag: string) => void;
+  setInputValue: (value: string) => void;
   togglePreview: () => void;
   saveDraft: () => void;
   publish: () => void;

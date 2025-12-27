@@ -1,11 +1,11 @@
 'use client';
 
-import React from 'react';
 import { CardContent } from '@/components/ui/card';
 import Image from 'next/image';
 import thumbnailIcon from '@/assets/images/thumbnail-icon.png';
 import { usePostEditor } from '@/contexts/admin/posts/PostEditorContext';
 import { Progress } from '@/components/ui/progress';
+import addGreyIcon from '@/assets/images/add-grey-icon.png';
 
 function Thumbnail() {
   const { state, actions, ui } = usePostEditor();
@@ -14,14 +14,23 @@ function Thumbnail() {
     <CardContent className="w-full h-80 p-4 flex items-center justify-center">
       <div className="w-full h-full rounded-lg relative">
         {!state.isLoading && state.thumbnailUrl && (
-          <Image
-            src={state.thumbnailUrl}
-            alt={state.altText ?? 'thumbnail'}
-            unoptimized
-            fill
-            className="object-contain rounded-lg"
-            onClick={actions.handleDeleteThumbnail}
-          />
+          <>
+            <Image
+              src={state.thumbnailUrl}
+              alt={state.altText ?? 'thumbnail'}
+              unoptimized
+              fill
+              className="object-contain rounded-lg"
+            />
+            <Image
+              src={addGreyIcon}
+              alt="削除ボタン"
+              width={24}
+              height={24}
+              className="absolute top-0 right-0 rotate-45 hover:cursor-pointer hover:opacity-60 duration-200"
+              onClick={actions.handleDeleteThumbnail}
+            />
+          </>
         )}
         {!state.isLoading && !state.thumbnailUrl && (
           <Image

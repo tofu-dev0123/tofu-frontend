@@ -7,6 +7,7 @@ import { usePostEditor } from '@/contexts/admin/posts/PostEditorContext';
 import { Progress } from '@/components/ui/progress';
 import addGreyIcon from '@/assets/images/add-grey-icon.png';
 import Alert from '@/components/features/admin/common/Alert';
+import { THUMBNAIL_ACCEPT_FORMATS } from '@/constants/admin/fileFormats';
 
 function Thumbnail() {
   const { state, actions, ui } = usePostEditor();
@@ -58,6 +59,7 @@ function Thumbnail() {
           ref={ui.thumbnailInputRef}
           type="file"
           className="hidden"
+          accept={THUMBNAIL_ACCEPT_FORMATS}
           onChange={actions.handleFileChange}
           disabled={state.isLoading}
         />

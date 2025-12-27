@@ -150,13 +150,13 @@ export function useThumbnail({
         URL.revokeObjectURL(previewImageUrl);
         setPreviewImageUrl(null);
       }
+      setIsOpen(true);
     } finally {
       const elapsedTime = Date.now() - startTime;
       const remainingTime = Math.max(0, MIN_LOADING_TIME - elapsedTime);
       await new Promise((resolve) => setTimeout(resolve, remainingTime));
       setIsLoading(false);
       setLoadingType(null);
-      setIsOpen(true);
     }
   }, [setErrorMessage, setThumbnailUrl, previewImageUrl, setIsOpen]);
 

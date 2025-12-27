@@ -59,7 +59,7 @@ function Thumbnail() {
           ref={ui.thumbnailInputRef}
           type="file"
           className="hidden"
-          // accept={THUMBNAIL_ACCEPT_FORMATS}
+          accept={THUMBNAIL_ACCEPT_FORMATS}
           onChange={actions.handleFileChange}
           disabled={state.isLoading}
         />

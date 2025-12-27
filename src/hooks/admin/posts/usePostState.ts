@@ -19,7 +19,6 @@ export function usePostState() {
   const { title, setTitle } = usePostTitle();
   const { content, setContent } = usePostContent();
   const thumbnailHooks = useThumbnail({
-    setIsOpen: errorModalHooks.setIsOpen,
     showError: errorModalHooks.showError,
   });
   const { tags, addTag, removeTag } = useTags();

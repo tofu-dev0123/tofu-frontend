@@ -51,7 +51,7 @@ interface PatternValidationOptions extends BaseValidationOptions {
  * カスタムバリデーション用のオプション
  */
 interface CustomValidationOptions extends BaseValidationOptions {
-  validator: (value: any) => boolean;
+  validator: (value: unknown) => boolean;
 }
 
 /**
@@ -76,7 +76,7 @@ export type ValidationOptions =
  * 必須チェック
  */
 function validateRequired(
-  value: any,
+  value: unknown,
   options?: BaseValidationOptions
 ): string | null {
   if (value === null || value === undefined || value === '') {
@@ -93,7 +93,7 @@ function validateRequired(
  * 最小文字数チェック
  */
 function validateMinLength(
-  value: any,
+  value: unknown,
   options?: LengthValidationOptions
 ): string | null {
   if (!options || typeof options.value !== 'number') {
@@ -115,7 +115,7 @@ function validateMinLength(
  * 最大文字数チェック
  */
 function validateMaxLength(
-  value: any,
+  value: unknown,
   options?: LengthValidationOptions
 ): string | null {
   if (!options || typeof options.value !== 'number') {
@@ -137,7 +137,7 @@ function validateMaxLength(
  * メールアドレス形式チェック
  */
 function validateEmail(
-  value: any,
+  value: unknown,
   options?: BaseValidationOptions
 ): string | null {
   if (value === null || value === undefined || value === '') {
@@ -159,7 +159,7 @@ function validateEmail(
  * URL形式チェック
  */
 function validateUrl(
-  value: any,
+  value: unknown,
   options?: BaseValidationOptions
 ): string | null {
   if (value === null || value === undefined || value === '') {
@@ -179,7 +179,7 @@ function validateUrl(
  * 正規表現パターンチェック
  */
 function validatePattern(
-  value: any,
+  value: unknown,
   options?: PatternValidationOptions
 ): string | null {
   if (!options || !(options.pattern instanceof RegExp)) {
@@ -203,7 +203,7 @@ function validatePattern(
  * 数値チェック
  */
 function validateNumber(
-  value: any,
+  value: unknown,
   options?: BaseValidationOptions
 ): string | null {
   if (value === null || value === undefined || value === '') {
@@ -229,7 +229,7 @@ function validateNumber(
  * 最小値チェック（数値）
  */
 function validateMin(
-  value: any,
+  value: unknown,
   options?: NumberValidationOptions
 ): string | null {
   if (!options || typeof options.value !== 'number') {
@@ -255,7 +255,7 @@ function validateMin(
  * 最大値チェック（数値）
  */
 function validateMax(
-  value: any,
+  value: unknown,
   options?: NumberValidationOptions
 ): string | null {
   if (!options || typeof options.value !== 'number') {
@@ -281,7 +281,7 @@ function validateMax(
  * カスタムバリデーション
  */
 function validateCustom(
-  value: any,
+  value: unknown,
   options?: CustomValidationOptions
 ): string | null {
   if (!options || typeof options.validator !== 'function') {
@@ -301,7 +301,7 @@ function validateCustom(
  * ファイルサイズチェック
  */
 function validateMaxFileSize(
-  value: any,
+  value: unknown,
   options?: FileSizeValidationOptions
 ): string | null {
   if (!options || typeof options.maxSize !== 'number') {
@@ -361,7 +361,7 @@ function validateMaxFileSize(
  * validate('valid@example.com', 'email') // null
  */
 export function validate(
-  value: any,
+  value: unknown,
   ruleType: ValidationRuleType,
   options?: ValidationOptions
 ): string | null {

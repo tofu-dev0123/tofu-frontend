@@ -11,11 +11,10 @@ import { MESSAGES } from '@/constants/messages';
 import { THUMBNAIL_MAX_FILE_SIZE } from '@/constants/admin/fileFormats';
 
 interface UseThumbnailProps {
-  setIsOpen: (open: boolean) => void;
   showError: (message: string[]) => void;
 }
 
-export function useThumbnail({ setIsOpen, showError }: UseThumbnailProps) {
+export function useThumbnail({ showError }: UseThumbnailProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [isAlertOpen, setIsAlertOpen] = useState(false);
   const [progress, setProgress] = useState(0);

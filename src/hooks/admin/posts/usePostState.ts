@@ -136,8 +136,6 @@ export function usePostState() {
       errorModalHooks.showError,
       errorModalHooks.setIsOpen,
       errorModalHooks.onClose,
-      // UI状態関連
-      onClickPreviewHooks.togglePreview,
     ]
   );
 

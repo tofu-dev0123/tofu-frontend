@@ -6,6 +6,9 @@ import { API_ENDPOINTS } from '@/lib/api/endpoint';
 import { ImagesUploadResponse } from '@/types/api/imagesUpload';
 import { ImagesDeleteResponse } from '@/types/api/imagesDelete';
 import { exceptErrorHandling } from '@/lib/utils/exceptErrorHandling';
+import { validate } from '@/lib/utils/validation';
+import { MESSAGES } from '@/constants/messages';
+import { THUMBNAIL_MAX_FILE_SIZE } from '@/constants/admin/fileFormats';
 
 interface UseThumbnailProps {
   setIsOpen: (open: boolean) => void;
@@ -61,6 +64,23 @@ export function useThumbnail({
       const file = e.target.files?.[0];
       if (!file) return;
 
+      // ファイルサイズのバリデーション
+      const fileSizeError = validate(file, 'maxFileSize', {
+        maxSize: THUMBNAIL_MAX_FILE_SIZE,
+        message: MESSAGES.validation.thumbnail.maxFileSize,
+      });
+
+      if (fileSizeError) {
+        // エラーメッセージを設定
+        setErrorMessage([fileSizeError]);
+        // ファイル入力をリセット
+        if (thumbnailInputRef.current) {
+          thumbnailInputRef.current.value = '';
+        }
+        setIsOpen(true);
+        return; // エラーがある場合は処理を中断
+      }
+
       // 既存のプレビューURLを解放
       if (previewImageUrl) {
         URL.revokeObjectURL(previewImageUrl);
@@ -72,7 +92,7 @@ export function useThumbnail({
       pendingFileRef.current = file;
       setIsAlertOpen(true);
     },
-    [previewImageUrl]
+    [previewImageUrl, setErrorMessage]
   );
 
   const setThumbnailUrl = useCallback((url: string | null) => {

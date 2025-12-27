@@ -34,6 +34,7 @@ export function usePostState() {
       progress: thumbnailHooks.progress,
       loadingType: thumbnailHooks.loadingType,
       isAlertOpen: thumbnailHooks.isAlertOpen,
+      previewImageUrl: thumbnailHooks.previewImageUrl,
       tags,
     }),
     [
@@ -46,6 +47,7 @@ export function usePostState() {
       thumbnailHooks.progress,
       thumbnailHooks.loadingType,
       thumbnailHooks.isAlertOpen,
+      thumbnailHooks.previewImageUrl,
       tags,
       onClickPreviewHooks.isPreview,
     ]

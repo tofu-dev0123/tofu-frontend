@@ -8,6 +8,7 @@ import {
   AlertDialogCancel,
   AlertDialogAction,
 } from '@/components/ui/alert-dialog';
+import Image from 'next/image';
 
 interface AlertProps {
   open: boolean;
@@ -18,6 +19,7 @@ interface AlertProps {
   actionText?: string;
   onCancel?: () => void;
   onAction?: () => void;
+  previewImageUrl?: string | null;
 }
 
 function Alert({
@@ -29,6 +31,7 @@ function Alert({
   actionText = '続ける',
   onCancel,
   onAction,
+  previewImageUrl,
 }: AlertProps) {
   const handleCancel = () => {
     onCancel?.();
@@ -45,7 +48,22 @@ function Alert({
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>{title}</AlertDialogTitle>
-          <AlertDialogDescription>{description}</AlertDialogDescription>
+          {description && (
+            <AlertDialogDescription>{description}</AlertDialogDescription>
+          )}
+          {previewImageUrl && (
+            <div className="mt-4 flex justify-center">
+              <div className="relative w-full max-w-[400px] aspect-video rounded-lg overflow-hidden">
+                <Image
+                  src={previewImageUrl}
+                  alt="プレビュー画像"
+                  fill
+                  className="object-contain"
+                  unoptimized
+                />
+              </div>
+            </div>
+          )}
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel onClick={handleCancel}>

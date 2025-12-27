@@ -21,6 +21,7 @@ export function useThumbnail({ setErrorMessage }: UseThumbnailProps) {
   const [imageId, setImageId] = useState<number | null>(null);
   const [thumbnailUrl, setThumbnailUrlState] = useState<string | null>(null);
   const [altText, setAltText] = useState<string | null>(null);
+  const [previewImageUrl, setPreviewImageUrl] = useState<string | null>(null);
 
   const thumbnailInputRef = useRef<HTMLInputElement>(null);
   const pendingFileRef = useRef<File | null>(null);
@@ -55,10 +56,19 @@ export function useThumbnail({ setErrorMessage }: UseThumbnailProps) {
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const file = e.target.files?.[0];
       if (!file) return;
+
+      // 既存のプレビューURLを解放
+      if (previewImageUrl) {
+        URL.revokeObjectURL(previewImageUrl);
+      }
+
+      // 新しいプレビューURLを生成
+      const previewUrl = URL.createObjectURL(file);
+      setPreviewImageUrl(previewUrl);
       pendingFileRef.current = file;
       setIsAlertOpen(true);
     },
-    []
+    [previewImageUrl]
   );
 
   const setThumbnailUrl = useCallback((url: string | null) => {
@@ -121,9 +131,21 @@ export function useThumbnail({ setErrorMessage }: UseThumbnailProps) {
       setImageId(response.image_id);
       setAltText(response.alt_text);
       pendingFileRef.current = null;
+
+      // プレビューURLを解放
+      if (previewImageUrl) {
+        URL.revokeObjectURL(previewImageUrl);
+        setPreviewImageUrl(null);
+      }
     } catch (error) {
       exceptErrorHandling(error, setErrorMessage);
       pendingFileRef.current = null;
+
+      // エラー時もプレビューURLを解放
+      if (previewImageUrl) {
+        URL.revokeObjectURL(previewImageUrl);
+        setPreviewImageUrl(null);
+      }
     } finally {
       const elapsedTime = Date.now() - startTime;
       const remainingTime = Math.max(0, MIN_LOADING_TIME - elapsedTime);
@@ -131,29 +153,51 @@ export function useThumbnail({ setErrorMessage }: UseThumbnailProps) {
       setIsLoading(false);
       setLoadingType(null);
     }
-  }, [setErrorMessage, setThumbnailUrl]);
+  }, [setErrorMessage, setThumbnailUrl, previewImageUrl]);
 
   // アラートのキャンセルボタン押下時の処理
   const handleCancelUpload = useCallback(() => {
     pendingFileRef.current = null;
+    // プレビューURLを解放
+    if (previewImageUrl) {
+      URL.revokeObjectURL(previewImageUrl);
+      setPreviewImageUrl(null);
+    }
     // ファイル入力の値をリセット
     if (thumbnailInputRef.current) {
       thumbnailInputRef.current.value = '';
     }
-  }, []);
+  }, [previewImageUrl]);
 
   // アラートの開閉を制御する（ダイアログの外側クリックやESCキーで閉じられた場合の処理）
-  const handleAlertOpenChange = useCallback((open: boolean) => {
-    setIsAlertOpen(open);
-    if (!open && pendingFileRef.current) {
-      // アラートが閉じられたときに、まだファイルが残っている場合はキャンセル処理を実行
-      pendingFileRef.current = null;
-      // ファイル入力の値をリセット
-      if (thumbnailInputRef.current) {
-        thumbnailInputRef.current.value = '';
+  const handleAlertOpenChange = useCallback(
+    (open: boolean) => {
+      setIsAlertOpen(open);
+      if (!open && pendingFileRef.current) {
+        // アラートが閉じられたときに、まだファイルが残っている場合はキャンセル処理を実行
+        pendingFileRef.current = null;
+        // プレビューURLを解放
+        if (previewImageUrl) {
+          URL.revokeObjectURL(previewImageUrl);
+          setPreviewImageUrl(null);
+        }
+        // ファイル入力の値をリセット
+        if (thumbnailInputRef.current) {
+          thumbnailInputRef.current.value = '';
+        }
       }
-    }
-  }, []);
+    },
+    [previewImageUrl]
+  );
+
+  // コンポーネントのアンマウント時にプレビューURLを解放
+  useEffect(() => {
+    return () => {
+      if (previewImageUrl) {
+        URL.revokeObjectURL(previewImageUrl);
+      }
+    };
+  }, [previewImageUrl]);
 
   return {
     thumbnailUrl,
@@ -163,6 +207,7 @@ export function useThumbnail({ setErrorMessage }: UseThumbnailProps) {
     progress,
     loadingType,
     isAlertOpen,
+    previewImageUrl,
     thumbnailInputRef,
     handleThumbnailClick,
     handleFileChange,

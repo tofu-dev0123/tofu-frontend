@@ -13,6 +13,7 @@ export interface PostEditorState {
   progress: number;
   loadingType: 'upload' | 'delete' | null;
   isAlertOpen: boolean;
+  previewImageUrl: string | null;
 
   // タグ情報
   tags: string[];

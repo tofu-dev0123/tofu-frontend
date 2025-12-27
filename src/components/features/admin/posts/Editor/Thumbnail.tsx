@@ -66,8 +66,10 @@ function Thumbnail() {
         onOpenChange={actions.handleAlertOpenChange}
         onAction={actions.handleConfirmUpload}
         onCancel={actions.handleCancelUpload}
-        title="サムネイルを保存しますか？"
-        actionText="保存"
+        title="サムネイルをアップロードします"
+        description="サムネイルをアップロードします"
+        actionText="アップロード"
+        previewImageUrl={state.previewImageUrl}
       />
     </CardContent>
   );

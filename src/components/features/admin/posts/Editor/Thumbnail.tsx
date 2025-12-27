@@ -67,7 +67,6 @@ function Thumbnail() {
         onAction={actions.handleConfirmUpload}
         onCancel={actions.handleCancelUpload}
         title="サムネイルをアップロードします"
-        description="サムネイルをアップロードします"
         actionText="アップロード"
         previewImageUrl={state.previewImageUrl}
       />

@@ -8,10 +8,14 @@ import { ImagesDeleteResponse } from '@/types/api/imagesDelete';
 import { exceptErrorHandling } from '@/lib/utils/exceptErrorHandling';
 
 interface UseThumbnailProps {
+  setIsOpen: (open: boolean) => void;
   setErrorMessage: (message: string[]) => void;
 }
 
-export function useThumbnail({ setErrorMessage }: UseThumbnailProps) {
+export function useThumbnail({
+  setIsOpen,
+  setErrorMessage,
+}: UseThumbnailProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [isAlertOpen, setIsAlertOpen] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -94,7 +98,7 @@ export function useThumbnail({ setErrorMessage }: UseThumbnailProps) {
         thumbnailInputRef.current.value = '';
       }
     } catch (error) {
-      exceptErrorHandling(error, setErrorMessage);
+      exceptErrorHandling(error, setIsOpen, setErrorMessage);
     } finally {
       const elapsedTime = Date.now() - startTime;
       const remainingTime = Math.max(0, MIN_LOADING_TIME - elapsedTime);
@@ -138,7 +142,7 @@ export function useThumbnail({ setErrorMessage }: UseThumbnailProps) {
         setPreviewImageUrl(null);
       }
     } catch (error) {
-      exceptErrorHandling(error, setErrorMessage);
+      exceptErrorHandling(error, setIsOpen, setErrorMessage);
       pendingFileRef.current = null;
 
       // エラー時もプレビューURLを解放

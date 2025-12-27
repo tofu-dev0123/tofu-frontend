@@ -19,6 +19,7 @@ export function usePostState() {
   const { title, setTitle } = usePostTitle();
   const { content, setContent } = usePostContent();
   const thumbnailHooks = useThumbnail({
+    setIsOpen: errorModalHooks.setIsOpen,
     setErrorMessage: errorModalHooks.setErrorMessage,
   });
   const { tags, addTag, removeTag } = useTags();
@@ -36,6 +37,8 @@ export function usePostState() {
       isAlertOpen: thumbnailHooks.isAlertOpen,
       previewImageUrl: thumbnailHooks.previewImageUrl,
       tags,
+      isErrorModalOpen: errorModalHooks.isOpen,
+      errorMessage: errorModalHooks.errorMessage,
     }),
     [
       title,
@@ -50,6 +53,8 @@ export function usePostState() {
       thumbnailHooks.previewImageUrl,
       tags,
       onClickPreviewHooks.isPreview,
+      errorModalHooks.isOpen,
+      errorModalHooks.errorMessage,
     ]
   );
 
@@ -91,6 +96,10 @@ export function usePostState() {
       saveDraft,
       publish,
       reset,
+      // エラーモーダル関連
+      setErrorMessage: errorModalHooks.setErrorMessage,
+      setIsOpen: errorModalHooks.setIsOpen,
+      onClose: errorModalHooks.onClose,
     }),
     [
       setTitle,
@@ -109,6 +118,10 @@ export function usePostState() {
       thumbnailHooks.handleConfirmUpload,
       thumbnailHooks.handleCancelUpload,
       thumbnailHooks.handleAlertOpenChange,
+      // エラーモーダル関連
+      errorModalHooks.setErrorMessage,
+      errorModalHooks.setIsOpen,
+      errorModalHooks.onClose,
     ]
   );
 

@@ -17,6 +17,10 @@ export interface PostEditorState {
 
   // タグ情報
   tags: string[];
+
+  // エラーモーダル情報
+  isErrorModalOpen: boolean;
+  errorMessage: string[];
 }
 
 export interface PostEditorActions {
@@ -37,6 +41,9 @@ export interface PostEditorActions {
   handleConfirmUpload: () => void;
   handleCancelUpload: () => void;
   handleAlertOpenChange: (open: boolean) => void;
+  setErrorMessage: (message: string[]) => void;
+  setIsOpen: (open: boolean) => void;
+  onClose: () => void;
 }
 
 export interface PostEditorUI {

@@ -46,3 +46,23 @@ export const del = async <T>(
   const res = await apiClient.delete<T>(url, config);
   return res.data;
 };
+
+/**
+ * FILE UPLOAD
+ */
+export const uploadFile = async <T>(
+  url: string,
+  formData: FormData,
+  config?: AxiosRequestConfig
+): Promise<T> => {
+  // FormDataの場合はContent-Typeを削除してaxiosに自動設定させる
+  const headers = config?.headers ? { ...config.headers } : {};
+  if ('Content-Type' in headers) {
+    delete (headers as Record<string, unknown>)['Content-Type'];
+  }
+  const res = await apiClient.post<T>(url, formData, {
+    ...config,
+    headers,
+  });
+  return res.data;
+};

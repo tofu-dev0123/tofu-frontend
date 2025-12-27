@@ -4,12 +4,12 @@ import { MESSAGES } from '@/constants/messages';
 
 export const exceptErrorHandling = (
   error: unknown,
-  setErrorMessage: (message: string[]) => void
+  showError: (message: string[]) => void
 ) => {
   if (axios.isAxiosError(error) && error.response) {
     const errorMessage = getErrorMessage(error.response.data);
-    setErrorMessage(errorMessage);
+    showError(errorMessage);
   } else {
-    setErrorMessage([MESSAGES.errors.common.failed]);
+    showError([MESSAGES.errors.common.failed]);
   }
 };

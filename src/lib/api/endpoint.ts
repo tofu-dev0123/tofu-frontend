@@ -14,4 +14,8 @@ export const API_ENDPOINTS = {
   summary: {
     get: '/admin/posts/summary',
   },
+  images: {
+    post: '/admin/images/upload',
+    delete: (id: number) => `/admin/images/${id}`,
+  },
 };

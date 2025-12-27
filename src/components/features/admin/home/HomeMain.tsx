@@ -4,8 +4,8 @@ import Title from '@/components/features/admin/common/Title';
 import ErrorModal from '@/components/features/admin/common/ErrorModal';
 import SummaryArea from '@/components/features/admin/home/SummaryArea';
 import CreateArea from '@/components/features/admin/home/CreateArea';
-import useHome from '@/hooks/admin/home/useHome';
 import PostsListArea from '@/components/features/admin/home/PostsListArea';
+import useHome from '@/hooks/admin/home/useHome';
 
 function HomeMain() {
   const {
@@ -18,7 +18,7 @@ function HomeMain() {
   } = useHome();
 
   return (
-    <div className="h-full flex flex-col min-w-4xl max-w-6xl mx-auto">
+    <div className="h-full w-6xl flex flex-col mx-auto">
       <Title title="ホーム" />
       <div className="flex-1 grid grid-cols-12 grid-rows-[auto_1fr] gap-4 py-4 px-20">
         {/* SummaryArea */}

@@ -34,13 +34,12 @@ function useDashboard() {
         router.push('/admin/login');
       }
     } catch (error) {
-      errorModalHook.setIsOpen(true);
       if (axios.isAxiosError(error) && error.response) {
         // APIからエラーレスポンスが返ってきた場合
         const errorMessage = getErrorMessage(error.response.data);
-        errorModalHook.setErrorMessage(errorMessage);
+        errorModalHook.showError(errorMessage);
       } else {
-        errorModalHook.setErrorMessage([MESSAGES.errors.common.failed]);
+        errorModalHook.showError([MESSAGES.errors.common.failed]);
       }
     }
   };

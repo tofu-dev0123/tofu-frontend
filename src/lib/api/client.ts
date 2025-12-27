@@ -12,8 +12,11 @@ export const apiClient = axios.create({
 // リクエストインターセプターを追加
 apiClient.interceptors.request.use(
   (config) => {
-    // リクエストヘッダーを確実に設定
-    if (!config.headers['Content-Type']) {
+    // FormDataの場合はContent-Typeを削除してaxiosに自動設定させる
+    if (config.data instanceof FormData) {
+      delete config.headers['Content-Type'];
+    } else if (!config.headers['Content-Type']) {
+      // FormDataでない場合のみapplication/jsonを設定
       config.headers['Content-Type'] = 'application/json';
     }
     // localStorageからトークンを取得してヘッダーに追加

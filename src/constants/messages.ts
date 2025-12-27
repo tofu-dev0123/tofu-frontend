@@ -17,5 +17,8 @@ export const MESSAGES = {
       minLength: '8文字以上入力してください',
       maxLength: '20文字以内で入力してください',
     },
+    thumbnail: {
+      maxFileSize: 'ファイルサイズは5MB以下にしてください',
+    },
   },
 } as const;

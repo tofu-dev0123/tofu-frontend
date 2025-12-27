@@ -1,10 +1,10 @@
 'use client';
 
-import TextareaAutosize from 'react-textarea-autosize';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { usePostEditor } from '@/contexts/admin/posts/PostEditorContext';
 import { cn } from '@/lib/utils';
+import { MarkdownEditor } from '@/components/editor/MarkdownEditor';
 
 function MDContent({ className }: { className?: string }) {
   const { state, actions } = usePostEditor();
@@ -18,14 +18,7 @@ function MDContent({ className }: { className?: string }) {
           </ReactMarkdown>
         </article>
       ) : (
-        <TextareaAutosize
-          minRows={20}
-          placeholder="本文"
-          className="w-full h-full text-md font-bold border-none focus:outline-none resize-none placeholder:text-gray-400"
-          value={state.content}
-          onChange={(e) => actions.setContent(e.target.value)}
-          onKeyDown={actions.handleContentKeyDown}
-        />
+        <MarkdownEditor value={state.content} onChange={actions.setContent} />
       )}
     </div>
   );

@@ -29,7 +29,6 @@ export interface PostEditorState {
 export interface PostEditorActions {
   setTitle: (title: string) => void;
   setContent: (content: string) => void;
-  handleContentKeyDown: (e: React.KeyboardEvent<HTMLTextAreaElement>) => void;
   setThumbnailUrl: (url: string | null) => void;
   setImageId: (id: number | null) => void;
   setAltText: (text: string | null) => void;

@@ -102,7 +102,6 @@ export function usePostState() {
       // 基本情報関連
       setTitle: postTitleHooks.setTitle,
       setContent: postContentHooks.setContent,
-      handleContentKeyDown: postContentHooks.handleKeyDown,
       togglePreview: onClickPreviewHooks.togglePreview,
       saveDraft,
       publish,
@@ -115,7 +114,6 @@ export function usePostState() {
     [
       postTitleHooks.setTitle,
       postContentHooks.setContent,
-      postContentHooks.handleKeyDown,
       thumbnailHooks.setThumbnailUrl,
       thumbnailHooks.setImageId,
       thumbnailHooks.setAltText,

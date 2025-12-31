@@ -1,25 +1,17 @@
 import { EditorView } from '@codemirror/view';
 
-export const removeOutline = EditorView.baseTheme({
+export const editorTheme = EditorView.baseTheme({
   '&.cm-editor': {
-    outline: 'none',
-  },
-  '&.cm-editor.cm-focused': {
-    outline: 'none',
-  },
-});
-
-export const editorTheme = EditorView.theme({
-  '&': {
     fontSize: '1rem', // text-md
     fontWeight: 'bold', // font-bold
-    border: 'none', // border-none
-    outline: 'none', // focus:outline-none
     resize: 'none', // resize-none
     width: '100%',
     height: '100%',
     fontFamily: 'inherit', // 他の部分と同じフォントを継承
     letterSpacing: '0.05em', // 文字間隔を少し広げる
+  },
+  '&.cm-editor.cm-focused': {
+    outline: 'none',
   },
   '.cm-content': {
     padding: 0,
@@ -34,12 +26,8 @@ export const editorTheme = EditorView.theme({
     padding: '0.125rem 0', // 行間を広げるためのパディング
     letterSpacing: '0.05em', // 文字間隔を少し広げる
   },
-  '.cm-focused': {
-    outline: 'none',
-  },
   '.cm-placeholder': {
     color: '#9ca3af', // text-gray-400
     fontFamily: 'inherit', // 他の部分と同じフォントを継承
   },
 });
-

@@ -5,16 +5,18 @@ import { Button } from '@/components/ui/button';
 import { usePostEditor } from '@/contexts/admin/posts/PostEditorContext';
 import previewIcon from '@/assets/images/preview-icon.png';
 import editIcon from '@/assets/images/edit-icon.png';
+import imageAddIcon from '@/assets/images/image-add-icon.png';
+import linkIcon from '@/assets/images/link-icon.png';
 import Image from 'next/image';
 
 function EditorHeader() {
   const { state, actions } = usePostEditor();
 
   return (
-    <CardContent className="w-full h-20 p-4 flex items-center justify-between gap-4">
-      <div className="flex items-center justify-start pl-10">
+    <CardContent className="w-full h-20 p-4 flex items-center justify-between gap-4 border-b border-gray-200">
+      <div className="flex items-center justify-start pl-10 gap-2">
         <div
-          className="relative w-18 h-8 rounded-full bg-gray-300 flex items-center justify-between"
+          className="relative w-18 h-8 rounded-full bg-gray-300 flex items-center justify-between mr-4"
           onClick={actions.togglePreview}
         >
           <div
@@ -50,6 +52,16 @@ function EditorHeader() {
               }`}
             />
           </div>
+        </div>
+        <div className="w-10 h-full rounded-full flex items-center justify-center">
+          <button className="w-8 h-8 border border-gray-300 rounded-full flex items-center justify-center hover:cursor-pointer hover:opacity-60 duration-200">
+            <Image src={imageAddIcon} alt="image add" width={18} height={18} />
+          </button>
+        </div>
+        <div className="w-10 h-full rounded-full flex items-center justify-center">
+          <button className="w-8 h-8 border border-gray-300 rounded-full flex items-center justify-center hover:cursor-pointer hover:opacity-60 duration-200">
+            <Image src={linkIcon} alt="link" width={18} height={18} />
+          </button>
         </div>
       </div>
       <div className="flex items-center justify-end gap-4 pr-10">

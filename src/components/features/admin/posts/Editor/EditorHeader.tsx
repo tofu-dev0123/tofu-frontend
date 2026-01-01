@@ -8,6 +8,7 @@ import editIcon from '@/assets/images/edit-icon.png';
 import imageAddIcon from '@/assets/images/image-add-icon.png';
 import linkIcon from '@/assets/images/link-icon.png';
 import Image from 'next/image';
+import { IMAGE_ACCEPT_FORMATS } from '@/constants/admin/fileFormats';
 
 function EditorHeader() {
   const { state, actions, ui } = usePostEditor();
@@ -63,7 +64,7 @@ function EditorHeader() {
           </button>
           <input
             type="file"
-            accept="image/*"
+            accept={IMAGE_ACCEPT_FORMATS}
             ref={ui.imageInputRef}
             onChange={actions.handleImageFileChange}
             className="hidden"

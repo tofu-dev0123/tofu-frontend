@@ -8,7 +8,11 @@ import { useMarkdownEditor } from '@/hooks/admin/editor/useMarkdownEditor';
 
 function MDContent({ className }: { className?: string }) {
   const { state, actions } = usePostEditor();
-  const containerRef = useMarkdownEditor(state.content, actions.setContent);
+  const containerRef = useMarkdownEditor(
+    state.content,
+    actions.setContent,
+    state.isPreview
+  );
 
   return (
     <div className={cn('w-full flex-1 min-h-0 py-10', className)}>

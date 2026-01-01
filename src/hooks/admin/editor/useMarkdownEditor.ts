@@ -7,13 +7,21 @@ import { createExtensions } from '@/components/editor/extensions';
 
 export function useMarkdownEditor(
   value: string,
-  onChange: (value: string) => void
+  onChange: (value: string) => void,
+  isPreview: boolean
 ) {
   const containerRef = useRef<HTMLDivElement>(null);
   const viewRef = useRef<EditorView | null>(null);
 
   useEffect(() => {
-    if (!containerRef.current) return;
+    // プレビューモードの場合はエディタを初期化しない
+    if (isPreview || !containerRef.current) return;
+
+    // 既存のエディタがあれば破棄
+    if (viewRef.current) {
+      viewRef.current.destroy();
+      viewRef.current = null;
+    }
 
     const state = EditorState.create({
       doc: value,
@@ -29,7 +37,8 @@ export function useMarkdownEditor(
       viewRef.current?.destroy();
       viewRef.current = null;
     };
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isPreview]);
 
   return containerRef;
 }

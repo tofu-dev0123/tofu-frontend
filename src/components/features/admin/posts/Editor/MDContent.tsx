@@ -4,10 +4,11 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { usePostEditor } from '@/contexts/admin/posts/PostEditorContext';
 import { cn } from '@/lib/utils';
-import { MarkdownEditor } from '@/components/editor/MarkdownEditor';
+import { useMarkdownEditor } from '@/hooks/admin/editor/useMarkdownEditor';
 
 function MDContent({ className }: { className?: string }) {
   const { state, actions } = usePostEditor();
+  const containerRef = useMarkdownEditor(state.content, actions.setContent);
 
   return (
     <div className={cn('w-full flex-1 min-h-0 py-10', className)}>
@@ -18,7 +19,7 @@ function MDContent({ className }: { className?: string }) {
           </ReactMarkdown>
         </article>
       ) : (
-        <MarkdownEditor value={state.content} onChange={actions.setContent} />
+        <div ref={containerRef} className="w-full h-full" />
       )}
     </div>
   );

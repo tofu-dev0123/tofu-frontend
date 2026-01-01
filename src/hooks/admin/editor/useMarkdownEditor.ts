@@ -3,14 +3,12 @@
 import { useEffect, useRef } from 'react';
 import { EditorView } from '@codemirror/view';
 import { EditorState } from '@codemirror/state';
-import { createExtensions } from './extensions';
+import { createExtensions } from '@/components/editor/extensions';
 
-interface Props {
-  value: string;
-  onChange: (value: string) => void;
-}
-
-export function MarkdownEditor({ value, onChange }: Props) {
+export function useMarkdownEditor(
+  value: string,
+  onChange: (value: string) => void
+) {
   const containerRef = useRef<HTMLDivElement>(null);
   const viewRef = useRef<EditorView | null>(null);
 
@@ -33,5 +31,5 @@ export function MarkdownEditor({ value, onChange }: Props) {
     };
   }, []);
 
-  return <div ref={containerRef} className="w-full h-full" />;
+  return containerRef;
 }

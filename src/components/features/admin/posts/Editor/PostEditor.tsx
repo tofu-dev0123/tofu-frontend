@@ -4,6 +4,7 @@ import { Card } from '@/components/ui/card';
 import EditorHeader from '@/components/features/admin/posts/Editor/EditorHeader';
 import EditorBody from '@/components/features/admin/posts/Editor/EditorBody';
 import ErrorModal from '@/components/features/admin/common/ErrorModal';
+import Alert from '@/components/features/admin/common/Alert';
 import { usePostEditor } from '@/contexts/admin/posts/PostEditorContext';
 
 function PostEditor() {
@@ -19,6 +20,17 @@ function PostEditor() {
         isOpen={state.isErrorModalOpen}
         errorMessage={state.errorMessage}
         onClose={actions.onClose}
+      />
+      <Alert
+        open={state.isImageAlertOpen}
+        onOpenChange={actions.handleImageAlertOpenChange}
+        title="画像を挿入しますか？"
+        description="選択した画像をエディタに挿入します。"
+        cancelText="キャンセル"
+        actionText="挿入"
+        onCancel={actions.handleCancelImageInsert}
+        onAction={actions.handleConfirmImageInsert}
+        previewImageUrl={state.imagePreviewUrl}
       />
     </div>
   );

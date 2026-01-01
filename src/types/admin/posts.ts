@@ -1,4 +1,5 @@
 import type { RefObject } from 'react';
+import type { EditorView } from '@codemirror/view';
 
 export interface PostEditorState {
   // UI状態
@@ -24,6 +25,10 @@ export interface PostEditorState {
   // エラーモーダル情報
   isErrorModalOpen: boolean;
   errorMessage: string[];
+
+  // 画像挿入情報
+  isImageAlertOpen: boolean;
+  imagePreviewUrl: string | null;
 }
 
 export interface PostEditorActions {
@@ -48,11 +53,20 @@ export interface PostEditorActions {
   showError: (message: string[]) => void;
   setIsOpen: (open: boolean) => void;
   onClose: () => void;
+  // 画像挿入関連
+  handleImageIconClick: () => void;
+  handleImageFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleConfirmImageInsert: () => void;
+  handleCancelImageInsert: () => void;
+  handleImageAlertOpenChange: (open: boolean) => void;
 }
 
 export interface PostEditorUI {
   // サムネイル情報
   thumbnailInputRef: RefObject<HTMLInputElement | null>;
+  // 画像挿入情報
+  imageInputRef: RefObject<HTMLInputElement | null>;
+  editorViewRef: RefObject<EditorView | null>;
 }
 
 export interface PostEditorContextValue {

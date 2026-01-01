@@ -1,6 +1,7 @@
 'use client';
 
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo, useRef } from 'react';
+import { EditorView } from '@codemirror/view';
 import type {
   PostEditorState,
   PostEditorActions,
@@ -11,6 +12,7 @@ import { usePostTitle } from './usePostTitle';
 import { usePostContent } from './usePostContent';
 import { useThumbnail } from './useThumbnail';
 import { useTags } from './useTags';
+import { useImageInsertion } from './useImageInsertion';
 import useErrorModal from '@/hooks/admin/common/useErrorModal';
 
 export function usePostState() {
@@ -22,6 +24,11 @@ export function usePostState() {
     showError: errorModalHooks.showError,
   });
   const tagsHooks = useTags();
+  const editorViewRef = useRef<EditorView | null>(null);
+  const imageInsertionHooks = useImageInsertion({
+    editorViewRef,
+    showError: errorModalHooks.showError,
+  });
 
   const state: PostEditorState = useMemo(
     () => ({
@@ -45,6 +52,9 @@ export function usePostState() {
       // エラーモーダル情報
       isErrorModalOpen: errorModalHooks.isOpen,
       errorMessage: errorModalHooks.errorMessage,
+      // 画像挿入情報
+      isImageAlertOpen: imageInsertionHooks.isImageAlertOpen,
+      imagePreviewUrl: imageInsertionHooks.previewImageUrl,
     }),
     [
       postTitleHooks.title,
@@ -62,6 +72,8 @@ export function usePostState() {
       onClickPreviewHooks.isPreview,
       errorModalHooks.isOpen,
       errorModalHooks.errorMessage,
+      imageInsertionHooks.isImageAlertOpen,
+      imageInsertionHooks.previewImageUrl,
     ]
   );
 
@@ -110,6 +122,13 @@ export function usePostState() {
       showError: errorModalHooks.showError,
       setIsOpen: errorModalHooks.setIsOpen,
       onClose: errorModalHooks.onClose,
+      // 画像挿入関連
+      handleImageIconClick: imageInsertionHooks.handleImageIconClick,
+      handleImageFileChange: imageInsertionHooks.handleImageFileChange,
+      handleConfirmImageInsert: imageInsertionHooks.handleConfirmImageInsert,
+      handleCancelImageInsert: imageInsertionHooks.handleCancelImageInsert,
+      handleImageAlertOpenChange:
+        imageInsertionHooks.handleImageAlertOpenChange,
     }),
     [
       postTitleHooks.setTitle,
@@ -136,14 +155,22 @@ export function usePostState() {
       errorModalHooks.showError,
       errorModalHooks.setIsOpen,
       errorModalHooks.onClose,
+      // 画像挿入関連
+      imageInsertionHooks.handleImageIconClick,
+      imageInsertionHooks.handleImageFileChange,
+      imageInsertionHooks.handleConfirmImageInsert,
+      imageInsertionHooks.handleCancelImageInsert,
+      imageInsertionHooks.handleImageAlertOpenChange,
     ]
   );
 
   const ui: PostEditorUI = useMemo(
     () => ({
       thumbnailInputRef: thumbnailHooks.thumbnailInputRef,
+      imageInputRef: imageInsertionHooks.imageInputRef,
+      editorViewRef,
     }),
-    [thumbnailHooks.thumbnailInputRef]
+    [thumbnailHooks.thumbnailInputRef, imageInsertionHooks.imageInputRef]
   );
 
   return {

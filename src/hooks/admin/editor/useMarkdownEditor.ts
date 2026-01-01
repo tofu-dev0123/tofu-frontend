@@ -40,5 +40,8 @@ export function useMarkdownEditor(
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isPreview]);
 
-  return containerRef;
+  return {
+    containerRef,
+    viewRef,
+  };
 }

@@ -10,7 +10,7 @@ import linkIcon from '@/assets/images/link-icon.png';
 import Image from 'next/image';
 
 function EditorHeader() {
-  const { state, actions } = usePostEditor();
+  const { state, actions, ui } = usePostEditor();
 
   return (
     <CardContent className="w-full h-20 p-4 flex items-center justify-between gap-4 border-b border-gray-200">
@@ -54,9 +54,20 @@ function EditorHeader() {
           </div>
         </div>
         <div className="w-10 h-full rounded-full flex items-center justify-center">
-          <button className="w-8 h-8 border border-gray-300 rounded-full flex items-center justify-center hover:cursor-pointer hover:opacity-60 duration-200">
+          <button
+            type="button"
+            className="w-8 h-8 border border-gray-300 rounded-full flex items-center justify-center hover:cursor-pointer hover:opacity-60 duration-200"
+            onClick={actions.handleImageIconClick}
+          >
             <Image src={imageAddIcon} alt="image add" width={18} height={18} />
           </button>
+          <input
+            type="file"
+            accept="image/*"
+            ref={ui.imageInputRef}
+            onChange={actions.handleImageFileChange}
+            className="hidden"
+          />
         </div>
         <div className="w-10 h-full rounded-full flex items-center justify-center">
           <button className="w-8 h-8 border border-gray-300 rounded-full flex items-center justify-center hover:cursor-pointer hover:opacity-60 duration-200">

@@ -3,7 +3,7 @@
 import { useEffect, useRef } from 'react';
 import { EditorView } from '@codemirror/view';
 import { EditorState } from '@codemirror/state';
-import { createExtensions } from '@/components/editor/extensions';
+import { createExtensions } from './extensions';
 
 export function useMarkdownEditor(
   value: string,

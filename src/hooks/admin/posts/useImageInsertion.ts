@@ -15,14 +15,24 @@ interface UseImageInsertionProps {
   showError: (message: string[]) => void;
 }
 
+interface ImageInsertionState {
+  imageId: number;
+  url: string;
+}
+
 export function useImageInsertion({
   editorViewRef,
   showError,
 }: UseImageInsertionProps) {
+  const [images, setImages] = useState<ImageInsertionState[]>([]);
   const [isImageAlertOpen, setIsImageAlertOpen] = useState(false);
   const [previewImageUrl, setPreviewImageUrl] = useState<string | null>(null);
   const imageInputRef = useRef<HTMLInputElement>(null);
   const pendingFileRef = useRef<File | null>(null);
+
+  useEffect(() => {
+    console.log('images', images);
+  }, [images]);
 
   // CodeMirror のカーソル位置に Markdown を挿入
   const insertImageMarkdown = useCallback(
@@ -116,6 +126,9 @@ export function useImageInsertion({
       // CodeMirror に Markdown を挿入
       insertImageMarkdown(response.url);
 
+      // 画像情報を追加
+      setImages([...images, { imageId: response.image_id, url: response.url }]);
+
       pendingFileRef.current = null;
 
       // プレビューURLを解放
@@ -185,6 +198,7 @@ export function useImageInsertion({
   }, [previewImageUrl]);
 
   return {
+    images,
     isImageAlertOpen,
     previewImageUrl,
     imageInputRef,

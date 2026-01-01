@@ -5,6 +5,7 @@ import { markdownKeymap } from './keymap';
 import { editorPlaceholder } from './placeholder';
 import { createUpdateListener } from './listener';
 import { EditorView } from '@codemirror/view';
+import { markdownFenceCompletion } from './fenceCompletion';
 
 export function createExtensions(
   onChange: (value: string) => void
@@ -16,5 +17,7 @@ export function createExtensions(
     editorPlaceholder,
     EditorView.lineWrapping,
     createUpdateListener(onChange),
+    markdownFenceCompletion,
   ];
 }
+

@@ -14,13 +14,13 @@ function EditorHeader() {
     <CardContent className="w-full h-20 p-4 flex items-center justify-between gap-4">
       <div className="flex items-center justify-start pl-10">
         <div
-          className="relative w-22 h-10 rounded-full bg-gray-300 flex items-center justify-between px-1"
+          className="relative w-18 h-8 rounded-full bg-gray-300 flex items-center justify-between"
           onClick={actions.togglePreview}
         >
           <div
-            className={`absolute w-9 h-9 rounded-full bg-white transition-transform duration-300 ease-in-out ${
+            className={`absolute w-9 h-9 border border-gray-300 rounded-full bg-white transition-transform duration-300 ease-in-out ${
               state.isPreview
-                ? 'translate-x-[calc(100%+0.6rem)]'
+                ? 'translate-x-[calc(100%+0.1rem)]'
                 : 'translate-x-[-0.1rem]'
             }`}
           />
@@ -28,8 +28,8 @@ function EditorHeader() {
             <Image
               src={editIcon}
               alt="edit"
-              width={20}
-              height={20}
+              width={18}
+              height={18}
               className={`${
                 state.isPreview
                   ? 'opacity-40'
@@ -41,8 +41,8 @@ function EditorHeader() {
             <Image
               src={previewIcon}
               alt="preview"
-              width={20}
-              height={20}
+              width={18}
+              height={18}
               className={`${
                 state.isPreview
                   ? 'hover:cursor-pointer hover:opacity-60 duration-200'

@@ -2,8 +2,6 @@ import { EditorView } from '@codemirror/view';
 
 export const editorTheme = EditorView.baseTheme({
   '&.cm-editor': {
-    fontSize: '1rem', // text-md
-    fontWeight: 'bold', // font-bold
     resize: 'none', // resize-none
     width: '100%',
     height: '100%',

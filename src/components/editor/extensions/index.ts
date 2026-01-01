@@ -4,6 +4,7 @@ import { editorTheme } from './theme';
 import { markdownKeymap } from './keymap';
 import { editorPlaceholder } from './placeholder';
 import { createUpdateListener } from './listener';
+import { EditorView } from '@codemirror/view';
 
 export function createExtensions(
   onChange: (value: string) => void
@@ -13,6 +14,7 @@ export function createExtensions(
     markdownKeymap,
     editorTheme,
     editorPlaceholder,
+    EditorView.lineWrapping,
     createUpdateListener(onChange),
   ];
 }

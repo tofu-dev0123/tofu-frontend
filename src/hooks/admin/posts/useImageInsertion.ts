@@ -31,7 +31,15 @@ export function useImageInsertion({
       if (!view) return;
 
       const { from, to } = view.state.selection.main;
-      const markdownText = `![](${imageUrl})\n`;
+      const doc = view.state.doc;
+
+      // カーソル位置の前の文字を確認
+      const charBefore = from > 0 ? doc.sliceString(from - 1, from) : '';
+      const needsLeadingNewline = charBefore !== '' && charBefore !== '\n';
+
+      // 改行を追加してから画像マークダウンを挿入
+      const leadingNewline = needsLeadingNewline ? '\n' : '';
+      const markdownText = `${leadingNewline}![](${imageUrl})\n`;
 
       view.dispatch({
         changes: { from, to, insert: markdownText },
@@ -187,4 +195,3 @@ export function useImageInsertion({
     handleImageAlertOpenChange,
   };
 }
-

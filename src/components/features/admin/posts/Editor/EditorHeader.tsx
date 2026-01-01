@@ -3,20 +3,54 @@
 import { CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { usePostEditor } from '@/contexts/admin/posts/PostEditorContext';
+import previewIcon from '@/assets/images/preview-icon.png';
+import editIcon from '@/assets/images/edit-icon.png';
+import Image from 'next/image';
 
 function EditorHeader() {
-  const { actions } = usePostEditor();
+  const { state, actions } = usePostEditor();
 
   return (
     <CardContent className="w-full h-20 p-4 flex items-center justify-between gap-4">
       <div className="flex items-center justify-start pl-10">
-        <Button
-          variant="outline"
-          className="w-30 rounded-full cursor-pointer"
+        <div
+          className="relative w-22 h-10 rounded-full bg-gray-300 flex items-center justify-between px-1"
           onClick={actions.togglePreview}
         >
-          preview
-        </Button>
+          <div
+            className={`absolute w-9 h-9 rounded-full bg-white transition-transform duration-300 ease-in-out ${
+              state.isPreview
+                ? 'translate-x-[calc(100%+0.6rem)]'
+                : 'translate-x-[-0.1rem]'
+            }`}
+          />
+          <div className="relative w-8 h-8 rounded-full flex items-center justify-center z-10">
+            <Image
+              src={editIcon}
+              alt="edit"
+              width={20}
+              height={20}
+              className={`${
+                state.isPreview
+                  ? 'opacity-40'
+                  : 'hover:cursor-pointer hover:opacity-60 duration-200'
+              }`}
+            />
+          </div>
+          <div className="relative w-8 h-8 rounded-full flex items-center justify-center z-10">
+            <Image
+              src={previewIcon}
+              alt="preview"
+              width={20}
+              height={20}
+              className={`${
+                state.isPreview
+                  ? 'hover:cursor-pointer hover:opacity-60 duration-200'
+                  : 'opacity-40'
+              }`}
+            />
+          </div>
+        </div>
       </div>
       <div className="flex items-center justify-end gap-4 pr-10">
         <Button

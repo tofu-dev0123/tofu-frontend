@@ -20,7 +20,7 @@ function MDContent({ className }: { className?: string }) {
     if (viewRef.current && ui.editorViewRef) {
       ui.editorViewRef.current = viewRef.current;
     }
-  }, [viewRef, ui.editorViewRef]);
+  }, [viewRef, ui.editorViewRef, state.isPreview]);
 
   return (
     <div className={cn('w-full flex-1 min-h-0 py-10', className)}>

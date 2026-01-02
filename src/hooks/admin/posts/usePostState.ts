@@ -14,6 +14,7 @@ import { useThumbnail } from './useThumbnail';
 import { useTags } from './useTags';
 import { useImageInsertion } from './useImageInsertion';
 import useErrorModal from '@/hooks/admin/common/useErrorModal';
+import useEmbedLink from './useEmbedLink';
 
 export function usePostState() {
   const errorModalHooks = useErrorModal();
@@ -29,6 +30,7 @@ export function usePostState() {
     editorViewRef,
     showError: errorModalHooks.showError,
   });
+  const embedLinkHooks = useEmbedLink();
 
   const state: PostEditorState = useMemo(
     () => ({
@@ -55,6 +57,10 @@ export function usePostState() {
       // 画像挿入情報
       isImageAlertOpen: imageInsertionHooks.isImageAlertOpen,
       imagePreviewUrl: imageInsertionHooks.previewImageUrl,
+
+      // 埋め込みリンク情報
+      isEmbedLinkOpen: embedLinkHooks.open,
+      cursorPosition: embedLinkHooks.cursorPosition,
     }),
     [
       postTitleHooks.title,
@@ -74,6 +80,8 @@ export function usePostState() {
       errorModalHooks.errorMessage,
       imageInsertionHooks.isImageAlertOpen,
       imageInsertionHooks.previewImageUrl,
+      embedLinkHooks.open,
+      embedLinkHooks.cursorPosition,
     ]
   );
 
@@ -129,6 +137,9 @@ export function usePostState() {
       handleCancelImageInsert: imageInsertionHooks.handleCancelImageInsert,
       handleImageAlertOpenChange:
         imageInsertionHooks.handleImageAlertOpenChange,
+      // 埋め込みリンク関連
+      handleOpenEmbedLink: embedLinkHooks.handleOpen,
+      handleCloseEmbedLink: embedLinkHooks.handleClose,
     }),
     [
       postTitleHooks.setTitle,
@@ -161,6 +172,9 @@ export function usePostState() {
       imageInsertionHooks.handleConfirmImageInsert,
       imageInsertionHooks.handleCancelImageInsert,
       imageInsertionHooks.handleImageAlertOpenChange,
+      // 埋め込みリンク関連
+      embedLinkHooks.handleOpen,
+      embedLinkHooks.handleClose,
     ]
   );
 

@@ -4,7 +4,7 @@ import { CardContent } from '@/components/ui/card';
 import Thumbnail from '@/components/features/admin/posts/Editor/Thumbnail';
 import PostTitle from '@/components/features/admin/posts/Editor/PostTitle';
 import Tag from '@/components/features/admin/posts/Editor/Tag';
-import MDContent from '@/components/features/admin/posts/Editor/MDContent';
+import Content from '@/components/features/admin/posts/Editor/Content';
 
 function EditorBody() {
   return (
@@ -12,7 +12,7 @@ function EditorBody() {
       <Thumbnail />
       <PostTitle />
       <Tag />
-      <MDContent className="flex-1" />
+      <Content className="flex-1" />
     </CardContent>
   );
 }

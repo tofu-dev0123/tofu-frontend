@@ -29,6 +29,10 @@ export interface PostEditorState {
   // 画像挿入情報
   isImageAlertOpen: boolean;
   imagePreviewUrl: string | null;
+
+  // 埋め込みリンク情報
+  isEmbedLinkOpen: boolean;
+  cursorPosition: { x: number; y: number };
 }
 
 export interface PostEditorActions {
@@ -59,6 +63,9 @@ export interface PostEditorActions {
   handleConfirmImageInsert: () => void;
   handleCancelImageInsert: () => void;
   handleImageAlertOpenChange: (open: boolean) => void;
+  // 埋め込みリンク関連
+  handleOpenEmbedLink: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  handleCloseEmbedLink: () => void;
 }
 
 export interface PostEditorUI {

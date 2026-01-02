@@ -72,6 +72,7 @@ function EditorHeader() {
             <input
               type="file"
               accept={IMAGE_ACCEPT_FORMATS}
+              // eslint-disable-next-line react-hooks/refs
               ref={ui.imageInputRef}
               onChange={actions.handleImageFileChange}
               className="hidden"

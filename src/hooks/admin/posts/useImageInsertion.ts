@@ -127,7 +127,10 @@ export function useImageInsertion({
       insertImageMarkdown(response.url);
 
       // 画像情報を追加
-      setImages([...images, { imageId: response.image_id, url: response.url }]);
+      setImages((prevImages) => [
+        ...prevImages,
+        { imageId: response.image_id, url: response.url },
+      ]);
 
       pendingFileRef.current = null;
 

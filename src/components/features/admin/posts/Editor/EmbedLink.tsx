@@ -11,9 +11,9 @@ interface EmbedLinkProps {
 }
 
 function EmbedLink({ open, onClose }: EmbedLinkProps) {
-  if (!open) return null;
-
   const { state, actions } = usePostEditor();
+
+  if (!open) return null;
 
   return (
     <Card

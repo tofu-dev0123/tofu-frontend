@@ -18,6 +18,7 @@ function MDContent({ className }: { className?: string }) {
   // viewRef を Context に接続
   useEffect(() => {
     if (viewRef.current && ui.editorViewRef) {
+      // eslint-disable-next-line react-hooks/immutability
       ui.editorViewRef.current = viewRef.current;
     }
   }, [viewRef, ui.editorViewRef, state.isPreview]);

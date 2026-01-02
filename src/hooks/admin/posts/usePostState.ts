@@ -105,7 +105,7 @@ export function usePostState() {
     postContentHooks.setContent('');
     thumbnailHooks.setThumbnailUrl(null);
     // tagsとisPreviewのリセットは、必要に応じて各フックにリセット機能を追加
-  }, [postTitleHooks.setTitle, postContentHooks.setContent, thumbnailHooks]);
+  }, [postTitleHooks, postContentHooks, thumbnailHooks]);
 
   const actions: PostEditorActions = useMemo(
     () => ({

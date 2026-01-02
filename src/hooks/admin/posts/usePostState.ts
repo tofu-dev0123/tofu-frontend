@@ -35,7 +35,9 @@ export function usePostState() {
     editorViewRef,
     showError: errorModalHooks.showError,
   });
-  const confirmModalHooks = useConfirmModal();
+  const confirmModalHooks = useConfirmModal({
+    showError: errorModalHooks.showError,
+  });
 
   const state: PostEditorState = useMemo(
     () => ({

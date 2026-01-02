@@ -93,7 +93,7 @@ function EditorHeader() {
           <div className="w-10 h-full rounded-full flex items-center justify-center">
             <button
               className="w-8 h-8 border border-gray-300 rounded-full flex items-center justify-center hover:cursor-pointer hover:opacity-60 duration-200"
-              onClick={actions.handleOpenConfirmModal}
+              onClick={() => console.log('draft')}
             >
               <Image src={draftIcon} alt="draft" width={18} height={18} />
             </button>
@@ -101,7 +101,14 @@ function EditorHeader() {
           <div className="w-10 h-full rounded-full flex items-center justify-center">
             <button
               className="w-8 h-8 border border-gray-300 rounded-full flex items-center justify-center hover:cursor-pointer hover:opacity-60 duration-200"
-              onClick={actions.handleOpenConfirmModal}
+              onClick={() =>
+                actions.handleOpenConfirmModal(
+                  state.thumbnailUrl ?? '',
+                  state.title,
+                  state.tags,
+                  state.content
+                )
+              }
             >
               <Image src={uploadIcon} alt="upload" width={18} height={18} />
             </button>

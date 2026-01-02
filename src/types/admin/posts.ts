@@ -72,7 +72,12 @@ export interface PostEditorActions {
   handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleInsert: () => void;
   // 確認モーダル関連
-  handleOpenConfirmModal: () => void;
+  handleOpenConfirmModal: (
+    thumbnailUrl: string,
+    title: string,
+    tags: string[],
+    content: string
+  ) => void;
   handleCloseConfirmModal: () => void;
 }
 

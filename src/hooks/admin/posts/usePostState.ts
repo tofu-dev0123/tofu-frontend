@@ -1,6 +1,7 @@
 'use client';
 
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo, useRef } from 'react';
+import { EditorView } from '@codemirror/view';
 import type {
   PostEditorState,
   PostEditorActions,
@@ -11,25 +12,36 @@ import { usePostTitle } from './usePostTitle';
 import { usePostContent } from './usePostContent';
 import { useThumbnail } from './useThumbnail';
 import { useTags } from './useTags';
+import { useImageInsertion } from './useImageInsertion';
 import useErrorModal from '@/hooks/admin/common/useErrorModal';
+import useEmbedLink from './useEmbedLink';
 
 export function usePostState() {
   const errorModalHooks = useErrorModal();
   const onClickPreviewHooks = useOnClickPreview();
-  const { title, setTitle } = usePostTitle();
-  const { content, setContent } = usePostContent();
+  const postTitleHooks = usePostTitle();
+  const postContentHooks = usePostContent();
   const thumbnailHooks = useThumbnail({
     showError: errorModalHooks.showError,
   });
   const tagsHooks = useTags();
+  const editorViewRef = useRef<EditorView | null>(null);
+  const imageInsertionHooks = useImageInsertion({
+    editorViewRef,
+    showError: errorModalHooks.showError,
+  });
+  const embedLinkHooks = useEmbedLink({
+    editorViewRef,
+    showError: errorModalHooks.showError,
+  });
 
   const state: PostEditorState = useMemo(
     () => ({
       // UI状態
       isPreview: onClickPreviewHooks.isPreview,
       // 基本情報
-      title,
-      content,
+      title: postTitleHooks.title,
+      content: postContentHooks.content,
       // サムネイル情報
       thumbnailUrl: thumbnailHooks.thumbnailUrl,
       imageId: thumbnailHooks.imageId,
@@ -45,10 +57,18 @@ export function usePostState() {
       // エラーモーダル情報
       isErrorModalOpen: errorModalHooks.isOpen,
       errorMessage: errorModalHooks.errorMessage,
+      // 画像挿入情報
+      isImageAlertOpen: imageInsertionHooks.isImageAlertOpen,
+      imagePreviewUrl: imageInsertionHooks.previewImageUrl,
+
+      // 埋め込みリンク情報
+      inputUrl: embedLinkHooks.inputUrl,
+      isEmbedLinkOpen: embedLinkHooks.open,
+      cursorPosition: embedLinkHooks.cursorPosition,
     }),
     [
-      title,
-      content,
+      postTitleHooks.title,
+      postContentHooks.content,
       thumbnailHooks.thumbnailUrl,
       thumbnailHooks.imageId,
       thumbnailHooks.altText,
@@ -62,6 +82,11 @@ export function usePostState() {
       onClickPreviewHooks.isPreview,
       errorModalHooks.isOpen,
       errorModalHooks.errorMessage,
+      imageInsertionHooks.isImageAlertOpen,
+      imageInsertionHooks.previewImageUrl,
+      embedLinkHooks.open,
+      embedLinkHooks.cursorPosition,
+      embedLinkHooks.inputUrl,
     ]
   );
 
@@ -76,11 +101,11 @@ export function usePostState() {
   }, [state]);
 
   const reset = useCallback(() => {
-    setTitle('');
-    setContent('');
+    postTitleHooks.setTitle('');
+    postContentHooks.setContent('');
     thumbnailHooks.setThumbnailUrl(null);
     // tagsとisPreviewのリセットは、必要に応じて各フックにリセット機能を追加
-  }, [setTitle, setContent, thumbnailHooks]);
+  }, [postTitleHooks, postContentHooks, thumbnailHooks]);
 
   const actions: PostEditorActions = useMemo(
     () => ({
@@ -100,8 +125,8 @@ export function usePostState() {
       handleCancelUpload: thumbnailHooks.handleCancelUpload,
       handleAlertOpenChange: thumbnailHooks.handleAlertOpenChange,
       // 基本情報関連
-      setTitle,
-      setContent,
+      setTitle: postTitleHooks.setTitle,
+      setContent: postContentHooks.setContent,
       togglePreview: onClickPreviewHooks.togglePreview,
       saveDraft,
       publish,
@@ -110,10 +135,22 @@ export function usePostState() {
       showError: errorModalHooks.showError,
       setIsOpen: errorModalHooks.setIsOpen,
       onClose: errorModalHooks.onClose,
+      // 画像挿入関連
+      handleImageIconClick: imageInsertionHooks.handleImageIconClick,
+      handleImageFileChange: imageInsertionHooks.handleImageFileChange,
+      handleConfirmImageInsert: imageInsertionHooks.handleConfirmImageInsert,
+      handleCancelImageInsert: imageInsertionHooks.handleCancelImageInsert,
+      handleImageAlertOpenChange:
+        imageInsertionHooks.handleImageAlertOpenChange,
+      // 埋め込みリンク関連
+      handleOpenEmbedLink: embedLinkHooks.handleOpen,
+      handleCloseEmbedLink: embedLinkHooks.handleClose,
+      handleInputChange: embedLinkHooks.handleInputChange,
+      handleInsert: embedLinkHooks.handleInsert,
     }),
     [
-      setTitle,
-      setContent,
+      postTitleHooks.setTitle,
+      postContentHooks.setContent,
       thumbnailHooks.setThumbnailUrl,
       thumbnailHooks.setImageId,
       thumbnailHooks.setAltText,
@@ -136,14 +173,27 @@ export function usePostState() {
       errorModalHooks.showError,
       errorModalHooks.setIsOpen,
       errorModalHooks.onClose,
+      // 画像挿入関連
+      imageInsertionHooks.handleImageIconClick,
+      imageInsertionHooks.handleImageFileChange,
+      imageInsertionHooks.handleConfirmImageInsert,
+      imageInsertionHooks.handleCancelImageInsert,
+      imageInsertionHooks.handleImageAlertOpenChange,
+      // 埋め込みリンク関連
+      embedLinkHooks.handleOpen,
+      embedLinkHooks.handleClose,
+      embedLinkHooks.handleInputChange,
+      embedLinkHooks.handleInsert,
     ]
   );
 
   const ui: PostEditorUI = useMemo(
     () => ({
       thumbnailInputRef: thumbnailHooks.thumbnailInputRef,
+      imageInputRef: imageInsertionHooks.imageInputRef,
+      editorViewRef,
     }),
-    [thumbnailHooks.thumbnailInputRef]
+    [thumbnailHooks.thumbnailInputRef, imageInsertionHooks.imageInputRef]
   );
 
   return {

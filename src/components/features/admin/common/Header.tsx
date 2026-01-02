@@ -27,11 +27,13 @@ function Header({
   return (
     <header className="w-full h-16 bg-white shadow">
       <div className="h-full flex justify-between items-center px-4">
-        <div
-          className="flex items-center cursor-pointer gap-4"
-          onClick={handleClickLogo}
-        >
-          <span className="text-2xl font-bold">Tofu Blog</span>
+        <div className="flex items-center cursor-pointer gap-4">
+          <span
+            className="text-2xl font-bold cursor-pointer"
+            onClick={handleClickLogo}
+          >
+            Tofu Blog
+          </span>
           {loginFlag && (
             <div className="flex items-center" onClick={handleClickMenu}>
               <Image

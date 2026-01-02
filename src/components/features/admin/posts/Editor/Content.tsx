@@ -1,13 +1,27 @@
 'use client';
 
-import TextareaAutosize from 'react-textarea-autosize';
+import { useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { usePostEditor } from '@/contexts/admin/posts/PostEditorContext';
 import { cn } from '@/lib/utils';
+import { useMarkdownEditor } from '@/hooks/admin/editor/useMarkdownEditor';
 
 function MDContent({ className }: { className?: string }) {
-  const { state, actions } = usePostEditor();
+  const { state, actions, ui } = usePostEditor();
+  const { containerRef, viewRef } = useMarkdownEditor(
+    state.content,
+    actions.setContent,
+    state.isPreview
+  );
+
+  // viewRef を Context に接続
+  useEffect(() => {
+    if (viewRef.current && ui.editorViewRef) {
+      // eslint-disable-next-line react-hooks/immutability
+      ui.editorViewRef.current = viewRef.current;
+    }
+  }, [viewRef, ui.editorViewRef, state.isPreview]);
 
   return (
     <div className={cn('w-full flex-1 min-h-0 py-10', className)}>
@@ -18,13 +32,7 @@ function MDContent({ className }: { className?: string }) {
           </ReactMarkdown>
         </article>
       ) : (
-        <TextareaAutosize
-          minRows={20}
-          placeholder="本文"
-          className="w-full h-full text-md font-bold border-none focus:outline-none resize-none placeholder:text-gray-400"
-          value={state.content}
-          onChange={(e) => actions.setContent(e.target.value)}
-        />
+        <div ref={containerRef} className="w-full h-full" />
       )}
     </div>
   );

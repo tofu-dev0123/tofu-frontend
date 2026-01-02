@@ -14,3 +14,9 @@ export const THUMBNAIL_ACCEPT_FORMATS = '.jpeg,.png,.jpg' as const;
  * 5MB = 5 * 1024 * 1024 バイト
  */
 export const THUMBNAIL_MAX_FILE_SIZE = 5 * 1024 * 1024;
+
+/**
+ * 画像挿入で許可するファイル形式
+ * HTMLのaccept属性で使用する形式を指定
+ */
+export const IMAGE_ACCEPT_FORMATS = '.jpeg,.png,.jpg' as const;

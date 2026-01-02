@@ -30,7 +30,10 @@ export function usePostState() {
     editorViewRef,
     showError: errorModalHooks.showError,
   });
-  const embedLinkHooks = useEmbedLink();
+  const embedLinkHooks = useEmbedLink({
+    editorViewRef,
+    showError: errorModalHooks.showError,
+  });
 
   const state: PostEditorState = useMemo(
     () => ({
@@ -59,6 +62,7 @@ export function usePostState() {
       imagePreviewUrl: imageInsertionHooks.previewImageUrl,
 
       // 埋め込みリンク情報
+      inputUrl: embedLinkHooks.inputUrl,
       isEmbedLinkOpen: embedLinkHooks.open,
       cursorPosition: embedLinkHooks.cursorPosition,
     }),
@@ -82,6 +86,7 @@ export function usePostState() {
       imageInsertionHooks.previewImageUrl,
       embedLinkHooks.open,
       embedLinkHooks.cursorPosition,
+      embedLinkHooks.inputUrl,
     ]
   );
 
@@ -140,6 +145,8 @@ export function usePostState() {
       // 埋め込みリンク関連
       handleOpenEmbedLink: embedLinkHooks.handleOpen,
       handleCloseEmbedLink: embedLinkHooks.handleClose,
+      handleInputChange: embedLinkHooks.handleInputChange,
+      handleInsert: embedLinkHooks.handleInsert,
     }),
     [
       postTitleHooks.setTitle,
@@ -175,6 +182,8 @@ export function usePostState() {
       // 埋め込みリンク関連
       embedLinkHooks.handleOpen,
       embedLinkHooks.handleClose,
+      embedLinkHooks.handleInputChange,
+      embedLinkHooks.handleInsert,
     ]
   );
 

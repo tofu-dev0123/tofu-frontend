@@ -31,6 +31,7 @@ export interface PostEditorState {
   imagePreviewUrl: string | null;
 
   // 埋め込みリンク情報
+  inputUrl: string;
   isEmbedLinkOpen: boolean;
   cursorPosition: { x: number; y: number };
 }
@@ -66,6 +67,8 @@ export interface PostEditorActions {
   // 埋め込みリンク関連
   handleOpenEmbedLink: (e: React.MouseEvent<HTMLButtonElement>) => void;
   handleCloseEmbedLink: () => void;
+  handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleInsert: () => void;
 }
 
 export interface PostEditorUI {

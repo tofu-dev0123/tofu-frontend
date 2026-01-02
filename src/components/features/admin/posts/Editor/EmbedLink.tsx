@@ -11,12 +11,13 @@ interface EmbedLinkProps {
 }
 
 function EmbedLink({ open, onClose }: EmbedLinkProps) {
-  const { state } = usePostEditor();
   if (!open) return null;
+
+  const { state, actions } = usePostEditor();
 
   return (
     <Card
-      className="w-80 h-12 flex items-center justify-start gap-2 border border-gray-200 shadow p-2 absolute"
+      className="w-80 h-12 flex items-center justify-start border border-gray-200 shadow p-2 absolute"
       style={{
         top: state.cursorPosition.y,
         left: state.cursorPosition.x,
@@ -27,8 +28,15 @@ function EmbedLink({ open, onClose }: EmbedLinkProps) {
         type="url"
         placeholder="URLを入力してください"
         className="w-full shadow-none border-none"
+        value={state.inputUrl}
+        onChange={actions.handleInputChange}
       />
-      <Button className="w-12 h-8 cursor-pointer mx-2">挿入</Button>
+      <Button
+        className="w-12 h-8 cursor-pointer mx-2"
+        onClick={actions.handleInsert}
+      >
+        挿入
+      </Button>
       <Image
         src={addGreyIcon}
         alt="追加"

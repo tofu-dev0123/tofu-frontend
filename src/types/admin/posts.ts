@@ -34,9 +34,13 @@ export interface PostEditorState {
   inputUrl: string;
   isEmbedLinkOpen: boolean;
   cursorPosition: { x: number; y: number };
+
+  // 確認モーダル情報
+  isConfirmModalOpen: boolean;
 }
 
 export interface PostEditorActions {
+  // 基本情報関連
   setTitle: (title: string) => void;
   setContent: (content: string) => void;
   setThumbnailUrl: (url: string | null) => void;
@@ -46,8 +50,6 @@ export interface PostEditorActions {
   removeTag: (tag: string) => void;
   setInputValue: (value: string) => void;
   togglePreview: () => void;
-  saveDraft: () => void;
-  publish: () => void;
   reset: () => void;
   handleThumbnailClick: () => void;
   handleFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -69,6 +71,9 @@ export interface PostEditorActions {
   handleCloseEmbedLink: () => void;
   handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleInsert: () => void;
+  // 確認モーダル関連
+  handleOpenConfirmModal: () => void;
+  handleCloseConfirmModal: () => void;
 }
 
 export interface PostEditorUI {

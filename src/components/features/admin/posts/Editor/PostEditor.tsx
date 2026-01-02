@@ -6,6 +6,7 @@ import EditorBody from '@/components/features/admin/posts/Editor/EditorBody';
 import ErrorModal from '@/components/features/admin/common/ErrorModal';
 import Alert from '@/components/features/admin/common/Alert';
 import { usePostEditor } from '@/contexts/admin/posts/PostEditorContext';
+import ConfirmModal from '@/components/features/admin/posts/ConfirmModal';
 
 function PostEditor() {
   const { state, actions } = usePostEditor();
@@ -31,6 +32,12 @@ function PostEditor() {
         onCancel={actions.handleCancelImageInsert}
         onAction={actions.handleConfirmImageInsert}
         previewImageUrl={state.imagePreviewUrl}
+      />
+      <ConfirmModal
+        isOpen={state.isConfirmModalOpen}
+        onClose={actions.handleCloseConfirmModal}
+        title={state.title}
+        tags={state.tags}
       />
     </div>
   );

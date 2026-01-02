@@ -29,4 +29,3 @@ export const editorTheme = EditorView.baseTheme({
     fontFamily: 'inherit', // 他の部分と同じフォントを継承
   },
 });
-

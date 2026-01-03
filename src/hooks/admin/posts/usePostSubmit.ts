@@ -40,7 +40,6 @@ function usePostSubmit({ showError }: UsePostSubmitProps) {
       const request: PostRequest = {
         title: state.title,
         content_md: state.content,
-        content_html: state.content,
         thumbnail_url: state.thumbnailUrl,
         status: status,
         images: registerImages,

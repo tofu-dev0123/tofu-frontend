@@ -21,7 +21,6 @@ export type PostResponse = {
 export type PostRequest = {
   title: string;
   content_md: string;
-  content_html: string;
   thumbnail_url: string | null;
   status: PostStatus;
   images: number[];

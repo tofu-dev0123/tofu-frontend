@@ -1,7 +1,6 @@
 'use client';
 
 import { CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import { usePostEditor } from '@/contexts/admin/posts/PostEditorContext';
 import previewIcon from '@/assets/images/preview-icon.png';
 import editIcon from '@/assets/images/edit-icon.png';
@@ -12,6 +11,7 @@ import draftIcon from '@/assets/images/draft-icon.png';
 import Image from 'next/image';
 import { IMAGE_ACCEPT_FORMATS } from '@/constants/admin/fileFormats';
 import EmbedLink from '@/components/features/admin/posts/Editor/EmbedLink';
+import { PostStatus } from '@/types/api/post';
 
 function EditorHeader() {
   const { state, actions, ui } = usePostEditor();
@@ -93,7 +93,7 @@ function EditorHeader() {
           <div className="w-10 h-full rounded-full flex items-center justify-center">
             <button
               className="w-8 h-8 border border-gray-300 rounded-full flex items-center justify-center hover:cursor-pointer hover:opacity-60 duration-200"
-              onClick={() => console.log('draft')}
+              onClick={() => actions.handleSubmit(state, 'DRAFT' as PostStatus)}
             >
               <Image src={draftIcon} alt="draft" width={18} height={18} />
             </button>

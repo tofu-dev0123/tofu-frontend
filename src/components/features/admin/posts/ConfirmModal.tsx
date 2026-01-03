@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import confirmIcon from '@/assets/images/confirm-icon.png';
 import Image from 'next/image';
 import { usePostEditor } from '@/contexts/admin/posts/PostEditorContext';
+import { PostStatus } from '@/types/api/post';
 
 interface ConfirmModalProps {
   isOpen: boolean;
@@ -69,7 +70,9 @@ function ConfirmModal({ isOpen, onClose, title, tags }: ConfirmModalProps) {
           </Button>
           <Button
             className="w-30 rounded-full bg-admin-main text-white cursor-pointer shadow-none hover:bg-admin-main/90 hover:text-white"
-            onClick={() => actions.handleSubmit(state, 'PUBLISHED')}
+            onClick={() =>
+              actions.handleSubmit(state, 'PUBLISHED' as PostStatus)
+            }
           >
             公開
           </Button>

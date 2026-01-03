@@ -6,6 +6,7 @@ import { exceptErrorHandling } from '@/lib/utils/exceptErrorHandling';
 import { useRouter } from 'next/navigation';
 import { PostEditorState } from '@/types/admin/posts';
 import { ImagesDeleteResponse } from '@/types/api/imagesDelete';
+import { useToastStore } from '@/stores/toastStore';
 
 interface UsePostSubmitProps {
   showError: (message: string[]) => void;
@@ -49,6 +50,16 @@ function usePostSubmit({ showError }: UsePostSubmitProps) {
       try {
         // 投稿を作成
         await post<PostResponse>(API_ENDPOINTS.posts.post, request);
+
+        // トーストを表示
+        const message =
+          status === 'PUBLISHED'
+            ? '記事を公開しました'
+            : '下書きに保存しました';
+        useToastStore.getState().show({
+          type: 'success',
+          message: message,
+        });
 
         // 投稿を作成したら、投稿一覧ページにリダイレクト
         router.push('/admin/home');

@@ -16,6 +16,7 @@ import { useImageInsertion } from './useImageInsertion';
 import useErrorModal from '@/hooks/admin/common/useErrorModal';
 import useEmbedLink from './useEmbedLink';
 import useConfirmModal from './useConfirmModal';
+import usePostSubmit from './usePostSubmit';
 
 export function usePostState() {
   const errorModalHooks = useErrorModal();
@@ -38,11 +39,15 @@ export function usePostState() {
   const confirmModalHooks = useConfirmModal({
     showError: errorModalHooks.showError,
   });
+  const postSubmitHooks = usePostSubmit({
+    showError: errorModalHooks.showError,
+  });
 
   const state: PostEditorState = useMemo(
     () => ({
       // UI状態
       isPreview: onClickPreviewHooks.isPreview,
+      isSubmitLoading: postSubmitHooks.isLoading,
       // 基本情報
       title: postTitleHooks.title,
       content: postContentHooks.content,
@@ -50,7 +55,7 @@ export function usePostState() {
       thumbnailUrl: thumbnailHooks.thumbnailUrl,
       imageId: thumbnailHooks.imageId,
       altText: thumbnailHooks.altText,
-      isLoading: thumbnailHooks.isLoading,
+      isThumbnailLoading: thumbnailHooks.isLoading,
       progress: thumbnailHooks.progress,
       loadingType: thumbnailHooks.loadingType,
       isAlertOpen: thumbnailHooks.isAlertOpen,
@@ -62,6 +67,7 @@ export function usePostState() {
       isErrorModalOpen: errorModalHooks.isOpen,
       errorMessage: errorModalHooks.errorMessage,
       // 画像挿入情報
+      images: imageInsertionHooks.images,
       isImageAlertOpen: imageInsertionHooks.isImageAlertOpen,
       imagePreviewUrl: imageInsertionHooks.previewImageUrl,
 
@@ -71,8 +77,11 @@ export function usePostState() {
       cursorPosition: embedLinkHooks.cursorPosition,
       // 確認モーダル情報
       isConfirmModalOpen: confirmModalHooks.isOpen,
+      attachedImages: confirmModalHooks.attachedImages,
     }),
     [
+      onClickPreviewHooks.isPreview,
+      postSubmitHooks.isLoading,
       postTitleHooks.title,
       postContentHooks.content,
       thumbnailHooks.thumbnailUrl,
@@ -85,15 +94,16 @@ export function usePostState() {
       thumbnailHooks.previewImageUrl,
       tagsHooks.tags,
       tagsHooks.inputValue,
-      onClickPreviewHooks.isPreview,
       errorModalHooks.isOpen,
       errorModalHooks.errorMessage,
+      imageInsertionHooks.images,
       imageInsertionHooks.isImageAlertOpen,
       imageInsertionHooks.previewImageUrl,
       embedLinkHooks.open,
       embedLinkHooks.cursorPosition,
       embedLinkHooks.inputUrl,
       confirmModalHooks.isOpen,
+      confirmModalHooks.attachedImages,
     ]
   );
 
@@ -145,6 +155,8 @@ export function usePostState() {
       // 確認モーダル関連
       handleOpenConfirmModal: confirmModalHooks.onOpen,
       handleCloseConfirmModal: confirmModalHooks.onClose,
+      // 投稿送信関連
+      handleSubmit: postSubmitHooks.onSubmit,
     }),
     [
       // 基本情報関連
@@ -184,6 +196,8 @@ export function usePostState() {
       // 確認モーダル関連
       confirmModalHooks.onOpen,
       confirmModalHooks.onClose,
+      // 投稿送信関連
+      postSubmitHooks.onSubmit,
     ]
   );
 

@@ -10,6 +10,7 @@ import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import confirmIcon from '@/assets/images/confirm-icon.png';
 import Image from 'next/image';
+import { usePostEditor } from '@/contexts/admin/posts/PostEditorContext';
 
 interface ConfirmModalProps {
   isOpen: boolean;
@@ -19,6 +20,7 @@ interface ConfirmModalProps {
 }
 
 function ConfirmModal({ isOpen, onClose, title, tags }: ConfirmModalProps) {
+  const { actions, state } = usePostEditor();
   if (!isOpen) return null;
 
   const handleClose = () => {
@@ -67,7 +69,10 @@ function ConfirmModal({ isOpen, onClose, title, tags }: ConfirmModalProps) {
           >
             戻る
           </Button>
-          <Button className="w-30 rounded-full bg-admin-main text-white cursor-pointer shadow-none hover:bg-admin-main/90 hover:text-white">
+          <Button
+            className="w-30 rounded-full bg-admin-main text-white cursor-pointer shadow-none hover:bg-admin-main/90 hover:text-white"
+            onClick={() => actions.handleSubmit(state, 'PUBLISHED')}
+          >
             公開
           </Button>
         </CardFooter>

@@ -1,9 +1,12 @@
 import type { RefObject } from 'react';
 import type { EditorView } from '@codemirror/view';
+import type { ImageInsertionState } from '@/hooks/admin/posts/useImageInsertion';
+import type { PostStatus } from '@/types/api/post';
 
 export interface PostEditorState {
   // UI状態
   isPreview: boolean;
+  isSubmitLoading: boolean;
   // 基本情報
   title: string;
   content: string;
@@ -12,7 +15,7 @@ export interface PostEditorState {
   thumbnailUrl: string | null;
   imageId: number | null;
   altText: string | null;
-  isLoading: boolean;
+  isThumbnailLoading: boolean;
   progress: number;
   loadingType: 'upload' | 'delete' | null;
   isAlertOpen: boolean;
@@ -27,6 +30,7 @@ export interface PostEditorState {
   errorMessage: string[];
 
   // 画像挿入情報
+  images: ImageInsertionState[];
   isImageAlertOpen: boolean;
   imagePreviewUrl: string | null;
 
@@ -37,6 +41,7 @@ export interface PostEditorState {
 
   // 確認モーダル情報
   isConfirmModalOpen: boolean;
+  attachedImages: string[];
 }
 
 export interface PostEditorActions {
@@ -79,6 +84,8 @@ export interface PostEditorActions {
     content: string
   ) => void;
   handleCloseConfirmModal: () => void;
+  // 投稿送信関連
+  handleSubmit: (state: PostEditorState, status: PostStatus) => void;
 }
 
 export interface PostEditorUI {

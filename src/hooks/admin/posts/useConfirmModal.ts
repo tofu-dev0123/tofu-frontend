@@ -40,7 +40,7 @@ function useConfirmModal({ showError }: UseConfirmModalProps) {
     setIsOpen(false);
   }, []);
 
-  return { isOpen, onOpen, onClose };
+  return { isOpen, attachedImages, onOpen, onClose };
 }
 
 export default useConfirmModal;

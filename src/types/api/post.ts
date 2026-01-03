@@ -1,4 +1,4 @@
-export type PostStatus = 'draft' | 'published';
+export type PostStatus = 'DRAFT' | 'PUBLISHED';
 
 export type Post = {
   post_id: number;
@@ -16,4 +16,14 @@ export type PostResponse = {
   total_count: number;
   total_pages: number;
   posts: Post[];
+};
+
+export type PostRequest = {
+  title: string;
+  content_md: string;
+  content_html: string;
+  thumbnail_url: string | null;
+  status: PostStatus;
+  images: number[];
+  tags: string[];
 };

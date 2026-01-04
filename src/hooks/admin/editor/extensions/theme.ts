@@ -7,6 +7,7 @@ export const editorTheme = EditorView.baseTheme({
     height: '100%',
     fontFamily: 'inherit', // 他の部分と同じフォントを継承
     letterSpacing: '0.05em', // 文字間隔を少し広げる
+    fontSize: '1rem',
   },
   '&.cm-editor.cm-focused': {
     outline: 'none',

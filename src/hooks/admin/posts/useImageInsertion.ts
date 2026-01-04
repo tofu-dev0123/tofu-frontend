@@ -15,7 +15,7 @@ interface UseImageInsertionProps {
   showError: (message: string[]) => void;
 }
 
-interface ImageInsertionState {
+export interface ImageInsertionState {
   imageId: number;
   url: string;
 }

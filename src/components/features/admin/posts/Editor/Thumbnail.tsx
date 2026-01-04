@@ -15,7 +15,7 @@ function Thumbnail() {
   return (
     <CardContent className="w-full h-80 p-4 flex items-center justify-center">
       <div className="w-full h-full rounded-lg relative">
-        {!state.isLoading && state.thumbnailUrl && (
+        {!state.isThumbnailLoading && state.thumbnailUrl && (
           <>
             <Image
               src={state.thumbnailUrl}
@@ -34,7 +34,7 @@ function Thumbnail() {
             />
           </>
         )}
-        {!state.isLoading && !state.thumbnailUrl && (
+        {!state.isThumbnailLoading && !state.thumbnailUrl && (
           <Image
             src={thumbnailIcon}
             alt="thumbnail"
@@ -44,7 +44,7 @@ function Thumbnail() {
             onClick={actions.handleThumbnailClick}
           />
         )}
-        {state.isLoading && (
+        {state.isThumbnailLoading && (
           <div className="absolute inset-0 rounded-lg flex flex-col items-center justify-center z-10">
             <Progress value={state.progress} className="w-3/4 mb-4" />
             <span className="text-sm">
@@ -61,7 +61,7 @@ function Thumbnail() {
           className="hidden"
           accept={THUMBNAIL_ACCEPT_FORMATS}
           onChange={actions.handleFileChange}
-          disabled={state.isLoading}
+          disabled={state.isThumbnailLoading}
         />
       </div>
       <Alert

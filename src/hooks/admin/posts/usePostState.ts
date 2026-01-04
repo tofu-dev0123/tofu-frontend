@@ -15,6 +15,8 @@ import { useTags } from './useTags';
 import { useImageInsertion } from './useImageInsertion';
 import useErrorModal from '@/hooks/admin/common/useErrorModal';
 import useEmbedLink from './useEmbedLink';
+import useConfirmModal from './useConfirmModal';
+import usePostSubmit from './usePostSubmit';
 
 export function usePostState() {
   const errorModalHooks = useErrorModal();
@@ -34,11 +36,18 @@ export function usePostState() {
     editorViewRef,
     showError: errorModalHooks.showError,
   });
+  const confirmModalHooks = useConfirmModal({
+    showError: errorModalHooks.showError,
+  });
+  const postSubmitHooks = usePostSubmit({
+    showError: errorModalHooks.showError,
+  });
 
   const state: PostEditorState = useMemo(
     () => ({
       // UI状態
       isPreview: onClickPreviewHooks.isPreview,
+      isSubmitLoading: postSubmitHooks.isLoading,
       // 基本情報
       title: postTitleHooks.title,
       content: postContentHooks.content,
@@ -46,7 +55,7 @@ export function usePostState() {
       thumbnailUrl: thumbnailHooks.thumbnailUrl,
       imageId: thumbnailHooks.imageId,
       altText: thumbnailHooks.altText,
-      isLoading: thumbnailHooks.isLoading,
+      isThumbnailLoading: thumbnailHooks.isLoading,
       progress: thumbnailHooks.progress,
       loadingType: thumbnailHooks.loadingType,
       isAlertOpen: thumbnailHooks.isAlertOpen,
@@ -58,6 +67,7 @@ export function usePostState() {
       isErrorModalOpen: errorModalHooks.isOpen,
       errorMessage: errorModalHooks.errorMessage,
       // 画像挿入情報
+      images: imageInsertionHooks.images,
       isImageAlertOpen: imageInsertionHooks.isImageAlertOpen,
       imagePreviewUrl: imageInsertionHooks.previewImageUrl,
 
@@ -65,8 +75,13 @@ export function usePostState() {
       inputUrl: embedLinkHooks.inputUrl,
       isEmbedLinkOpen: embedLinkHooks.open,
       cursorPosition: embedLinkHooks.cursorPosition,
+      // 確認モーダル情報
+      isConfirmModalOpen: confirmModalHooks.isOpen,
+      attachedImages: confirmModalHooks.attachedImages,
     }),
     [
+      onClickPreviewHooks.isPreview,
+      postSubmitHooks.isLoading,
       postTitleHooks.title,
       postContentHooks.content,
       thumbnailHooks.thumbnailUrl,
@@ -79,26 +94,18 @@ export function usePostState() {
       thumbnailHooks.previewImageUrl,
       tagsHooks.tags,
       tagsHooks.inputValue,
-      onClickPreviewHooks.isPreview,
       errorModalHooks.isOpen,
       errorModalHooks.errorMessage,
+      imageInsertionHooks.images,
       imageInsertionHooks.isImageAlertOpen,
       imageInsertionHooks.previewImageUrl,
       embedLinkHooks.open,
       embedLinkHooks.cursorPosition,
       embedLinkHooks.inputUrl,
+      confirmModalHooks.isOpen,
+      confirmModalHooks.attachedImages,
     ]
   );
-
-  const saveDraft = useCallback(() => {
-    console.log('save draft', state);
-    // TODO: API連携を実装
-  }, [state]);
-
-  const publish = useCallback(() => {
-    console.log('publish', state);
-    // TODO: API連携を実装
-  }, [state]);
 
   const reset = useCallback(() => {
     postTitleHooks.setTitle('');
@@ -128,8 +135,6 @@ export function usePostState() {
       setTitle: postTitleHooks.setTitle,
       setContent: postContentHooks.setContent,
       togglePreview: onClickPreviewHooks.togglePreview,
-      saveDraft,
-      publish,
       reset,
       // エラーモーダル関連
       showError: errorModalHooks.showError,
@@ -147,16 +152,20 @@ export function usePostState() {
       handleCloseEmbedLink: embedLinkHooks.handleClose,
       handleInputChange: embedLinkHooks.handleInputChange,
       handleInsert: embedLinkHooks.handleInsert,
+      // 確認モーダル関連
+      handleOpenConfirmModal: confirmModalHooks.onOpen,
+      handleCloseConfirmModal: confirmModalHooks.onClose,
+      // 投稿送信関連
+      handleSubmit: postSubmitHooks.onSubmit,
     }),
     [
+      // 基本情報関連
       postTitleHooks.setTitle,
       postContentHooks.setContent,
       thumbnailHooks.setThumbnailUrl,
       thumbnailHooks.setImageId,
       thumbnailHooks.setAltText,
       onClickPreviewHooks.togglePreview,
-      saveDraft,
-      publish,
       reset,
       // タグ関連
       tagsHooks.addTag,
@@ -184,6 +193,11 @@ export function usePostState() {
       embedLinkHooks.handleClose,
       embedLinkHooks.handleInputChange,
       embedLinkHooks.handleInsert,
+      // 確認モーダル関連
+      confirmModalHooks.onOpen,
+      confirmModalHooks.onClose,
+      // 投稿送信関連
+      postSubmitHooks.onSubmit,
     ]
   );
 

@@ -20,3 +20,9 @@ export const THUMBNAIL_MAX_FILE_SIZE = 5 * 1024 * 1024;
  * HTMLのaccept属性で使用する形式を指定
  */
 export const IMAGE_ACCEPT_FORMATS = '.jpeg,.png,.jpg' as const;
+
+/**
+ * 投稿の最大文字数
+ * 100000文字
+ */
+export const POST_MAX_CHARACTERS = 100000;

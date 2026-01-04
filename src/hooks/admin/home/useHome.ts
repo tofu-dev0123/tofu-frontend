@@ -5,6 +5,7 @@ import usePostList from '@/hooks/admin/home/usePostList';
 import { useEffect } from 'react';
 import useErrorModal from '@/hooks/admin/common/useErrorModal';
 import { useRouter } from 'next/navigation';
+import { PostStatus } from '@/types/api/post';
 
 function useHome() {
   const router = useRouter();
@@ -29,7 +30,7 @@ function useHome() {
   useEffect(() => {
     // 初期処理
     getSummary();
-    getPostList({ limit: 6 });
+    getPostList({ limit: 6, status: 'PUBLISHED' as PostStatus });
   }, [getSummary, getPostList]);
 
   return {

@@ -7,7 +7,7 @@ export const API_ENDPOINTS = {
   },
   posts: {
     get: '/admin/posts/',
-    post: '/admin/posts',
+    post: '/admin/posts/',
     put: (id: number) => `/admin/posts/${id}`,
     delete: (id: number) => `/admin/posts/${id}`,
   },

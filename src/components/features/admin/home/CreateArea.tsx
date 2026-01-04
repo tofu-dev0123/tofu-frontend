@@ -15,7 +15,9 @@ function CreateArea({ handleClickCreate }: CreateAreaProps) {
           className="flex items-center justify-center"
           onClick={handleClickCreate}
         >
-          <Image src={addIcon} alt="追加" width={40} height={40} />
+          <button className="hover:cursor-pointer hover:opacity-60 hover:scale-110 duration-200">
+            <Image src={addIcon} alt="追加" width={40} height={40} />
+          </button>
         </div>
       </CardContent>
     </Card>

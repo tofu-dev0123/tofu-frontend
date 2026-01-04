@@ -12,11 +12,11 @@ function PostsListArea({ postList }: PostsListAreaProps) {
       <CardHeader>
         <CardTitle className="text-lg font-medium py-4">最近の投稿</CardTitle>
       </CardHeader>
-      <CardContent className="grid grid-cols-3">
+      <CardContent className="grid grid-cols-3 gap-2">
         {postList.map((post) => (
           <div
             key={post.post_id}
-            className="col-span-1 flex flex-col justify-center items-center gap-4 mb-4"
+            className="col-span-1 flex flex-col justify-start items-center mb-4 p-1 border border-white rounded-md"
           >
             <Post key={post.post_id} post={post} />
           </div>

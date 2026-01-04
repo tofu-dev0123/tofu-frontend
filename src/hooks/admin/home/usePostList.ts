@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useCallback } from 'react';
-import type { Post, PostResponse } from '@/types/api/post';
+import type { Post, PostResponse, PostStatus } from '@/types/api/post';
 import { get } from '@/lib/api/http';
 import { API_ENDPOINTS } from '@/lib/api/endpoint';
 import { exceptErrorHandling } from '@/lib/utils/exceptErrorHandling';
@@ -16,13 +16,19 @@ function usePostList({ showError }: UsePostListProps) {
   const [totalPages, setTotalPages] = useState<number>(0);
 
   const getPostList = useCallback(
-    async (params: { offset?: number; limit?: number; keyword?: string }) => {
-      const { offset, limit, keyword } = params;
+    async (params: {
+      offset?: number;
+      limit?: number;
+      keyword?: string;
+      status?: PostStatus;
+    }) => {
+      const { offset, limit, keyword, status } = params;
       const queryParams = new URLSearchParams();
 
       if (offset) queryParams.append('offset', offset.toString());
       if (limit) queryParams.append('limit', limit.toString());
       if (keyword) queryParams.append('keyword', keyword);
+      if (status) queryParams.append('status', status);
 
       try {
         const response = await get<PostResponse>(

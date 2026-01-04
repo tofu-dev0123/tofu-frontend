@@ -1,9 +1,12 @@
 import type { RefObject } from 'react';
 import type { EditorView } from '@codemirror/view';
+import type { ImageInsertionState } from '@/hooks/admin/posts/useImageInsertion';
+import type { PostStatus } from '@/types/api/post';
 
 export interface PostEditorState {
   // UI状態
   isPreview: boolean;
+  isSubmitLoading: boolean;
   // 基本情報
   title: string;
   content: string;
@@ -12,7 +15,7 @@ export interface PostEditorState {
   thumbnailUrl: string | null;
   imageId: number | null;
   altText: string | null;
-  isLoading: boolean;
+  isThumbnailLoading: boolean;
   progress: number;
   loadingType: 'upload' | 'delete' | null;
   isAlertOpen: boolean;
@@ -27,6 +30,7 @@ export interface PostEditorState {
   errorMessage: string[];
 
   // 画像挿入情報
+  images: ImageInsertionState[];
   isImageAlertOpen: boolean;
   imagePreviewUrl: string | null;
 
@@ -34,9 +38,14 @@ export interface PostEditorState {
   inputUrl: string;
   isEmbedLinkOpen: boolean;
   cursorPosition: { x: number; y: number };
+
+  // 確認モーダル情報
+  isConfirmModalOpen: boolean;
+  attachedImages: string[];
 }
 
 export interface PostEditorActions {
+  // 基本情報関連
   setTitle: (title: string) => void;
   setContent: (content: string) => void;
   setThumbnailUrl: (url: string | null) => void;
@@ -46,8 +55,6 @@ export interface PostEditorActions {
   removeTag: (tag: string) => void;
   setInputValue: (value: string) => void;
   togglePreview: () => void;
-  saveDraft: () => void;
-  publish: () => void;
   reset: () => void;
   handleThumbnailClick: () => void;
   handleFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -69,6 +76,16 @@ export interface PostEditorActions {
   handleCloseEmbedLink: () => void;
   handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleInsert: () => void;
+  // 確認モーダル関連
+  handleOpenConfirmModal: (
+    thumbnailUrl: string,
+    title: string,
+    tags: string[],
+    content: string
+  ) => void;
+  handleCloseConfirmModal: () => void;
+  // 投稿送信関連
+  handleSubmit: (state: PostEditorState, status: PostStatus) => void;
 }
 
 export interface PostEditorUI {

@@ -22,13 +22,11 @@ function useLoginForm() {
   const [errorMessage, setErrorMessage] = useState<string[]>([]);
 
   // ログイン処理
-  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
+  const onSubmit = async (data: LoginForm) => {
     setErrorMessage([]);
     const request: LoginRequest = {
-      username: formHook.getValues('username'),
-      password: formHook.getValues('password'),
+      username: data.username,
+      password: data.password,
     };
     try {
       const response = await post<LoginResponse>(
@@ -55,7 +53,7 @@ function useLoginForm() {
 
   return {
     formHook,
-    onSubmit,
+    onSubmit: formHook.handleSubmit(onSubmit),
     errorMessage,
   };
 }

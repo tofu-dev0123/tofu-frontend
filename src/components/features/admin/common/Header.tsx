@@ -59,11 +59,15 @@ function Header({
                 </InputGroupAddon>
               </InputGroup>
             </div>
-            <div
-              className="flex items-center cursor-pointer"
-              onClick={handleClickLogout}
-            >
-              <Image src={logoutIcon} alt="logout" width={20} height={20} />
+            <div className="flex items-center">
+              <Image
+                src={logoutIcon}
+                alt="logout"
+                width={20}
+                height={20}
+                className="cursor-pointer hover:opacity-60 duration-200"
+                onClick={handleClickLogout}
+              />
             </div>
           </div>
         )}

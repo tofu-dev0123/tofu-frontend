@@ -8,13 +8,22 @@ interface PostProps {
 }
 
 function Post({ post }: PostProps) {
+  const thumbnailUrl = post.thumbnail_url || dummyImage;
+  const width = 150;
+  const height = 100;
   return (
     <>
-      <div className="w-full h-full flex flex-col gap-4">
+      <div className="w-full h-full flex flex-col justify-start items-center gap-4">
         <div className="w-full h-full flex justify-center items-center rounded-md overflow-hidden shadow-md">
-          <Image src={dummyImage} alt={post.title} width={300} height={200} />
+          <Image
+            src={thumbnailUrl}
+            alt={post.title}
+            width={width}
+            height={height}
+            unoptimized
+          />
         </div>
-        <div className="flex justify-center items-center">
+        <div className="h-15 flex justify-center items-center">
           <p className="text-md truncate">{post.title}</p>
         </div>
       </div>

@@ -69,7 +69,7 @@ function usePostSubmit({ showError }: UsePostSubmitProps) {
         setIsLoading(false);
       }
     },
-    []
+    [router, showError]
   );
 
   return {

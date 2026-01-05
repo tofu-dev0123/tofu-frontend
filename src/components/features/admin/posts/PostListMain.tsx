@@ -10,6 +10,7 @@ function PostListMain() {
     searchPost,
     status: statusHook,
     deleteAlert,
+    patchStatusAlert,
     displayedKeyword,
   } = usePostList();
   return (
@@ -24,6 +25,7 @@ function PostListMain() {
           searchPost={searchPost}
           status={statusHook}
           deleteAlert={deleteAlert}
+          patchStatusAlert={patchStatusAlert}
         />
       </div>
     </div>

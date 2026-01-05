@@ -22,14 +22,21 @@ import Alert from '@/components/features/admin/common/Alert';
 import useSearchPost from '@/hooks/admin/posts/useSearchPost';
 import useStatus from '@/hooks/admin/posts/useStatus';
 import usePostDeleteAlert from '@/hooks/admin/posts/usePostDeleteAlert';
+import usePatchStatusAlert from '@/hooks/admin/posts/usePatchStatusAlert';
 
 interface PostListProps {
   searchPost: ReturnType<typeof useSearchPost>;
   status: ReturnType<typeof useStatus>;
   deleteAlert: ReturnType<typeof usePostDeleteAlert>;
+  patchStatusAlert: ReturnType<typeof usePatchStatusAlert>;
 }
 
-function PostList({ searchPost, status, deleteAlert }: PostListProps) {
+function PostList({
+  searchPost,
+  status,
+  deleteAlert,
+  patchStatusAlert,
+}: PostListProps) {
   return (
     <Card className="h-full w-full flex flex-col gap-4 justify-start border-none shadow-lg">
       <CardContent className="flex items-center justify-between p-4">
@@ -80,6 +87,7 @@ function PostList({ searchPost, status, deleteAlert }: PostListProps) {
               key={post.post_id}
               post={post}
               handleOpenDeleteAlert={deleteAlert.handleOpen}
+              handleOpenPatchStatusAlert={patchStatusAlert.handleOpen}
             />
           </div>
         ))}
@@ -92,6 +100,15 @@ function PostList({ searchPost, status, deleteAlert }: PostListProps) {
         actionText="削除"
         onCancel={deleteAlert.handleClose}
         onAction={deleteAlert.handleDelete}
+      />
+      <Alert
+        open={patchStatusAlert.open}
+        onOpenChange={patchStatusAlert.handleClose}
+        title="公開を解除しますか？"
+        cancelText="キャンセル"
+        actionText="公開を解除"
+        onCancel={patchStatusAlert.handleClose}
+        onAction={patchStatusAlert.handlePatchStatus}
       />
     </Card>
   );

@@ -30,3 +30,11 @@ export type PostRequest = {
 export type PostDeleteResponse = {
   message: string;
 };
+
+export type PostStatusPatchRequest = {
+  status: PostStatus;
+};
+
+export type PostStatusPatchResponse = {
+  message: string;
+};

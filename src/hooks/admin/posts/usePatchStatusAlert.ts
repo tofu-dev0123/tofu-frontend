@@ -1,35 +1,46 @@
 'use client';
 
 import { useState } from 'react';
-import { del } from '@/lib/api/http';
+import { patch } from '@/lib/api/http';
 import { API_ENDPOINTS } from '@/lib/api/endpoint';
-import { PostDeleteResponse } from '@/types/api/post';
+import {
+  PostStatus,
+  PostStatusPatchRequest,
+  PostStatusPatchResponse,
+} from '@/types/api/post';
 import { exceptErrorHandling } from '@/lib/utils/exceptErrorHandling';
 import { useToastStore } from '@/stores/toastStore';
 
-interface UsePostDeleteAlertProps {
+interface UsePatchStatusAlertProps {
   showError: (message: string[]) => void;
 }
 
-function usePostDeleteAlert({ showError }: UsePostDeleteAlertProps) {
+function usePatchStatusAlert({ showError }: UsePatchStatusAlertProps) {
   const [open, setOpen] = useState(false);
   const [postId, setPostId] = useState<number | null>(null);
+  const [status, setStatus] = useState<PostStatus | null>(null);
 
-  const handleOpen = (id: number) => {
+  const handleOpen = (id: number, status: PostStatus) => {
     setOpen(true);
     setPostId(id);
+    setStatus(status);
   };
 
   const handleClose = () => {
     setOpen(false);
     setPostId(null);
+    setStatus(null);
   };
 
-  const handleDelete = async () => {
-    if (!postId) return;
+  const handlePatchStatus = async () => {
+    if (!postId || !status) return;
+    const request: PostStatusPatchRequest = {
+      status,
+    };
     try {
-      const response = await del<PostDeleteResponse>(
-        API_ENDPOINTS.posts.delete(postId)
+      const response = await patch<PostStatusPatchResponse>(
+        API_ENDPOINTS.posts.patchStatus(postId),
+        request
       );
 
       const message = response.message;
@@ -37,6 +48,7 @@ function usePostDeleteAlert({ showError }: UsePostDeleteAlertProps) {
         type: 'success',
         message: message,
       });
+
       setTimeout(() => {
         window.location.reload();
       }, 1500);
@@ -50,8 +62,8 @@ function usePostDeleteAlert({ showError }: UsePostDeleteAlertProps) {
     open,
     handleOpen,
     handleClose,
-    handleDelete,
+    handlePatchStatus,
   };
 }
 
-export default usePostDeleteAlert;
+export default usePatchStatusAlert;

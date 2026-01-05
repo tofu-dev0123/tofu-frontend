@@ -18,10 +18,13 @@ function useStatus() {
     [router, searchParams]
   );
 
-  const handleStatusChange = useCallback((newStatus: PostStatus | 'ALL') => {
-    setStatus(newStatus);
-    handleStatus(newStatus);
-  }, []);
+  const handleStatusChange = useCallback(
+    (newStatus: PostStatus | 'ALL') => {
+      setStatus(newStatus);
+      handleStatus(newStatus);
+    },
+    [handleStatus]
+  );
 
   return {
     status,

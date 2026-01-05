@@ -7,6 +7,7 @@ import useSearchPost from '@/hooks/admin/posts/useSearchPost';
 import useStatus from '@/hooks/admin/posts/useStatus';
 import { PostStatus } from '@/types/api/post';
 import usePostDeleteAlert from './usePostDeleteAlert';
+import usePatchStatusAlert from './usePatchStatusAlert';
 
 function usePostList() {
   const searchParams = useSearchParams();
@@ -14,6 +15,7 @@ function usePostList() {
   const searchPostHook = useSearchPost();
   const statusHook = useStatus();
   const deleteAlertHook = usePostDeleteAlert({ showError });
+  const patchStatusAlertHook = usePatchStatusAlert({ showError });
   const [displayedKeyword, setDisplayedKeyword] = useState<string>('');
 
   useEffect(() => {
@@ -24,7 +26,7 @@ function usePostList() {
       const status = searchParams.get('status') as PostStatus | undefined;
 
       let offset = 0;
-      let limit = 10;
+      const limit = 10;
       if (page) {
         offset = (parseInt(page) - 1) * limit;
       }
@@ -39,12 +41,14 @@ function usePostList() {
     };
 
     init();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams]);
 
   return {
     searchPost: searchPostHook,
     status: statusHook,
     deleteAlert: deleteAlertHook,
+    patchStatusAlert: patchStatusAlertHook,
     displayedKeyword,
   };
 }

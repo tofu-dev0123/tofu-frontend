@@ -1,4 +1,6 @@
-import { Post } from '@/types/api/post';
+'use client';
+
+import { PostStatus, Post } from '@/types/api/post';
 import threeDotsIcon from '@/assets/images/three-dots-reader-icon.png';
 import Image from 'next/image';
 import { formatDateTime } from '@/lib/utils/dateFormat';
@@ -10,9 +12,14 @@ import {
 interface PostInfoProps {
   post: Post;
   handleOpenDeleteAlert: (id: number) => void;
+  handleOpenPatchStatusAlert: (id: number, status: PostStatus) => void;
 }
 
-function PostInfo({ post, handleOpenDeleteAlert }: PostInfoProps) {
+function PostInfo({
+  post,
+  handleOpenDeleteAlert,
+  handleOpenPatchStatusAlert,
+}: PostInfoProps) {
   return (
     <>
       <div className="w-150 h-25 mx-auto flex justify-between items-center gap-4">
@@ -58,21 +65,26 @@ function PostInfo({ post, handleOpenDeleteAlert }: PostInfoProps) {
                 className="hover:cursor-pointer hover:opacity-60 duration-200"
               />
             </PopoverTrigger>
-            <PopoverContent className="w-20 flex flex-col justify-start items-start gap-4 p-4 border border-gray-200 rounded-md">
-              <p className="w-full text-start text-sm text-gray-700 hover:cursor-pointer hover:opacity-60 duration-200">
+            <PopoverContent className="w-30 p-0 flex flex-col justify-start items-start border border-gray-200 rounded-md">
+              <p className="w-full py-2 px-4 text-start text-sm text-gray-700 hover:cursor-pointer hover:bg-gray-100/50 duration-200">
                 編集
               </p>
+              {post.status === 'PUBLISHED' && (
+                <p
+                  className="w-full py-2 px-4 text-start text-sm text-gray-700 hover:cursor-pointer hover:bg-gray-100/50 duration-200"
+                  onClick={() =>
+                    handleOpenPatchStatusAlert(post.post_id, 'DRAFT')
+                  }
+                >
+                  公開を解除
+                </p>
+              )}
               <p
-                className="w-full text-start text-sm text-red-700 hover:cursor-pointer hover:opacity-60 duration-200"
+                className="w-full py-2 px-4 text-start text-sm text-red-700 hover:cursor-pointer hover:bg-gray-100/50 duration-200"
                 onClick={() => handleOpenDeleteAlert(post.post_id)}
               >
                 削除
               </p>
-              {post.status === 'PUBLISHED' && (
-                <p className="w-full text-start text-sm text-red-700 hover:cursor-pointer hover:opacity-60 duration-200">
-                  非公開
-                </p>
-              )}
             </PopoverContent>
           </Popover>
         </div>

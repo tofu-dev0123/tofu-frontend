@@ -1,0 +1,58 @@
+'use client';
+
+import React, { useState, useCallback } from 'react';
+import { get } from '@/lib/api/http';
+import { API_ENDPOINTS } from '@/lib/api/endpoint';
+import { PostResponse, Post } from '@/types/api/post';
+import { useRouter } from 'next/navigation';
+
+function useSearchPost() {
+  const router = useRouter();
+  const [totalCount, setTotalCount] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
+  const [postList, setPostList] = useState<Post[]>([]);
+  const [keyword, setKeyword] = useState<string>('');
+
+  const handleInputChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setKeyword(e.target.value);
+    },
+    []
+  );
+
+  const search = useCallback(
+    async (offset?: number, limit?: number, keyword?: string) => {
+      const queryParams = new URLSearchParams();
+      if (offset) queryParams.append('offset', offset.toString());
+      if (limit) queryParams.append('limit', limit.toString());
+      if (keyword) queryParams.append('keyword', keyword);
+      const response = await get<PostResponse>(
+        `${API_ENDPOINTS.posts.get}?${queryParams.toString()}`
+      );
+      setPostList(response.posts);
+      setTotalCount(response.total_count);
+      setTotalPages(response.total_pages);
+    },
+    []
+  );
+
+  const handleSearch = useCallback(async () => {
+    router.push(`/admin/posts?keyword=${encodeURIComponent(keyword)}`);
+  }, [router, keyword]);
+
+  return {
+    totalCount,
+    totalPages,
+    postList,
+    keyword,
+    search,
+    handleSearch,
+    handleInputChange,
+    setTotalCount,
+    setTotalPages,
+    setPostList,
+    setKeyword,
+  };
+}
+
+export default useSearchPost;

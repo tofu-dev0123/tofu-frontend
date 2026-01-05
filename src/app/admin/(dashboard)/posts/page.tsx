@@ -1,7 +1,5 @@
+import PostListMain from '@/components/features/admin/posts/PostListMain';
+
 export default function Page() {
-  return (
-    <div>
-      <h1>投稿一覧</h1>
-    </div>
-  );
+  return <PostListMain />;
 }

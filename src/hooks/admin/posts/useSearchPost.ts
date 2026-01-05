@@ -43,6 +43,7 @@ function useSearchPost() {
   );
 
   const handleSearch = useCallback(async () => {
+    if (!keyword) return;
     router.push(`/admin/posts?keyword=${encodeURIComponent(keyword)}`);
   }, [router, keyword]);
 

@@ -10,11 +10,13 @@ import { getErrorMessage } from '@/lib/utils/getErrorMessage';
 import { MESSAGES } from '@/constants/messages';
 import useErrorModal from './useErrorModal';
 import { removeToken } from '@/lib/utils/token';
+import useSearchPost from '@/hooks/admin/posts/useSearchPost';
 
 function useDashboard() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const router = useRouter();
+  const searchPostHook = useSearchPost();
 
   // エラーモーダル状態管理フック
   const errorModalHook = useErrorModal();
@@ -49,6 +51,7 @@ function useDashboard() {
     handleClickMenu,
     handleClickLogout,
     errorModalHook,
+    searchPostHook,
   };
 }
 

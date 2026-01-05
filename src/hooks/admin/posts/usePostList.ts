@@ -6,12 +6,14 @@ import useErrorModal from '@/hooks/admin/common/useErrorModal';
 import useSearchPost from '@/hooks/admin/posts/useSearchPost';
 import useStatus from '@/hooks/admin/posts/useStatus';
 import { PostStatus } from '@/types/api/post';
+import usePostDeleteAlert from './usePostDeleteAlert';
 
 function usePostList() {
   const searchParams = useSearchParams();
   const { showError } = useErrorModal();
   const searchPostHook = useSearchPost();
   const statusHook = useStatus();
+  const deleteAlertHook = usePostDeleteAlert({ showError });
   const [displayedKeyword, setDisplayedKeyword] = useState<string>('');
 
   useEffect(() => {
@@ -46,6 +48,10 @@ function usePostList() {
     keyword: searchPostHook.keyword,
     displayedKeyword,
     status: statusHook.status,
+    openDeleteAlert: deleteAlertHook.open,
+    handleOpenDeleteAlert: deleteAlertHook.handleOpen,
+    handleCloseDeleteAlert: deleteAlertHook.handleClose,
+    handleDelete: deleteAlertHook.handleDelete,
     setTotalCount: searchPostHook.setTotalCount,
     setTotalPages: searchPostHook.setTotalPages,
     setPostList: searchPostHook.setPostList,

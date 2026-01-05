@@ -26,3 +26,7 @@ export type PostRequest = {
   images: number[];
   tags: string[];
 };
+
+export type PostDeleteResponse = {
+  message: string;
+};

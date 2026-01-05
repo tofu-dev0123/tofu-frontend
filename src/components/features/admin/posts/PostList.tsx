@@ -1,3 +1,5 @@
+'use client';
+
 import { Card, CardContent } from '@/components/ui/card';
 import {
   InputGroup,
@@ -15,7 +17,8 @@ import {
   SelectItem,
 } from '@/components/ui/select';
 import { Post, PostStatus } from '@/types/api/post';
-import PostInfo from './PostInfo';
+import PostInfo from '@/components/features/admin/posts/PostInfo';
+import Alert from '@/components/features/admin/common/Alert';
 
 interface PostListProps {
   totalCount: number;
@@ -23,6 +26,10 @@ interface PostListProps {
   postList: Post[];
   keyword: string;
   status: PostStatus | 'ALL';
+  openDeleteAlert: boolean;
+  handleOpenDeleteAlert: (id: number) => void;
+  handleCloseDeleteAlert: () => void;
+  handleDelete: () => void;
   handleSearch: () => void;
   handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleStatusChange: (newStatus: PostStatus | 'ALL') => void;
@@ -34,6 +41,10 @@ function PostList({
   postList,
   keyword,
   status,
+  openDeleteAlert,
+  handleOpenDeleteAlert,
+  handleCloseDeleteAlert,
+  handleDelete,
   handleSearch,
   handleInputChange,
   handleStatusChange,
@@ -77,9 +88,22 @@ function PostList({
       </CardContent>
       <CardContent>
         {postList.map((post) => (
-          <PostInfo key={post.post_id} post={post} />
+          <PostInfo
+            key={post.post_id}
+            post={post}
+            handleOpenDeleteAlert={handleOpenDeleteAlert}
+          />
         ))}
       </CardContent>
+      <Alert
+        open={openDeleteAlert}
+        onOpenChange={handleCloseDeleteAlert}
+        title="記事を削除しますか？"
+        cancelText="キャンセル"
+        actionText="削除"
+        onCancel={handleCloseDeleteAlert}
+        onAction={handleDelete}
+      />
     </Card>
   );
 }

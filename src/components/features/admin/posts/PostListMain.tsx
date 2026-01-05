@@ -16,6 +16,10 @@ function PostListMain() {
     handleInputChange,
     handleStatusChange,
     status,
+    openDeleteAlert,
+    handleOpenDeleteAlert,
+    handleCloseDeleteAlert,
+    handleDelete,
   } = usePostList();
   return (
     <div className="h-full w-6xl flex flex-col mx-auto">
@@ -31,6 +35,10 @@ function PostListMain() {
           handleInputChange={handleInputChange}
           handleStatusChange={handleStatusChange}
           status={status}
+          openDeleteAlert={openDeleteAlert}
+          handleOpenDeleteAlert={handleOpenDeleteAlert}
+          handleCloseDeleteAlert={handleCloseDeleteAlert}
+          handleDelete={handleDelete}
         />
       </div>
     </div>

@@ -15,12 +15,18 @@ interface HeaderProps {
   loginFlag: boolean;
   handleClickMenu?: () => void;
   handleClickLogout?: () => void;
+  keyword?: string;
+  handleInputChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleSearch?: () => void;
 }
 
 function Header({
   loginFlag = false,
   handleClickMenu,
   handleClickLogout,
+  keyword,
+  handleInputChange,
+  handleSearch,
 }: HeaderProps) {
   const { handleClickLogo } = useHeader();
 
@@ -50,10 +56,14 @@ function Header({
           <div className="flex items-center gap-4">
             <div className="flex items-center">
               <InputGroup className="rounded-full">
-                <InputGroupInput placeholder="Search..." />
+                <InputGroupInput
+                  placeholder="Search..."
+                  value={keyword}
+                  onChange={handleInputChange}
+                />
                 <InputGroupAddon
                   className="rounded-full"
-                  onClick={() => console.log('click')}
+                  onClick={handleSearch}
                 >
                   <SearchIcon className="cursor-pointer" />
                 </InputGroupAddon>

@@ -11,11 +11,11 @@ export const NAVIGATION_ITEMS = [
   {
     icon: articleIcon,
     label: '記事一覧',
-    href: '/articles',
+    href: '/posts',
   },
   {
     icon: createIcon,
     label: '記事作成',
-    href: '/create',
+    href: '/posts/new',
   },
 ];

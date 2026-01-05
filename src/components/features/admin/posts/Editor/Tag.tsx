@@ -14,13 +14,13 @@ function Tag() {
           onClick={actions.addTag}
           className="w-10 h-10 hover:cursor-pointer hover:opacity-60 duration-200 flex items-center justify-center"
         >
-          <Image src={addGreyIcon} alt="add grey icon" width={20} height={20} />
+          <Image src={addGreyIcon} alt="add grey icon" width={16} height={16} />
         </button>
         <input
           type="text"
           placeholder="タグの追加"
           size={50}
-          className="border-none focus:outline-none focus:ring-0 text-md font-bold placeholder:text-gray-400 resize-none"
+          className="border-none focus:outline-none focus:ring-0 text-sm font-bold placeholder:text-gray-400 resize-none"
           value={state.inputValue}
           onChange={(e) => actions.setInputValue(e.target.value)}
         />
@@ -29,7 +29,7 @@ function Tag() {
         {state.tags.map((tag) => (
           <div
             key={tag}
-            className="px-4 py-0 rounded-md border border-gray-200  relative"
+            className="px-4 py-0 rounded-md border border-gray-200 relative"
           >
             <span className="text-sm font-bold">{tag}</span>
             <Image

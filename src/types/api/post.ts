@@ -26,3 +26,15 @@ export type PostRequest = {
   images: number[];
   tags: string[];
 };
+
+export type PostDeleteResponse = {
+  message: string;
+};
+
+export type PostStatusPatchRequest = {
+  status: PostStatus;
+};
+
+export type PostStatusPatchResponse = {
+  message: string;
+};

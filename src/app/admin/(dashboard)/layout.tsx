@@ -7,8 +7,13 @@ import useDashboard from '@/hooks/admin/common/useDashboard';
 import ErrorModal from '@/components/features/admin/common/ErrorModal';
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
-  const { isMenuOpen, handleClickMenu, handleClickLogout, errorModalHook } =
-    useDashboard();
+  const {
+    isMenuOpen,
+    handleClickMenu,
+    handleClickLogout,
+    errorModalHook,
+    searchPostHook,
+  } = useDashboard();
 
   return (
     <>
@@ -19,6 +24,9 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
             loginFlag={true}
             handleClickMenu={handleClickMenu}
             handleClickLogout={handleClickLogout}
+            keyword={searchPostHook.keyword}
+            handleInputChange={searchPostHook.handleInputChange}
+            handleSearch={searchPostHook.handleSearch}
           />
         </header>
 

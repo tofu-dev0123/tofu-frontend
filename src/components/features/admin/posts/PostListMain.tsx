@@ -7,38 +7,23 @@ import usePostList from '@/hooks/admin/posts/usePostList';
 
 function PostListMain() {
   const {
-    totalCount,
-    totalPages,
-    postList,
-    keyword,
+    searchPost,
+    status: statusHook,
+    deleteAlert,
     displayedKeyword,
-    handleSearch,
-    handleInputChange,
-    handleStatusChange,
-    status,
-    openDeleteAlert,
-    handleOpenDeleteAlert,
-    handleCloseDeleteAlert,
-    handleDelete,
   } = usePostList();
   return (
     <div className="h-full w-6xl flex flex-col mx-auto">
       <Title title="記事一覧" />
       <div className="h-full w-200 mx-auto flex flex-col">
-        <PostSearchInfo totalPosts={totalCount} keyword={displayedKeyword} />
+        <PostSearchInfo
+          totalPosts={searchPost.totalCount}
+          keyword={displayedKeyword}
+        />
         <PostList
-          totalCount={totalCount}
-          totalPages={totalPages}
-          postList={postList}
-          keyword={keyword}
-          handleSearch={handleSearch}
-          handleInputChange={handleInputChange}
-          handleStatusChange={handleStatusChange}
-          status={status}
-          openDeleteAlert={openDeleteAlert}
-          handleOpenDeleteAlert={handleOpenDeleteAlert}
-          handleCloseDeleteAlert={handleCloseDeleteAlert}
-          handleDelete={handleDelete}
+          searchPost={searchPost}
+          status={statusHook}
+          deleteAlert={deleteAlert}
         />
       </div>
     </div>

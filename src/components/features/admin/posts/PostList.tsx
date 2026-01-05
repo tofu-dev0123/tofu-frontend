@@ -16,39 +16,20 @@ import {
   SelectLabel,
   SelectItem,
 } from '@/components/ui/select';
-import { Post, PostStatus } from '@/types/api/post';
+import { PostStatus } from '@/types/api/post';
 import PostInfo from '@/components/features/admin/posts/PostInfo';
 import Alert from '@/components/features/admin/common/Alert';
+import useSearchPost from '@/hooks/admin/posts/useSearchPost';
+import useStatus from '@/hooks/admin/posts/useStatus';
+import usePostDeleteAlert from '@/hooks/admin/posts/usePostDeleteAlert';
 
 interface PostListProps {
-  totalCount: number;
-  totalPages: number;
-  postList: Post[];
-  keyword: string;
-  status: PostStatus | 'ALL';
-  openDeleteAlert: boolean;
-  handleOpenDeleteAlert: (id: number) => void;
-  handleCloseDeleteAlert: () => void;
-  handleDelete: () => void;
-  handleSearch: () => void;
-  handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handleStatusChange: (newStatus: PostStatus | 'ALL') => void;
+  searchPost: ReturnType<typeof useSearchPost>;
+  status: ReturnType<typeof useStatus>;
+  deleteAlert: ReturnType<typeof usePostDeleteAlert>;
 }
 
-function PostList({
-  totalCount,
-  totalPages,
-  postList,
-  keyword,
-  status,
-  openDeleteAlert,
-  handleOpenDeleteAlert,
-  handleCloseDeleteAlert,
-  handleDelete,
-  handleSearch,
-  handleInputChange,
-  handleStatusChange,
-}: PostListProps) {
+function PostList({ searchPost, status, deleteAlert }: PostListProps) {
   return (
     <Card className="h-full w-full flex flex-col gap-4 justify-start border-none shadow-lg">
       <CardContent className="flex items-center justify-between p-4">
@@ -56,21 +37,23 @@ function PostList({
           <InputGroup className="rounded-full">
             <InputGroupInput
               placeholder="Search..."
-              value={keyword}
-              onChange={handleInputChange}
+              value={searchPost.keyword}
+              onChange={searchPost.handleInputChange}
             />
             <InputGroupAddon className="rounded-full">
               <SearchIcon
                 className="cursor-pointer hover:opacity-60 duration-200"
-                onClick={handleSearch}
+                onClick={searchPost.handleSearch}
               />
             </InputGroupAddon>
           </InputGroup>
         </div>
         <div className="w-40 flex items-center">
           <Select
-            value={status || 'ALL'}
-            onValueChange={(value) => handleStatusChange(value as PostStatus)}
+            value={status.status || 'ALL'}
+            onValueChange={(value) =>
+              status.handleStatusChange(value as PostStatus)
+            }
           >
             <SelectTrigger className="w-full">
               <SelectValue placeholder="公開ステータス" />
@@ -87,22 +70,22 @@ function PostList({
         </div>
       </CardContent>
       <CardContent>
-        {postList.map((post) => (
+        {searchPost.postList.map((post) => (
           <PostInfo
             key={post.post_id}
             post={post}
-            handleOpenDeleteAlert={handleOpenDeleteAlert}
+            handleOpenDeleteAlert={deleteAlert.handleOpen}
           />
         ))}
       </CardContent>
       <Alert
-        open={openDeleteAlert}
-        onOpenChange={handleCloseDeleteAlert}
+        open={deleteAlert.open}
+        onOpenChange={deleteAlert.handleClose}
         title="記事を削除しますか？"
         cancelText="キャンセル"
         actionText="削除"
-        onCancel={handleCloseDeleteAlert}
-        onAction={handleDelete}
+        onCancel={deleteAlert.handleClose}
+        onAction={deleteAlert.handleDelete}
       />
     </Card>
   );

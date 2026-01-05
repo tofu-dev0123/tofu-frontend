@@ -1,4 +1,3 @@
-import React from 'react';
 import { Post } from '@/types/api/post';
 import threeDotsIcon from '@/assets/images/three-dots-reader-icon.png';
 import Image from 'next/image';

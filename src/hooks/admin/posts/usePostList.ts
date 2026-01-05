@@ -42,23 +42,10 @@ function usePostList() {
   }, [searchParams]);
 
   return {
-    totalCount: searchPostHook.totalCount,
-    totalPages: searchPostHook.totalPages,
-    postList: searchPostHook.postList,
-    keyword: searchPostHook.keyword,
+    searchPost: searchPostHook,
+    status: statusHook,
+    deleteAlert: deleteAlertHook,
     displayedKeyword,
-    status: statusHook.status,
-    openDeleteAlert: deleteAlertHook.open,
-    handleOpenDeleteAlert: deleteAlertHook.handleOpen,
-    handleCloseDeleteAlert: deleteAlertHook.handleClose,
-    handleDelete: deleteAlertHook.handleDelete,
-    setTotalCount: searchPostHook.setTotalCount,
-    setTotalPages: searchPostHook.setTotalPages,
-    setPostList: searchPostHook.setPostList,
-    setKeyword: searchPostHook.setKeyword,
-    handleSearch: searchPostHook.handleSearch,
-    handleInputChange: searchPostHook.handleInputChange,
-    handleStatusChange: statusHook.handleStatusChange,
   };
 }
 

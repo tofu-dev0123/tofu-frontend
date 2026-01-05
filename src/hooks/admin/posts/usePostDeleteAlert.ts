@@ -1,3 +1,5 @@
+'use client';
+
 import { useState } from 'react';
 import { del } from '@/lib/api/http';
 import { API_ENDPOINTS } from '@/lib/api/endpoint';
@@ -35,7 +37,7 @@ function usePostDeleteAlert({ showError }: UsePostDeleteAlertProps) {
         type: 'success',
         message: message,
       });
-      handleClose();
+      window.location.reload();
     } catch (error) {
       exceptErrorHandling(error, showError);
       handleClose();

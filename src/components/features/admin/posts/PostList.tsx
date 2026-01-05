@@ -14,15 +14,18 @@ import {
   SelectLabel,
   SelectItem,
 } from '@/components/ui/select';
-import { Post } from '@/types/api/post';
+import { Post, PostStatus } from '@/types/api/post';
+import PostInfo from './PostInfo';
 
 interface PostListProps {
   totalCount: number;
   totalPages: number;
   postList: Post[];
   keyword: string;
+  status: PostStatus | 'ALL';
   handleSearch: () => void;
   handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleStatusChange: (newStatus: PostStatus | 'ALL') => void;
 }
 
 function PostList({
@@ -30,8 +33,10 @@ function PostList({
   totalPages,
   postList,
   keyword,
+  status,
   handleSearch,
   handleInputChange,
+  handleStatusChange,
 }: PostListProps) {
   return (
     <Card className="h-full w-full flex flex-col gap-4 justify-start border-none shadow-lg">
@@ -44,12 +49,18 @@ function PostList({
               onChange={handleInputChange}
             />
             <InputGroupAddon className="rounded-full">
-              <SearchIcon className="cursor-pointer" onClick={handleSearch} />
+              <SearchIcon
+                className="cursor-pointer hover:opacity-60 duration-200"
+                onClick={handleSearch}
+              />
             </InputGroupAddon>
           </InputGroup>
         </div>
         <div className="w-40 flex items-center">
-          <Select>
+          <Select
+            value={status || 'ALL'}
+            onValueChange={(value) => handleStatusChange(value as PostStatus)}
+          >
             <SelectTrigger className="w-full">
               <SelectValue placeholder="公開ステータス" />
             </SelectTrigger>
@@ -64,7 +75,11 @@ function PostList({
           </Select>
         </div>
       </CardContent>
-      <CardContent></CardContent>
+      <CardContent>
+        {postList.map((post) => (
+          <PostInfo key={post.post_id} post={post} />
+        ))}
+      </CardContent>
     </Card>
   );
 }

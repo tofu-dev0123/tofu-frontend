@@ -3,7 +3,7 @@
 import React, { useState, useCallback } from 'react';
 import { get } from '@/lib/api/http';
 import { API_ENDPOINTS } from '@/lib/api/endpoint';
-import { PostResponse, Post } from '@/types/api/post';
+import { PostResponse, Post, PostStatus } from '@/types/api/post';
 import { useRouter } from 'next/navigation';
 
 function useSearchPost() {
@@ -21,11 +21,17 @@ function useSearchPost() {
   );
 
   const search = useCallback(
-    async (offset?: number, limit?: number, keyword?: string) => {
+    async (
+      offset?: number,
+      limit?: number,
+      keyword?: string,
+      status?: PostStatus
+    ) => {
       const queryParams = new URLSearchParams();
       if (offset) queryParams.append('offset', offset.toString());
       if (limit) queryParams.append('limit', limit.toString());
       if (keyword) queryParams.append('keyword', keyword);
+      if (status) queryParams.append('status', status);
       const response = await get<PostResponse>(
         `${API_ENDPOINTS.posts.get}?${queryParams.toString()}`
       );

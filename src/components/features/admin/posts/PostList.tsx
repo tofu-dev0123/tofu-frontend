@@ -58,7 +58,7 @@ function PostList({ searchPost, status, deleteAlert }: PostListProps) {
             <SelectTrigger className="w-full">
               <SelectValue placeholder="公開ステータス" />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="border border-gray-200 rounded-md">
               <SelectGroup>
                 <SelectLabel>公開ステータス</SelectLabel>
                 <SelectItem value="ALL">全て</SelectItem>
@@ -70,12 +70,18 @@ function PostList({ searchPost, status, deleteAlert }: PostListProps) {
         </div>
       </CardContent>
       <CardContent>
+        <hr className="w-full border-gray-200" />
         {searchPost.postList.map((post) => (
-          <PostInfo
+          <div
             key={post.post_id}
-            post={post}
-            handleOpenDeleteAlert={deleteAlert.handleOpen}
-          />
+            className="w-full h-25 hover:bg-gray-100/50 duration-200 cursor-pointer"
+          >
+            <PostInfo
+              key={post.post_id}
+              post={post}
+              handleOpenDeleteAlert={deleteAlert.handleOpen}
+            />
+          </div>
         ))}
       </CardContent>
       <Alert

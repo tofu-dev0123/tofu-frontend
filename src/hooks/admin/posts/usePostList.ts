@@ -1,8 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
-import { API_ENDPOINTS } from '@/lib/api/endpoint';
-import { exceptErrorHandling } from '@/lib/utils/exceptErrorHandling';
+import { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import useErrorModal from '@/hooks/admin/common/useErrorModal';
 import useSearchPost from '@/hooks/admin/posts/useSearchPost';
@@ -11,6 +9,7 @@ function usePostList() {
   const searchParams = useSearchParams();
   const { showError } = useErrorModal();
   const searchPostHook = useSearchPost();
+  const [displayedKeyword, setDisplayedKeyword] = useState<string>('');
 
   useEffect(() => {
     // 初期処理
@@ -25,6 +24,7 @@ function usePostList() {
       }
 
       searchPostHook.search(offset, limit, keyword || undefined);
+      setDisplayedKeyword(keyword || '');
     };
 
     init();
@@ -35,6 +35,7 @@ function usePostList() {
     totalPages: searchPostHook.totalPages,
     postList: searchPostHook.postList,
     keyword: searchPostHook.keyword,
+    displayedKeyword,
     setTotalCount: searchPostHook.setTotalCount,
     setTotalPages: searchPostHook.setTotalPages,
     setPostList: searchPostHook.setPostList,

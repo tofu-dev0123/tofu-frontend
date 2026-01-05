@@ -11,13 +11,14 @@ function PostListMain() {
     totalPages,
     postList,
     keyword,
+    displayedKeyword,
     handleSearch,
     handleInputChange,
   } = usePostList();
   return (
     <div className="h-full w-6xl flex flex-col mx-auto">
       <Title title="記事一覧" />
-      <PostSearchInfo totalPosts={totalCount} keyword={keyword} />
+      <PostSearchInfo totalPosts={totalCount} keyword={displayedKeyword} />
       <PostList
         totalCount={totalCount}
         totalPages={totalPages}

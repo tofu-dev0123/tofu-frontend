@@ -5,11 +5,11 @@ import Thumbnail from '@/components/features/admin/posts/Editor/Thumbnail';
 import PostTitle from '@/components/features/admin/posts/Editor/PostTitle';
 import Tag from '@/components/features/admin/posts/Editor/Tag';
 import Content from '@/components/features/admin/posts/Editor/Content';
-import { usePostEditor } from '@/contexts/admin/posts/PostEditorContext';
+import { usePostEditorContext } from '@/hooks/admin/posts/usePostEditorContext';
 import { POST_MAX_CHARACTERS } from '@/constants/admin/fileFormats';
 
 function EditorBody() {
-  const { state } = usePostEditor();
+  const { state } = usePostEditorContext();
   return (
     <>
       <div className="w-full h-10 flex items-center justify-end pr-4">

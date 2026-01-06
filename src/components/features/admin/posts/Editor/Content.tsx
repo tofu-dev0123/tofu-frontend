@@ -3,12 +3,12 @@
 import { useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { usePostEditor } from '@/contexts/admin/posts/PostEditorContext';
+import { usePostEditorContext } from '@/hooks/admin/posts/usePostEditorContext';
 import { cn } from '@/lib/utils';
 import { useMarkdownEditor } from '@/hooks/admin/editor/useMarkdownEditor';
 
 function MDContent({ className }: { className?: string }) {
-  const { state, actions, ui } = usePostEditor();
+  const { state, actions, ui } = usePostEditorContext();
   const { containerRef, viewRef } = useMarkdownEditor(
     state.content,
     actions.setContent,

@@ -1,7 +1,7 @@
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { usePostEditor } from '@/contexts/admin/posts/PostEditorContext';
+import { usePostEditorContext } from '@/hooks/admin/posts/usePostEditorContext';
 import addGreyIcon from '@/assets/images/add-grey-icon.png';
 import Image from 'next/image';
 
@@ -11,7 +11,7 @@ interface EmbedLinkProps {
 }
 
 function EmbedLink({ open, onClose }: EmbedLinkProps) {
-  const { state, actions } = usePostEditor();
+  const { state, actions } = usePostEditorContext();
 
   if (!open) return null;
 

@@ -16,10 +16,10 @@ export interface PostEditorState {
   imageId: number | null;
   altText: string | null;
   isThumbnailLoading: boolean;
-  progress: number;
   loadingType: 'upload' | 'delete' | null;
   isAlertOpen: boolean;
   previewImageUrl: string | null;
+  thumbnailDeleteFlag?: boolean;
 
   // タグ情報
   tags: string[];
@@ -31,6 +31,7 @@ export interface PostEditorState {
 
   // 画像挿入情報
   images: ImageInsertionState[];
+  newImages?: ImageInsertionState[];
   isImageAlertOpen: boolean;
   imagePreviewUrl: string | null;
 

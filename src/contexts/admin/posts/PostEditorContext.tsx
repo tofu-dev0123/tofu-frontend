@@ -2,18 +2,18 @@
 
 import React, { createContext, useContext } from 'react';
 import type { PostEditorContextValue } from '@/types/admin/posts';
-import { usePostEditorContext } from '@/hooks/admin/posts/usePostEditorContext';
+import { usePostState } from '@/hooks/admin/posts/usePostState';
 
-const PostEditorContext = createContext<PostEditorContextValue | undefined>(
-  undefined
-);
+export const PostEditorContext = createContext<
+  PostEditorContextValue | undefined
+>(undefined);
 
 interface PostEditorProviderProps {
   children: React.ReactNode;
 }
 
 export function PostEditorProvider({ children }: PostEditorProviderProps) {
-  const value = usePostEditorContext();
+  const value = usePostState();
 
   return (
     <PostEditorContext.Provider value={value}>

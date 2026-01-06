@@ -11,6 +11,7 @@ export const API_ENDPOINTS = {
     put: (id: number) => `/admin/posts/${id}`,
     delete: (id: number) => `/admin/posts/${id}`,
     patchStatus: (id: number) => `/admin/posts/${id}`,
+    edit: (id: number) => `/admin/posts/${id}`,
   },
   summary: {
     get: '/admin/posts/summary',

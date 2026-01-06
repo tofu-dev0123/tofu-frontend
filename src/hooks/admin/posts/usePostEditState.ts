@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useMemo, useRef } from 'react';
+import { useCallback, useMemo, useRef, useEffect } from 'react';
 import { EditorView } from '@codemirror/view';
 import type {
   PostEditorState,
@@ -16,9 +16,18 @@ import { useImageInsertion } from './useImageInsertion';
 import useErrorModal from '@/hooks/admin/common/useErrorModal';
 import useEmbedLink from './useEmbedLink';
 import useConfirmModal from './useConfirmModal';
-import usePostSubmit from './usePostSubmit';
+import usePostEditSubmit from './usePostEditSubmit';
+import type { PostEditInitialData } from '@/contexts/admin/posts/PostEditContext';
 
-export function usePostState() {
+interface UsePostEditStateProps {
+  postId: number;
+  initialData: PostEditInitialData;
+}
+
+export function usePostEditState({
+  postId,
+  initialData,
+}: UsePostEditStateProps) {
   const errorModalHooks = useErrorModal();
   const onClickPreviewHooks = useOnClickPreview();
   const postTitleHooks = usePostTitle();
@@ -26,10 +35,11 @@ export function usePostState() {
   const thumbnailHooks = useThumbnail({
     showError: errorModalHooks.showError,
   });
-  const tagsHooks = useTags();
+  const tagsHooks = useTags({ initialTags: initialData.tags });
   const editorViewRef = useRef<EditorView | null>(null);
   const imageInsertionHooks = useImageInsertion({
     editorViewRef,
+    initialImages: initialData.images,
     showError: errorModalHooks.showError,
   });
   const embedLinkHooks = useEmbedLink({
@@ -39,9 +49,21 @@ export function usePostState() {
   const confirmModalHooks = useConfirmModal({
     showError: errorModalHooks.showError,
   });
-  const postSubmitHooks = usePostSubmit({
+  const postSubmitHooks = usePostEditSubmit({
     showError: errorModalHooks.showError,
+    postId,
   });
+
+  // 編集画面用の初期データ設定（初回のみ実行）
+  useEffect(() => {
+    postTitleHooks.setTitle(initialData.title);
+    postContentHooks.setContent(initialData.content);
+    thumbnailHooks.setImageId(initialData.thumbnailId);
+    thumbnailHooks.setThumbnailUrl(initialData.thumbnailUrl);
+    thumbnailHooks.setAltText(initialData.thumbnailAltText);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // 初回のみ実行
 
   const state: PostEditorState = useMemo(
     () => ({
@@ -56,6 +78,7 @@ export function usePostState() {
       imageId: thumbnailHooks.imageId,
       altText: thumbnailHooks.altText,
       isThumbnailLoading: thumbnailHooks.isLoading,
+      thumbnailDeleteFlag: thumbnailHooks.thumbnailDeleteFlag,
       loadingType: thumbnailHooks.loadingType,
       isAlertOpen: thumbnailHooks.isAlertOpen,
       previewImageUrl: thumbnailHooks.previewImageUrl,
@@ -67,9 +90,9 @@ export function usePostState() {
       errorMessage: errorModalHooks.errorMessage,
       // 画像挿入情報
       images: imageInsertionHooks.images,
+      newImages: imageInsertionHooks.newImages,
       isImageAlertOpen: imageInsertionHooks.isImageAlertOpen,
       imagePreviewUrl: imageInsertionHooks.previewImageUrl,
-
       // 埋め込みリンク情報
       inputUrl: embedLinkHooks.inputUrl,
       isEmbedLinkOpen: embedLinkHooks.open,
@@ -87,6 +110,7 @@ export function usePostState() {
       thumbnailHooks.imageId,
       thumbnailHooks.altText,
       thumbnailHooks.isLoading,
+      thumbnailHooks.thumbnailDeleteFlag,
       thumbnailHooks.loadingType,
       thumbnailHooks.isAlertOpen,
       thumbnailHooks.previewImageUrl,
@@ -95,6 +119,7 @@ export function usePostState() {
       errorModalHooks.isOpen,
       errorModalHooks.errorMessage,
       imageInsertionHooks.images,
+      imageInsertionHooks.newImages,
       imageInsertionHooks.isImageAlertOpen,
       imageInsertionHooks.previewImageUrl,
       embedLinkHooks.open,
@@ -105,12 +130,13 @@ export function usePostState() {
     ]
   );
 
+  // 編集画面用のリセット処理（初期データに戻す）
   const reset = useCallback(() => {
-    postTitleHooks.setTitle('');
-    postContentHooks.setContent('');
-    thumbnailHooks.setThumbnailUrl(null);
+    postTitleHooks.setTitle(initialData.title);
+    postContentHooks.setContent(initialData.content);
+    thumbnailHooks.setThumbnailUrl(initialData.thumbnailUrl);
     // tagsとisPreviewのリセットは、必要に応じて各フックにリセット機能を追加
-  }, [postTitleHooks, postContentHooks, thumbnailHooks]);
+  }, [initialData, postTitleHooks, postContentHooks, thumbnailHooks]);
 
   const actions: PostEditorActions = useMemo(
     () => ({
@@ -141,7 +167,7 @@ export function usePostState() {
       // 画像挿入関連
       handleImageIconClick: imageInsertionHooks.handleImageIconClick,
       handleImageFileChange: imageInsertionHooks.handleImageFileChange,
-      handleConfirmImageInsert: imageInsertionHooks.handleConfirmImageInsert,
+      handleConfirmImageInsert: imageInsertionHooks.handleConfirmNewImageInsert,
       handleCancelImageInsert: imageInsertionHooks.handleCancelImageInsert,
       handleImageAlertOpenChange:
         imageInsertionHooks.handleImageAlertOpenChange,
@@ -157,44 +183,36 @@ export function usePostState() {
       handleSubmit: postSubmitHooks.onSubmit,
     }),
     [
-      // 基本情報関連
-      postTitleHooks.setTitle,
-      postContentHooks.setContent,
       thumbnailHooks.setThumbnailUrl,
       thumbnailHooks.setImageId,
       thumbnailHooks.setAltText,
-      onClickPreviewHooks.togglePreview,
-      reset,
-      // タグ関連
       tagsHooks.addTag,
       tagsHooks.removeTag,
       tagsHooks.setInputValue,
-      // UI状態関連
       thumbnailHooks.handleThumbnailClick,
       thumbnailHooks.handleFileChange,
       thumbnailHooks.handleDeleteThumbnail,
       thumbnailHooks.handleConfirmUpload,
       thumbnailHooks.handleCancelUpload,
       thumbnailHooks.handleAlertOpenChange,
-      // エラーモーダル関連
+      postTitleHooks.setTitle,
+      postContentHooks.setContent,
+      onClickPreviewHooks.togglePreview,
+      reset,
       errorModalHooks.showError,
       errorModalHooks.setIsOpen,
       errorModalHooks.onClose,
-      // 画像挿入関連
       imageInsertionHooks.handleImageIconClick,
       imageInsertionHooks.handleImageFileChange,
-      imageInsertionHooks.handleConfirmImageInsert,
+      imageInsertionHooks.handleConfirmNewImageInsert,
       imageInsertionHooks.handleCancelImageInsert,
       imageInsertionHooks.handleImageAlertOpenChange,
-      // 埋め込みリンク関連
       embedLinkHooks.handleOpen,
       embedLinkHooks.handleClose,
       embedLinkHooks.handleInputChange,
       embedLinkHooks.handleInsert,
-      // 確認モーダル関連
       confirmModalHooks.onOpen,
       confirmModalHooks.onClose,
-      // 投稿送信関連
       postSubmitHooks.onSubmit,
     ]
   );

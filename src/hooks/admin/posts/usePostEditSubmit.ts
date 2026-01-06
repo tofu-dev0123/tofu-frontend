@@ -1,7 +1,7 @@
 import { useState, useCallback } from 'react';
-import { post, del } from '@/lib/api/http';
+import { del, put } from '@/lib/api/http';
 import { API_ENDPOINTS } from '@/lib/api/endpoint';
-import { PostResponse, PostRequest, PostStatus } from '@/types/api/post';
+import { PostPutResponse, PostPutRequest, PostStatus } from '@/types/api/post';
 import { exceptErrorHandling } from '@/lib/utils/exceptErrorHandling';
 import { useRouter } from 'next/navigation';
 import { PostEditorState } from '@/types/admin/posts';
@@ -9,11 +9,12 @@ import { ImagesDeleteResponse } from '@/types/api/imagesDelete';
 import { useToastStore } from '@/stores/toastStore';
 import { extractImageUrls } from '@/services/admin/posts/extractImageUrls';
 
-interface UsePostSubmitProps {
+interface UsePostEditSubmitProps {
   showError: (message: string[]) => void;
+  postId: number;
 }
 
-function usePostSubmit({ showError }: UsePostSubmitProps) {
+function usePostEditSubmit({ showError, postId }: UsePostEditSubmitProps) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -27,15 +28,25 @@ function usePostSubmit({ showError }: UsePostSubmitProps) {
           : extractImageUrls(state.content);
 
       // 登録する画像ID,削除する画像IDを選別
-      // state.images の中から、attachedImages に含まれているもの → 登録する画像（既に登録済みなので、リクエストに含める）
-      const registerImages = state.images
-        .filter((image) => attachedImages.includes(image.url))
-        .map((image) => image.imageId);
+      // state.newImages の中から、attachedImages に含まれているもの → 登録する画像（既に登録済みなので、リクエストに含める）
+      const registerImages = [];
+      if (state.newImages) {
+        registerImages.push(
+          ...state.newImages
+            .filter((image) => attachedImages.includes(image.url))
+            .map((image) => image.imageId)
+        );
+      }
 
-      // state.images の中から、attachedImages に含まれていないもの → 削除する画像
-      const deleteImages = state.images
-        .filter((image) => !attachedImages.includes(image.url))
-        .map((image) => image.imageId);
+      // state.newImages の中から、attachedImages に含まれていないもの → 削除する画像
+      const deleteImages = [];
+      if (state.newImages) {
+        deleteImages.push(
+          ...state.newImages
+            .filter((image) => !attachedImages.includes(image.url))
+            .map((image) => image.imageId)
+        );
+      }
 
       // 削除する画像IDがある場合、削除する
       if (deleteImages.length > 0) {
@@ -44,31 +55,38 @@ function usePostSubmit({ showError }: UsePostSubmitProps) {
         }
       }
 
+      // state.images の中から、attachedImages に含まれていないもの → APIに削除依頼する画像
+      const deleteImagesFromRequest = state.images
+        .filter((image) => !attachedImages.includes(image.url))
+        .map((image) => image.imageId);
+
       // リクエストデータを作成
-      const request: PostRequest = {
+      const request: PostPutRequest = {
         title: state.title,
         content_md: state.content,
         thumbnail_url: state.thumbnailUrl,
+        thumbnail_delete_flag: state.thumbnailDeleteFlag,
         status: status,
-        images: registerImages,
+        delete_images: deleteImagesFromRequest,
+        new_images: registerImages,
         tags: state.tags,
       };
 
       try {
-        // 投稿を作成
-        await post<PostResponse>(API_ENDPOINTS.posts.post, request);
+        // 投稿を更新（編集画面用）
+        await put<PostPutResponse>(API_ENDPOINTS.posts.put(postId), request);
 
         // トーストを表示
         const message =
           status === 'PUBLISHED'
-            ? '記事を公開しました'
-            : '下書きに保存しました';
+            ? '記事を更新しました'
+            : '下書きを更新しました';
         useToastStore.getState().show({
           type: 'success',
           message: message,
         });
 
-        // 投稿を作成したら、投稿一覧ページにリダイレクト
+        // 更新後、投稿一覧ページにリダイレクト
         router.push('/admin/home');
       } catch (error) {
         exceptErrorHandling(error, showError);
@@ -76,7 +94,7 @@ function usePostSubmit({ showError }: UsePostSubmitProps) {
         setIsLoading(false);
       }
     },
-    [router, showError]
+    [router, showError, postId]
   );
 
   return {
@@ -85,4 +103,4 @@ function usePostSubmit({ showError }: UsePostSubmitProps) {
   };
 }
 
-export default usePostSubmit;
+export default usePostEditSubmit;

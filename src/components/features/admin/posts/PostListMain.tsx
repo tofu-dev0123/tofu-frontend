@@ -12,6 +12,7 @@ function PostListMain() {
     deleteAlert,
     patchStatusAlert,
     displayedKeyword,
+    handleClickEdit,
   } = usePostList();
   return (
     <div className="h-full w-6xl flex flex-col mx-auto">
@@ -26,6 +27,7 @@ function PostListMain() {
           status={statusHook}
           deleteAlert={deleteAlert}
           patchStatusAlert={patchStatusAlert}
+          handleClickEdit={handleClickEdit}
         />
       </div>
     </div>

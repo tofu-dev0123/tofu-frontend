@@ -2,26 +2,34 @@
 
 import Image from 'next/image';
 import addGreyIcon from '@/assets/images/add-grey-icon.png';
-import { usePostEditor } from '@/contexts/admin/posts/PostEditorContext';
+import { usePostEditorContext } from '@/hooks/admin/posts/usePostEditorContext';
 
 function Tag() {
-  const { state, actions } = usePostEditor();
+  const { state, actions } = usePostEditorContext();
 
   return (
     <>
       <div className="w-full min-h-10 flex">
-        <button
-          onClick={actions.addTag}
-          className="w-10 h-10 hover:cursor-pointer hover:opacity-60 duration-200 flex items-center justify-center"
-        >
-          <Image src={addGreyIcon} alt="add grey icon" width={16} height={16} />
-        </button>
+        {!state.isPreview && (
+          <button
+            onClick={actions.addTag}
+            className="w-10 h-10 hover:cursor-pointer hover:opacity-60 duration-200 flex items-center justify-center"
+          >
+            <Image
+              src={addGreyIcon}
+              alt="add grey icon"
+              width={16}
+              height={16}
+            />
+          </button>
+        )}
         <input
           type="text"
-          placeholder="タグの追加"
+          placeholder={state.isPreview ? '' : 'タグの追加'}
           size={50}
           className="border-none focus:outline-none focus:ring-0 text-sm font-bold placeholder:text-gray-400 resize-none"
           value={state.inputValue}
+          readOnly={state.isPreview}
           onChange={(e) => actions.setInputValue(e.target.value)}
         />
       </div>
@@ -32,14 +40,16 @@ function Tag() {
             className="px-4 py-0 rounded-md border border-gray-200 relative"
           >
             <span className="text-sm font-bold">{tag}</span>
-            <Image
-              src={addGreyIcon}
-              alt="remove tag icon"
-              width={15}
-              height={15}
-              className="absolute rotate-45 -top-1.5 -right-1.5 hover:cursor-pointer hover:opacity-60 duration-200"
-              onClick={() => actions.removeTag(tag)}
-            />
+            {!state.isPreview && (
+              <Image
+                src={addGreyIcon}
+                alt="remove tag icon"
+                width={15}
+                height={15}
+                className="absolute rotate-45 -top-1.5 -right-1.5 hover:cursor-pointer hover:opacity-60 duration-200"
+                onClick={() => actions.removeTag(tag)}
+              />
+            )}
           </div>
         ))}
       </div>

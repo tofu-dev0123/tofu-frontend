@@ -1,7 +1,7 @@
 'use client';
 
 import { CardContent } from '@/components/ui/card';
-import { usePostEditor } from '@/contexts/admin/posts/PostEditorContext';
+import { usePostEditorContext } from '@/hooks/admin/posts/usePostEditorContext';
 import previewIcon from '@/assets/images/preview-icon.png';
 import editIcon from '@/assets/images/edit-icon.png';
 import imageAddIcon from '@/assets/images/image-add-icon.png';
@@ -14,7 +14,7 @@ import EmbedLink from '@/components/features/admin/posts/Editor/EmbedLink';
 import { PostStatus } from '@/types/api/post';
 
 function EditorHeader() {
-  const { state, actions, ui } = usePostEditor();
+  const { state, actions, ui } = usePostEditorContext();
 
   return (
     <>

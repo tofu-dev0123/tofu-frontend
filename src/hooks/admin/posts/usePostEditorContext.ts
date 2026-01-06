@@ -1,18 +1,27 @@
 'use client';
 
-import { useMemo } from 'react';
+import { useContext } from 'react';
 import type { PostEditorContextValue } from '@/types/admin/posts';
-import { usePostState } from './usePostState';
+import { PostEditorContext } from '@/contexts/admin/posts/PostEditorContext';
+import { PostEditContext } from '@/contexts/admin/posts/PostEditContext';
 
+/**
+ * 登録画面と編集画面の両方で使用できる共通のコンテキストフック
+ * どちらのコンテキストが利用可能かを自動的に判定します
+ */
 export function usePostEditorContext(): PostEditorContextValue {
-  const { state, actions, ui } = usePostState();
+  const createContext = useContext(PostEditorContext);
+  const editContext = useContext(PostEditContext);
 
-  return useMemo(
-    () => ({
-      state,
-      actions,
-      ui,
-    }),
-    [state, actions, ui]
+  if (createContext !== undefined) {
+    return createContext;
+  }
+
+  if (editContext !== undefined) {
+    return editContext;
+  }
+
+  throw new Error(
+    'usePostEditorContext must be used within a PostEditorProvider or PostEditProvider'
   );
 }

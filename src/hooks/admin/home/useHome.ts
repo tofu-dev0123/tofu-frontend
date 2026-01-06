@@ -27,6 +27,10 @@ function useHome() {
     router.push('/admin/posts/new');
   };
 
+  const handleClickPost = (postId: number) => {
+    router.push(`/admin/posts/${postId}/edit`);
+  };
+
   useEffect(() => {
     // 初期処理
     getSummary();
@@ -39,6 +43,7 @@ function useHome() {
     draftPosts,
     errorModalHook,
     handleClickCreate,
+    handleClickPost,
     postList,
   };
 }

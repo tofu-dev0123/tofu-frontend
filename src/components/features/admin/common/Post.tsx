@@ -5,16 +5,20 @@ import dummyImage from '@/assets/images/dummy-image.png';
 
 interface PostProps {
   post: Post;
+  handleClickPost: (postId: number) => void;
 }
 
-function Post({ post }: PostProps) {
+function Post({ post, handleClickPost }: PostProps) {
   const thumbnailUrl = post.thumbnail_url || dummyImage;
   const width = 150;
   const height = 100;
   return (
     <>
       <div className="w-full h-full flex flex-col justify-start items-center gap-4">
-        <div className="w-full h-full flex justify-center items-center rounded-md overflow-hidden shadow-md">
+        <div
+          className="w-full h-full flex justify-center items-center rounded-md overflow-hidden shadow-md hover:cursor-pointer hover:bg-gray-100 duration-200"
+          onClick={() => handleClickPost(post.post_id)}
+        >
           <Image
             src={thumbnailUrl}
             alt={post.title}

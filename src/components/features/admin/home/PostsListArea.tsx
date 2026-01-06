@@ -4,9 +4,10 @@ import type { Post as PostType } from '@/types/api/post';
 
 interface PostsListAreaProps {
   postList: PostType[];
+  handleClickPost: (postId: number) => void;
 }
 
-function PostsListArea({ postList }: PostsListAreaProps) {
+function PostsListArea({ postList, handleClickPost }: PostsListAreaProps) {
   return (
     <Card className="h-full w-full flex flex-col gap-4 justify-start border-none shadow-lg">
       <CardHeader>
@@ -18,7 +19,11 @@ function PostsListArea({ postList }: PostsListAreaProps) {
             key={post.post_id}
             className="col-span-1 flex flex-col justify-start items-center mb-4 p-1 border border-white rounded-md"
           >
-            <Post key={post.post_id} post={post} />
+            <Post
+              key={post.post_id}
+              post={post}
+              handleClickPost={handleClickPost}
+            />
           </div>
         ))}
       </CardContent>

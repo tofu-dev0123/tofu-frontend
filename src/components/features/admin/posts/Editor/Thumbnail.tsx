@@ -24,17 +24,19 @@ function Thumbnail() {
               fill
               className="object-contain rounded-lg"
             />
-            <Image
-              src={addGreyIcon}
-              alt="削除ボタン"
-              width={24}
-              height={24}
-              className="absolute top-0 right-0 rotate-45 hover:cursor-pointer hover:opacity-60 duration-200"
-              onClick={actions.handleDeleteThumbnail}
-            />
+            {!state.isPreview && (
+              <Image
+                src={addGreyIcon}
+                alt="削除ボタン"
+                width={24}
+                height={24}
+                className="absolute top-0 right-0 rotate-45 hover:cursor-pointer hover:opacity-60 duration-200"
+                onClick={actions.handleDeleteThumbnail}
+              />
+            )}
           </>
         )}
-        {!state.isThumbnailLoading && !state.thumbnailUrl && (
+        {!state.isThumbnailLoading && !state.thumbnailUrl && !state.isPreview && (
           <Image
             src={thumbnailIcon}
             alt="thumbnail"

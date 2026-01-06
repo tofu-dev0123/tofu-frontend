@@ -36,16 +36,18 @@ function Thumbnail() {
             )}
           </>
         )}
-        {!state.isThumbnailLoading && !state.thumbnailUrl && !state.isPreview && (
-          <Image
-            src={thumbnailIcon}
-            alt="thumbnail"
-            width={40}
-            height={40}
-            className="absolute top-1/2 left-30 -translate-y-1/2 hover:cursor-pointer hover:opacity-60 duration-200"
-            onClick={actions.handleThumbnailClick}
-          />
-        )}
+        {!state.isThumbnailLoading &&
+          !state.thumbnailUrl &&
+          !state.isPreview && (
+            <Image
+              src={thumbnailIcon}
+              alt="thumbnail"
+              width={40}
+              height={40}
+              className="absolute top-1/2 left-30 -translate-y-1/2 hover:cursor-pointer hover:opacity-60 duration-200"
+              onClick={actions.handleThumbnailClick}
+            />
+          )}
         {state.isThumbnailLoading && (
           <div className="absolute inset-0 rounded-lg flex flex-col items-center justify-center z-10">
             <Spinner />

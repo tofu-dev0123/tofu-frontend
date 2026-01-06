@@ -44,6 +44,7 @@ export function useMarkdownEditor(
       viewRef.current = null;
       isInitializedRef.current = false;
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isPreview, onChange]);
 
   // 初期データの設定：エディタが初期化された後、エディタの内容が空でvalueが設定された場合のみ更新

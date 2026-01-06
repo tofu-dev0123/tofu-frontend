@@ -105,7 +105,14 @@ export function useThumbnail({ showError }: UseThumbnailProps) {
       setIsLoading(false);
       setLoadingType(null);
     }
-  }, [imageId, showError, setThumbnailUrl, setThumbnailDeleteFlag]);
+  }, [
+    imageId,
+    thumbnailUrl,
+    altText,
+    thumbnailDeleteFlag,
+    showError,
+    setThumbnailUrl,
+  ]);
 
   // アラートの保存ボタン押下時にアップロード処理を実行
   const handleConfirmUpload = useCallback(async () => {

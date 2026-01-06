@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback } from 'react';
 
 interface UseTagsProps {
   initialTags?: string[];
@@ -8,14 +8,9 @@ interface UseTagsProps {
 
 export function useTags({ initialTags }: UseTagsProps = {}) {
   const [inputValue, setInputValue] = useState('');
-  const [tags, setTagsState] = useState<string[]>([]);
-
-  // 初期タグを設定
-  useEffect(() => {
-    if (initialTags && initialTags.length > 0) {
-      setTagsState(initialTags);
-    }
-  }, [initialTags]);
+  const [tags, setTagsState] = useState<string[]>(
+    initialTags && initialTags.length > 0 ? initialTags : []
+  );
 
   const addTag = useCallback(() => {
     if (!inputValue.trim()) return;

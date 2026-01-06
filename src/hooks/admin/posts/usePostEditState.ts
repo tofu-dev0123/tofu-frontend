@@ -204,7 +204,7 @@ export function usePostEditState({
       errorModalHooks.onClose,
       imageInsertionHooks.handleImageIconClick,
       imageInsertionHooks.handleImageFileChange,
-      imageInsertionHooks.handleConfirmImageInsert,
+      imageInsertionHooks.handleConfirmNewImageInsert,
       imageInsertionHooks.handleCancelImageInsert,
       imageInsertionHooks.handleImageAlertOpenChange,
       embedLinkHooks.handleOpen,

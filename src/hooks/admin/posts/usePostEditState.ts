@@ -58,7 +58,10 @@ export function usePostEditState({
   useEffect(() => {
     postTitleHooks.setTitle(initialData.title);
     postContentHooks.setContent(initialData.content);
+    thumbnailHooks.setImageId(initialData.thumbnailId);
     thumbnailHooks.setThumbnailUrl(initialData.thumbnailUrl);
+    thumbnailHooks.setAltText(initialData.thumbnailAltText);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // 初回のみ実行
 

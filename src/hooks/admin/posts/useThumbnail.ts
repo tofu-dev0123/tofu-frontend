@@ -75,6 +75,10 @@ export function useThumbnail({ showError }: UseThumbnailProps) {
 
   // 画像を削除する
   const handleDeleteThumbnail = useCallback(async () => {
+    console.log('handleDeleteThumbnail', imageId);
+    console.log('thumbnailUrl', thumbnailUrl);
+    console.log('altText', altText);
+    console.log('thumbnailDeleteFlag', thumbnailDeleteFlag);
     if (!imageId) return;
     setIsLoading(true);
     setLoadingType('delete');

@@ -57,11 +57,29 @@ export type PostDetail = {
   slug: string;
   content_md: string;
   content_html: string;
+  thumbnail_id: number | null;
   thumbnail_url: string | null;
+  thumbnail_alt_text: string | null;
   status: PostStatus;
   images: PostImage[];
   tags: PostTag[];
   published_at: string | null;
   created_at: string;
   updated_at: string;
+};
+
+export type PostPutRequest = {
+  title: string;
+  content_md: string;
+  thumbnail_url: string | null;
+  thumbnail_delete_flag?: boolean;
+  status?: PostStatus;
+  delete_images?: number[];
+  new_images?: number[];
+  tags?: string[];
+};
+
+export type PostPutResponse = {
+  message: string;
+  post_id: number;
 };

@@ -33,6 +33,8 @@ function EditMain() {
         initialData={{
           title: postData.title,
           content: postData.content_md,
+          thumbnailId: postData.thumbnail_id,
+          thumbnailAltText: postData.thumbnail_alt_text,
           thumbnailUrl: postData.thumbnail_url,
           tags: postData.tags.map((tag) => tag.name),
           images: postData.images.map((image) => ({

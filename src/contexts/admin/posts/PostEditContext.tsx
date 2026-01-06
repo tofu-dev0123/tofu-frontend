@@ -12,7 +12,9 @@ export const PostEditContext = createContext<
 export interface PostEditInitialData {
   title: string;
   content: string;
+  thumbnailId: number | null;
   thumbnailUrl: string | null;
+  thumbnailAltText: string | null;
   tags: string[];
   images: ImageInsertionState[];
 }

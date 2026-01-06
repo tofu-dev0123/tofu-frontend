@@ -3,16 +3,18 @@
 import React, { createContext, useContext } from 'react';
 import type { PostEditorContextValue } from '@/types/admin/posts';
 import { usePostEditState } from '@/hooks/admin/posts/usePostEditState';
+import type { ImageInsertionState } from '@/hooks/admin/posts/useImageInsertion';
 
-export const PostEditContext = createContext<PostEditorContextValue | undefined>(
-  undefined
-);
+export const PostEditContext = createContext<
+  PostEditorContextValue | undefined
+>(undefined);
 
 export interface PostEditInitialData {
   title: string;
   content: string;
   thumbnailUrl: string | null;
   tags: string[];
+  images: ImageInsertionState[];
 }
 
 interface PostEditProviderProps {
@@ -42,4 +44,3 @@ export function usePostEdit(): PostEditorContextValue {
   }
   return context;
 }
-

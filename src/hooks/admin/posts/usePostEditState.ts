@@ -39,6 +39,7 @@ export function usePostEditState({
   const editorViewRef = useRef<EditorView | null>(null);
   const imageInsertionHooks = useImageInsertion({
     editorViewRef,
+    initialImages: initialData.images,
     showError: errorModalHooks.showError,
   });
   const embedLinkHooks = useEmbedLink({
@@ -74,7 +75,7 @@ export function usePostEditState({
       imageId: thumbnailHooks.imageId,
       altText: thumbnailHooks.altText,
       isThumbnailLoading: thumbnailHooks.isLoading,
-      progress: thumbnailHooks.progress,
+      thumbnailDeleteFlag: thumbnailHooks.thumbnailDeleteFlag,
       loadingType: thumbnailHooks.loadingType,
       isAlertOpen: thumbnailHooks.isAlertOpen,
       previewImageUrl: thumbnailHooks.previewImageUrl,
@@ -86,6 +87,7 @@ export function usePostEditState({
       errorMessage: errorModalHooks.errorMessage,
       // 画像挿入情報
       images: imageInsertionHooks.images,
+      newImages: imageInsertionHooks.newImages,
       isImageAlertOpen: imageInsertionHooks.isImageAlertOpen,
       imagePreviewUrl: imageInsertionHooks.previewImageUrl,
       // 埋め込みリンク情報
@@ -105,7 +107,7 @@ export function usePostEditState({
       thumbnailHooks.imageId,
       thumbnailHooks.altText,
       thumbnailHooks.isLoading,
-      thumbnailHooks.progress,
+      thumbnailHooks.thumbnailDeleteFlag,
       thumbnailHooks.loadingType,
       thumbnailHooks.isAlertOpen,
       thumbnailHooks.previewImageUrl,
@@ -114,6 +116,7 @@ export function usePostEditState({
       errorModalHooks.isOpen,
       errorModalHooks.errorMessage,
       imageInsertionHooks.images,
+      imageInsertionHooks.newImages,
       imageInsertionHooks.isImageAlertOpen,
       imageInsertionHooks.previewImageUrl,
       embedLinkHooks.open,
@@ -161,7 +164,7 @@ export function usePostEditState({
       // 画像挿入関連
       handleImageIconClick: imageInsertionHooks.handleImageIconClick,
       handleImageFileChange: imageInsertionHooks.handleImageFileChange,
-      handleConfirmImageInsert: imageInsertionHooks.handleConfirmImageInsert,
+      handleConfirmImageInsert: imageInsertionHooks.handleConfirmNewImageInsert,
       handleCancelImageInsert: imageInsertionHooks.handleCancelImageInsert,
       handleImageAlertOpenChange:
         imageInsertionHooks.handleImageAlertOpenChange,
@@ -226,4 +229,3 @@ export function usePostEditState({
     ui,
   };
 }
-

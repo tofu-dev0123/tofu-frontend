@@ -24,6 +24,7 @@ export function useThumbnail({ showError }: UseThumbnailProps) {
   const [thumbnailUrl, setThumbnailUrlState] = useState<string | null>(null);
   const [altText, setAltText] = useState<string | null>(null);
   const [previewImageUrl, setPreviewImageUrl] = useState<string | null>(null);
+  const [thumbnailDeleteFlag, setThumbnailDeleteFlag] = useState(false);
 
   const thumbnailInputRef = useRef<HTMLInputElement>(null);
   const pendingFileRef = useRef<File | null>(null);
@@ -84,6 +85,7 @@ export function useThumbnail({ showError }: UseThumbnailProps) {
       setThumbnailUrl(null);
       setImageId(null);
       setAltText(null);
+      setThumbnailDeleteFlag(true);
       // ファイル入力の値をリセット
       if (thumbnailInputRef.current) {
         thumbnailInputRef.current.value = '';
@@ -93,12 +95,13 @@ export function useThumbnail({ showError }: UseThumbnailProps) {
       setIsLoading(false);
       setLoadingType(null);
       exceptErrorHandling(error, showError);
+      setThumbnailDeleteFlag(false);
       return; // エラー時は finally ブロックの処理をスキップ
     } finally {
       setIsLoading(false);
       setLoadingType(null);
     }
-  }, [imageId, showError, setThumbnailUrl]);
+  }, [imageId, showError, setThumbnailUrl, setThumbnailDeleteFlag]);
 
   // アラートの保存ボタン押下時にアップロード処理を実行
   const handleConfirmUpload = useCallback(async () => {
@@ -147,6 +150,7 @@ export function useThumbnail({ showError }: UseThumbnailProps) {
     } finally {
       setIsLoading(false);
       setLoadingType(null);
+      setThumbnailDeleteFlag(false);
     }
   }, [showError, setThumbnailUrl, previewImageUrl]);
 
@@ -203,6 +207,7 @@ export function useThumbnail({ showError }: UseThumbnailProps) {
     isAlertOpen,
     previewImageUrl,
     thumbnailInputRef,
+    thumbnailDeleteFlag,
     handleThumbnailClick,
     handleFileChange,
     handleDeleteThumbnail,

@@ -35,6 +35,10 @@ function EditMain() {
           content: postData.content_md,
           thumbnailUrl: postData.thumbnail_url,
           tags: postData.tags.map((tag) => tag.name),
+          images: postData.images.map((image) => ({
+            imageId: image.image_id,
+            url: image.url,
+          })),
         }}
       >
         <div className="h-full w-6xl flex flex-col mx-auto">

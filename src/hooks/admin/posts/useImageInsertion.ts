@@ -13,6 +13,7 @@ import { THUMBNAIL_MAX_FILE_SIZE } from '@/constants/admin/fileFormats';
 interface UseImageInsertionProps {
   editorViewRef: React.RefObject<EditorView | null>;
   showError: (message: string[]) => void;
+  initialImages?: ImageInsertionState[];
 }
 
 export interface ImageInsertionState {
@@ -23,16 +24,22 @@ export interface ImageInsertionState {
 export function useImageInsertion({
   editorViewRef,
   showError,
+  initialImages,
 }: UseImageInsertionProps) {
   const [images, setImages] = useState<ImageInsertionState[]>([]);
+  // 編集画面で新たに追加された画像データ（編集画面のみ）
+  const [newImages, setNewImages] = useState<ImageInsertionState[]>([]);
   const [isImageAlertOpen, setIsImageAlertOpen] = useState(false);
   const [previewImageUrl, setPreviewImageUrl] = useState<string | null>(null);
   const imageInputRef = useRef<HTMLInputElement>(null);
   const pendingFileRef = useRef<File | null>(null);
 
+  // 初期画像データを設定
   useEffect(() => {
-    console.log('images', images);
-  }, [images]);
+    if (initialImages && initialImages.length > 0) {
+      setImages(initialImages);
+    }
+  }, [initialImages]);
 
   // CodeMirror のカーソル位置に Markdown を挿入
   const insertImageMarkdown = useCallback(
@@ -103,58 +110,65 @@ export function useImageInsertion({
     [previewImageUrl, showError]
   );
 
+  // 画像アップロードとMarkdown挿入の共通処理
+  const uploadAndInsertImage = useCallback(
+    async (addImage: (image: ImageInsertionState) => void) => {
+      const file = pendingFileRef.current;
+      if (!file) {
+        setIsImageAlertOpen(false);
+        return;
+      }
+
+      setIsImageAlertOpen(false);
+
+      try {
+        const formData = new FormData();
+        formData.append('image_file', file);
+        formData.append('alt_text', ''); // 空文字列をデフォルトとして使用
+
+        const response = await uploadFile<ImagesUploadResponse>(
+          API_ENDPOINTS.images.post,
+          formData
+        );
+
+        // CodeMirror に Markdown を挿入
+        insertImageMarkdown(response.url);
+
+        // 画像情報を追加
+        addImage({ imageId: response.image_id, url: response.url });
+
+        pendingFileRef.current = null;
+
+        // プレビューURLを解放
+        if (previewImageUrl) {
+          URL.revokeObjectURL(previewImageUrl);
+          setPreviewImageUrl(null);
+        }
+      } catch (error) {
+        exceptErrorHandling(error, showError);
+        pendingFileRef.current = null;
+
+        // エラー時もプレビューURLを解放
+        if (previewImageUrl) {
+          URL.revokeObjectURL(previewImageUrl);
+          setPreviewImageUrl(null);
+        }
+      } finally {
+        // ファイル入力をリセット
+        if (imageInputRef.current) {
+          imageInputRef.current.value = '';
+        }
+      }
+    },
+    [showError, insertImageMarkdown, previewImageUrl]
+  );
+
   // 確認ダイアログでOKを押した時の処理（アップロード → 挿入）
   const handleConfirmImageInsert = useCallback(async () => {
-    const file = pendingFileRef.current;
-    if (!file) {
-      setIsImageAlertOpen(false);
-      return;
-    }
-
-    setIsImageAlertOpen(false);
-
-    try {
-      const formData = new FormData();
-      formData.append('image_file', file);
-      formData.append('alt_text', ''); // 空文字列をデフォルトとして使用
-
-      const response = await uploadFile<ImagesUploadResponse>(
-        API_ENDPOINTS.images.post,
-        formData
-      );
-
-      // CodeMirror に Markdown を挿入
-      insertImageMarkdown(response.url);
-
-      // 画像情報を追加
-      setImages((prevImages) => [
-        ...prevImages,
-        { imageId: response.image_id, url: response.url },
-      ]);
-
-      pendingFileRef.current = null;
-
-      // プレビューURLを解放
-      if (previewImageUrl) {
-        URL.revokeObjectURL(previewImageUrl);
-        setPreviewImageUrl(null);
-      }
-    } catch (error) {
-      exceptErrorHandling(error, showError);
-      pendingFileRef.current = null;
-
-      // エラー時もプレビューURLを解放
-      if (previewImageUrl) {
-        URL.revokeObjectURL(previewImageUrl);
-        setPreviewImageUrl(null);
-      }
-    } finally {
-      // ファイル入力をリセット
-      if (imageInputRef.current) {
-        imageInputRef.current.value = '';
-      }
-    }
-  }, [showError, insertImageMarkdown, previewImageUrl]);
+    await uploadAndInsertImage((image) => {
+      setImages((prevImages) => [...prevImages, image]);
+    });
+  }, [uploadAndInsertImage]);
 
   // キャンセル時の処理
   const handleCancelImageInsert = useCallback(() => {
@@ -200,14 +214,24 @@ export function useImageInsertion({
     };
   }, [previewImageUrl]);
 
+  // 確認ダイアログでOKを押した時の処理（編集画面で新たに追加された画像データの挿入）
+  const handleConfirmNewImageInsert = useCallback(async () => {
+    await uploadAndInsertImage((image) => {
+      setNewImages((prevImages) => [...prevImages, image]);
+    });
+  }, [uploadAndInsertImage]);
+
   return {
     images,
+    newImages,
     isImageAlertOpen,
     previewImageUrl,
     imageInputRef,
+    setImages,
     handleImageIconClick,
     handleImageFileChange,
     handleConfirmImageInsert,
+    handleConfirmNewImageInsert,
     handleCancelImageInsert,
     handleImageAlertOpenChange,
   };

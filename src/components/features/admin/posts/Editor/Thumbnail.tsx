@@ -4,10 +4,10 @@ import { CardContent } from '@/components/ui/card';
 import Image from 'next/image';
 import thumbnailIcon from '@/assets/images/thumbnail-icon.png';
 import { usePostEditorContext } from '@/hooks/admin/posts/usePostEditorContext';
-import { Progress } from '@/components/ui/progress';
 import addGreyIcon from '@/assets/images/add-grey-icon.png';
 import Alert from '@/components/features/admin/common/Alert';
 import { THUMBNAIL_ACCEPT_FORMATS } from '@/constants/admin/fileFormats';
+import { Spinner } from '@/components/ui/spinner';
 
 function Thumbnail() {
   const { state, actions, ui } = usePostEditorContext();
@@ -46,7 +46,7 @@ function Thumbnail() {
         )}
         {state.isThumbnailLoading && (
           <div className="absolute inset-0 rounded-lg flex flex-col items-center justify-center z-10">
-            <Progress value={state.progress} className="w-3/4 mb-4" />
+            <Spinner />
             <span className="text-sm">
               {state.loadingType === 'delete'
                 ? '削除中...'

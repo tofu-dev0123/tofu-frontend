@@ -16,7 +16,6 @@ export interface PostEditorState {
   imageId: number | null;
   altText: string | null;
   isThumbnailLoading: boolean;
-  progress: number;
   loadingType: 'upload' | 'delete' | null;
   isAlertOpen: boolean;
   previewImageUrl: string | null;

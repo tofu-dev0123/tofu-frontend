@@ -17,7 +17,6 @@ interface UseThumbnailProps {
 export function useThumbnail({ showError }: UseThumbnailProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [isAlertOpen, setIsAlertOpen] = useState(false);
-  const [progress, setProgress] = useState(0);
   const [loadingType, setLoadingType] = useState<'upload' | 'delete' | null>(
     null
   );
@@ -28,27 +27,6 @@ export function useThumbnail({ showError }: UseThumbnailProps) {
 
   const thumbnailInputRef = useRef<HTMLInputElement>(null);
   const pendingFileRef = useRef<File | null>(null);
-
-  // プログレスバーのアニメーション
-  useEffect(() => {
-    if (!isLoading) {
-      setProgress(0);
-      return;
-    }
-
-    setProgress(0);
-    const interval = setInterval(() => {
-      setProgress((prev) => {
-        if (prev >= 100) {
-          clearInterval(interval);
-          return 100;
-        }
-        return prev + 2.5; // 50msごとに2.5%増加（50ms × 40回 = 2秒で100%）
-      });
-    }, 50);
-
-    return () => clearInterval(interval);
-  }, [isLoading]);
 
   const handleThumbnailClick = () => {
     thumbnailInputRef.current?.click();
@@ -99,8 +77,6 @@ export function useThumbnail({ showError }: UseThumbnailProps) {
     if (!imageId) return;
     setIsLoading(true);
     setLoadingType('delete');
-    const startTime = Date.now();
-    const MIN_LOADING_TIME = 2000; // 最低2秒間
 
     try {
       await del<ImagesDeleteResponse>(API_ENDPOINTS.images.delete(imageId));
@@ -119,9 +95,6 @@ export function useThumbnail({ showError }: UseThumbnailProps) {
       exceptErrorHandling(error, showError);
       return; // エラー時は finally ブロックの処理をスキップ
     } finally {
-      const elapsedTime = Date.now() - startTime;
-      const remainingTime = Math.max(0, MIN_LOADING_TIME - elapsedTime);
-      await new Promise((resolve) => setTimeout(resolve, remainingTime));
       setIsLoading(false);
       setLoadingType(null);
     }
@@ -138,8 +111,6 @@ export function useThumbnail({ showError }: UseThumbnailProps) {
     setIsAlertOpen(false);
     setIsLoading(true);
     setLoadingType('upload');
-    const startTime = Date.now();
-    const MIN_LOADING_TIME = 2000; // 最低2秒間
 
     try {
       const formData = new FormData();
@@ -174,9 +145,6 @@ export function useThumbnail({ showError }: UseThumbnailProps) {
       }
       return; // エラー時は finally ブロックの処理をスキップ
     } finally {
-      const elapsedTime = Date.now() - startTime;
-      const remainingTime = Math.max(0, MIN_LOADING_TIME - elapsedTime);
-      await new Promise((resolve) => setTimeout(resolve, remainingTime));
       setIsLoading(false);
       setLoadingType(null);
     }
@@ -231,7 +199,6 @@ export function useThumbnail({ showError }: UseThumbnailProps) {
     altText,
     imageId,
     isLoading,
-    progress,
     loadingType,
     isAlertOpen,
     previewImageUrl,

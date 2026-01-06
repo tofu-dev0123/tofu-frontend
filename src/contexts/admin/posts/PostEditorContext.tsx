@@ -12,7 +12,9 @@ interface PostEditorProviderProps {
   children: React.ReactNode;
 }
 
-export function PostEditorProvider({ children }: PostEditorProviderProps) {
+export function PostEditorProvider({
+  children,
+}: PostEditorProviderProps) {
   const value = usePostEditorContext();
 
   return (

@@ -1,10 +1,21 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 
-export function useTags() {
+interface UseTagsProps {
+  initialTags?: string[];
+}
+
+export function useTags({ initialTags }: UseTagsProps = {}) {
   const [inputValue, setInputValue] = useState('');
   const [tags, setTagsState] = useState<string[]>([]);
+
+  // 初期タグを設定
+  useEffect(() => {
+    if (initialTags && initialTags.length > 0) {
+      setTagsState(initialTags);
+    }
+  }, [initialTags]);
 
   const addTag = useCallback(() => {
     if (!inputValue.trim()) return;

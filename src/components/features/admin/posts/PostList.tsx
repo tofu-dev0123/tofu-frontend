@@ -31,6 +31,7 @@ interface PostListProps {
   status: ReturnType<typeof useStatus>;
   deleteAlert: ReturnType<typeof usePostDeleteAlert>;
   patchStatusAlert: ReturnType<typeof usePatchStatusAlert>;
+  handleClickEdit: (postId: number) => void;
 }
 
 function PostList({
@@ -38,6 +39,7 @@ function PostList({
   status,
   deleteAlert,
   patchStatusAlert,
+  handleClickEdit,
 }: PostListProps) {
   return (
     <Card className="h-full w-full flex flex-col gap-4 justify-start border-none shadow-lg">
@@ -102,6 +104,7 @@ function PostList({
               post={post}
               handleOpenDeleteAlert={deleteAlert.handleOpen}
               handleOpenPatchStatusAlert={patchStatusAlert.handleOpen}
+              handleClickEdit={handleClickEdit}
             />
           </div>
         ))}

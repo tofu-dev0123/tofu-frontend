@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 import useErrorModal from '@/hooks/admin/common/useErrorModal';
 import useSearchPost from '@/hooks/admin/posts/useSearchPost';
 import useStatus from '@/hooks/admin/posts/useStatus';
@@ -17,6 +17,11 @@ function usePostList() {
   const deleteAlertHook = usePostDeleteAlert({ showError });
   const patchStatusAlertHook = usePatchStatusAlert({ showError });
   const [displayedKeyword, setDisplayedKeyword] = useState<string>('');
+  const router = useRouter();
+
+  const handleClickEdit = (postId: number) => {
+    router.push(`/admin/posts/${postId}/edit`);
+  };
 
   useEffect(() => {
     // 初期処理
@@ -50,6 +55,7 @@ function usePostList() {
     deleteAlert: deleteAlertHook,
     patchStatusAlert: patchStatusAlertHook,
     displayedKeyword,
+    handleClickEdit,
   };
 }
 

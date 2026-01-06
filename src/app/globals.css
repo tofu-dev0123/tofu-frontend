@@ -122,3 +122,9 @@ body {
   height: 100%;
   margin: 0;
 }
+
+/* CodeMirrorエディタのフォントを標準フォントに統一 */
+.cm-editor,
+.cm-editor * {
+  font-family: var(--font-geist-sans), sans-serif !important;
+}

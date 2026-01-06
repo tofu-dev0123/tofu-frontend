@@ -13,12 +13,14 @@ interface PostInfoProps {
   post: Post;
   handleOpenDeleteAlert: (id: number) => void;
   handleOpenPatchStatusAlert: (id: number, status: PostStatus) => void;
+  handleClickEdit: (id: number) => void;
 }
 
 function PostInfo({
   post,
   handleOpenDeleteAlert,
   handleOpenPatchStatusAlert,
+  handleClickEdit,
 }: PostInfoProps) {
   return (
     <>
@@ -66,7 +68,10 @@ function PostInfo({
               />
             </PopoverTrigger>
             <PopoverContent className="w-30 p-0 flex flex-col justify-start items-start border border-gray-200 rounded-md">
-              <p className="w-full py-2 px-4 text-start text-sm text-gray-700 hover:cursor-pointer hover:bg-gray-100/50 duration-200">
+              <p
+                className="w-full py-2 px-4 text-start text-sm text-gray-700 hover:cursor-pointer hover:bg-gray-100/50 duration-200"
+                onClick={() => handleClickEdit(post.post_id)}
+              >
                 編集
               </p>
               {post.status === 'PUBLISHED' && (

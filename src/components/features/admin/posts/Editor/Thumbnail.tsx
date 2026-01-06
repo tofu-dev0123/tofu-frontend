@@ -3,14 +3,14 @@
 import { CardContent } from '@/components/ui/card';
 import Image from 'next/image';
 import thumbnailIcon from '@/assets/images/thumbnail-icon.png';
-import { usePostEditor } from '@/contexts/admin/posts/PostEditorContext';
+import { usePostEditorContext } from '@/hooks/admin/posts/usePostEditorContext';
 import { Progress } from '@/components/ui/progress';
 import addGreyIcon from '@/assets/images/add-grey-icon.png';
 import Alert from '@/components/features/admin/common/Alert';
 import { THUMBNAIL_ACCEPT_FORMATS } from '@/constants/admin/fileFormats';
 
 function Thumbnail() {
-  const { state, actions, ui } = usePostEditor();
+  const { state, actions, ui } = usePostEditorContext();
 
   return (
     <CardContent className="w-full h-80 p-4 flex items-center justify-center">

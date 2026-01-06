@@ -8,7 +8,7 @@ import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import confirmIcon from '@/assets/images/confirm-icon.png';
 import Image from 'next/image';
-import { usePostEditor } from '@/contexts/admin/posts/PostEditorContext';
+import { usePostEditorContext } from '@/hooks/admin/posts/usePostEditorContext';
 import { PostStatus } from '@/types/api/post';
 
 interface ConfirmModalProps {
@@ -19,7 +19,7 @@ interface ConfirmModalProps {
 }
 
 function ConfirmModal({ isOpen, onClose, title, tags }: ConfirmModalProps) {
-  const { actions, state } = usePostEditor();
+  const { actions, state } = usePostEditorContext();
   if (!isOpen) return null;
 
   const handleClose = () => {

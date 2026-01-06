@@ -2,10 +2,10 @@
 
 import Image from 'next/image';
 import addGreyIcon from '@/assets/images/add-grey-icon.png';
-import { usePostEditor } from '@/contexts/admin/posts/PostEditorContext';
+import { usePostEditorContext } from '@/hooks/admin/posts/usePostEditorContext';
 
 function Tag() {
-  const { state, actions } = usePostEditor();
+  const { state, actions } = usePostEditorContext();
 
   return (
     <>

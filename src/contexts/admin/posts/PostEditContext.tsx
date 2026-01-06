@@ -4,7 +4,7 @@ import React, { createContext, useContext } from 'react';
 import type { PostEditorContextValue } from '@/types/admin/posts';
 import { usePostEditState } from '@/hooks/admin/posts/usePostEditState';
 
-const PostEditContext = createContext<PostEditorContextValue | undefined>(
+export const PostEditContext = createContext<PostEditorContextValue | undefined>(
   undefined
 );
 

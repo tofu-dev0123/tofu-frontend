@@ -1,10 +1,10 @@
 'use client';
 
 import TextareaAutosize from 'react-textarea-autosize';
-import { usePostEditor } from '@/contexts/admin/posts/PostEditorContext';
+import { usePostEditorContext } from '@/hooks/admin/posts/usePostEditorContext';
 
 function PostTitle() {
-  const { state, actions } = usePostEditor();
+  const { state, actions } = usePostEditorContext();
 
   return (
     <div className="w-full min-h-20 flex items-center justify-center">

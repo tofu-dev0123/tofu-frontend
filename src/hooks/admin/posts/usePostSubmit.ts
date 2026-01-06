@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import { PostEditorState } from '@/types/admin/posts';
 import { ImagesDeleteResponse } from '@/types/api/imagesDelete';
 import { useToastStore } from '@/stores/toastStore';
+import { extractImageUrls } from '@/services/admin/posts/extractImageUrls';
 
 interface UsePostSubmitProps {
   showError: (message: string[]) => void;
@@ -19,15 +20,21 @@ function usePostSubmit({ showError }: UsePostSubmitProps) {
   const onSubmit = useCallback(
     async (state: PostEditorState, status: PostStatus) => {
       setIsLoading(true);
+      // 画像URLを抽出（下書き送信時のみ実行、公開時は確認モーダルで既に設定済み）
+      const attachedImages =
+        state.attachedImages.length > 0
+          ? state.attachedImages
+          : extractImageUrls(state.content);
+
       // 登録する画像ID,削除する画像IDを選別
-      // state.images の中から、state.attachedImages に含まれているもの → 登録する画像（既に登録済みなので、リクエストに含める）
+      // state.images の中から、attachedImages に含まれているもの → 登録する画像（既に登録済みなので、リクエストに含める）
       const registerImages = state.images
-        .filter((image) => state.attachedImages.includes(image.url))
+        .filter((image) => attachedImages.includes(image.url))
         .map((image) => image.imageId);
 
-      // state.images の中から、state.attachedImages に含まれていないもの → 削除する画像
+      // state.images の中から、attachedImages に含まれていないもの → 削除する画像
       const deleteImages = state.images
-        .filter((image) => !state.attachedImages.includes(image.url))
+        .filter((image) => !attachedImages.includes(image.url))
         .map((image) => image.imageId);
 
       // 削除する画像IDがある場合、削除する

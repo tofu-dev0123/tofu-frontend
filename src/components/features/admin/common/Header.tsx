@@ -31,7 +31,7 @@ function Header({
   const { handleClickLogo } = useHeader();
 
   return (
-    <header className="w-full h-16 bg-white shadow">
+    <header className="w-full h-16">
       <div className="h-full flex justify-between items-center px-4">
         <div className="flex items-center cursor-pointer gap-4">
           <span

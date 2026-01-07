@@ -17,28 +17,19 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
 
   return (
     <>
-      <div className="min-h-screen grid grid-rows-[auto_1fr] grid-cols-[auto_1fr]">
+      <div className="min-h-screen flex flex-col bg-gray-100/50">
         {/* ヘッダー: 上部全幅、2列をまたぐ */}
-        <header className="col-span-2">
+        <header className="w-full">
           <Header
             loginFlag={true}
-            handleClickMenu={handleClickMenu}
             handleClickLogout={handleClickLogout}
             keyword={searchPostHook.keyword}
             handleInputChange={searchPostHook.handleInputChange}
             handleSearch={searchPostHook.handleSearch}
           />
         </header>
-
-        {/* ナビゲーション: 左側、固定幅 */}
-        <aside className="row-start-2">
-          <Navigation isOpen={isMenuOpen} />
-        </aside>
-
         {/* メインコンテンツ: 右側、残りのスペース */}
-        <main className="row-start-2 overflow-auto bg-gray-100">
-          {children}
-        </main>
+        <main className="flex-1 overflow-auto">{children}</main>
       </div>
       <ErrorModal
         isOpen={errorModalHook.isOpen}

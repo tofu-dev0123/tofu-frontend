@@ -19,12 +19,16 @@ function useHome() {
   });
 
   // 投稿一覧の状態管理フック
-  const { postList, getPostList } = usePostList({
+  const { postList, draftPostList, getPostList } = usePostList({
     showError: errorModalHook.showError,
   });
 
   const handleClickCreate = () => {
     router.push('/admin/posts/new');
+  };
+
+  const handleClickList = () => {
+    router.push('/admin/posts');
   };
 
   const handleClickPost = (postId: number) => {
@@ -34,7 +38,8 @@ function useHome() {
   useEffect(() => {
     // 初期処理
     getSummary();
-    getPostList({ limit: 6, status: 'PUBLISHED' as PostStatus });
+    getPostList({ limit: 3, status: 'PUBLISHED' as PostStatus });
+    getPostList({ limit: 3, status: 'DRAFT' as PostStatus });
   }, [getSummary, getPostList]);
 
   return {
@@ -43,8 +48,10 @@ function useHome() {
     draftPosts,
     errorModalHook,
     handleClickCreate,
+    handleClickList,
     handleClickPost,
     postList,
+    draftPostList,
   };
 }
 

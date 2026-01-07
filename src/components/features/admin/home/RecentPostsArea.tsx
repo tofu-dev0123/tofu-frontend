@@ -9,20 +9,33 @@ interface RecentPostsAreaProps {
 
 function RecentPostsArea({ postList, handleClickPost }: RecentPostsAreaProps) {
   return (
-    <CardContent className="grid grid-cols-3 gap-2 w-full h-full">
-      {postList.map((post) => (
-        <div
-          key={post.post_id}
-          className="col-span-1 flex flex-col justify-start items-center mb-4 p-1 border border-white rounded-md"
-        >
-          <Post
+    <div className="w-full h-full">
+      <CardContent className="grid grid-cols-3 gap-2 w-full">
+        {postList.map((post) => (
+          <div
             key={post.post_id}
-            post={post}
-            handleClickPost={handleClickPost}
-          />
-        </div>
-      ))}
-    </CardContent>
+            className="col-span-1 flex flex-col justify-start items-center mb-4 p-1 border border-white rounded-md"
+          >
+            <Post
+              key={post.post_id}
+              post={post}
+              handleClickPost={handleClickPost}
+            />
+          </div>
+        ))}
+      </CardContent>
+      <div className="w-full flex justify-end items-center mb-4 p-1">
+        {postList.length === 0 ? (
+          <p className="text-sm text-gray-500 w-full text-left px-4">
+            投稿がありません
+          </p>
+        ) : (
+          <p className="text-sm text-gray-500 w-full text-right underline px-4 hover:cursor-pointer hover:text-black duration-200">
+            ...もっと見る
+          </p>
+        )}
+      </div>
+    </div>
   );
 }
 

@@ -7,17 +7,11 @@ import useDashboard from '@/hooks/admin/common/useDashboard';
 import ErrorModal from '@/components/features/admin/common/ErrorModal';
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
-  const {
-    isMenuOpen,
-    handleClickMenu,
-    handleClickLogout,
-    errorModalHook,
-    searchPostHook,
-  } = useDashboard();
+  const { handleClickLogout, errorModalHook, searchPostHook } = useDashboard();
 
   return (
     <>
-      <div className="min-h-screen flex flex-col bg-gray-100/50">
+      <div className="min-h-screen flex flex-col bg-gray-100">
         {/* ヘッダー: 上部全幅、2列をまたぐ */}
         <header className="w-full">
           <Header

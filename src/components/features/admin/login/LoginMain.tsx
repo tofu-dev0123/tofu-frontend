@@ -1,4 +1,4 @@
-import Header from '@/components/features/admin/common/Header';
+import Header from '@/components/features/admin/common/Navigation';
 import LoginFrom from './LoginFrom';
 
 function LoginMain() {

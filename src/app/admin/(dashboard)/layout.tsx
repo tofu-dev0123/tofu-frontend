@@ -9,19 +9,19 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
   const { handleClickLogout, errorModalHook, searchPostHook } = useDashboard();
 
   return (
-    <>
-      <div className="w-full h-screen flex bg-gray-100">
-        {/* ヘッダー: 上部全幅、2列をまたぐ */}
-        <aside className="h-full w-40">
-          <Navigation
-            loginFlag={true}
-            handleClickLogout={handleClickLogout}
-            keyword={searchPostHook.keyword}
-            handleInputChange={searchPostHook.handleInputChange}
-            handleSearch={searchPostHook.handleSearch}
-          />
-        </aside>
-        {/* メインコンテンツ: 右側、残りのスペース */}
+    <div className="w-full h-screen bg-gray-100/50">
+      `{/* ナビゲーション サイドに固定で配置 */}
+      <aside className="fixed top-0 left-0 h-full w-40">
+        <Navigation
+          loginFlag={true}
+          handleClickLogout={handleClickLogout}
+          keyword={searchPostHook.keyword}
+          handleInputChange={searchPostHook.handleInputChange}
+          handleSearch={searchPostHook.handleSearch}
+        />
+      </aside>
+      {/* メインコンテンツ */}
+      <div className="w-full h-full flex flex-col justify-start items-center">
         <main className="flex-1 overflow-auto">{children}</main>
       </div>
       <ErrorModal
@@ -29,6 +29,6 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
         errorMessage={errorModalHook.errorMessage}
         onClose={errorModalHook.onClose}
       />
-    </>
+    </div>
   );
 }

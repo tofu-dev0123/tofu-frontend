@@ -15,7 +15,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
   const pageTitle = getPageTitle(pathname);
 
   return (
-    <div className="w-full h-screen bg-gray-100/50">
+    <div className="w-full min-h-screen bg-gray-100/50">
       {/* ナビゲーション サイドに固定で配置 */}
       <aside className="fixed top-0 left-0 h-full w-40">
         <Navigation

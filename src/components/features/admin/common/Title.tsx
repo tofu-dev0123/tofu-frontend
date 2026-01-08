@@ -5,7 +5,7 @@ interface TitleProps {
 function Title({ title }: TitleProps) {
   return (
     <div className="h-15 w-full flex items-center p-4">
-      <h1 className="text-2xl font-bold">{title}</h1>
+      <h1 className="w-full text-center text-2xl font-bold">{title}</h1>
     </div>
   );
 }

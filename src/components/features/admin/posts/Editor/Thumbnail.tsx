@@ -5,9 +5,9 @@ import Image from 'next/image';
 import thumbnailIcon from '@/assets/images/thumbnail-icon.png';
 import { usePostEditorContext } from '@/hooks/admin/posts/usePostEditorContext';
 import addGreyIcon from '@/assets/images/add-grey-icon.png';
-import Alert from '@/components/features/admin/common/Alert';
 import { THUMBNAIL_ACCEPT_FORMATS } from '@/constants/admin/fileFormats';
 import { Spinner } from '@/components/ui/spinner';
+import ThumbnailConfirm from '@/components/features/admin/posts/ThumbnailConfirm';
 
 function Thumbnail() {
   const { state, actions, ui } = usePostEditorContext();
@@ -68,13 +68,11 @@ function Thumbnail() {
           disabled={state.isThumbnailLoading}
         />
       </div>
-      <Alert
+      <ThumbnailConfirm
         open={state.isAlertOpen}
         onOpenChange={actions.handleAlertOpenChange}
-        onAction={actions.handleConfirmUpload}
+        onConfirm={actions.handleConfirmUpload}
         onCancel={actions.handleCancelUpload}
-        title="サムネイルをアップロードします"
-        actionText="アップロード"
         previewImageUrl={state.previewImageUrl}
       />
     </CardContent>

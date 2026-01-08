@@ -30,7 +30,7 @@ function Thumbnail() {
                 alt="削除ボタン"
                 width={24}
                 height={24}
-                className="absolute top-0 right-0 rotate-45 hover:cursor-pointer hover:opacity-60 duration-200"
+                className="absolute -top-5 -right-5 rotate-45 hover:cursor-pointer hover:opacity-60 duration-200"
                 onClick={actions.handleDeleteThumbnail}
               />
             )}

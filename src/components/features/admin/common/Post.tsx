@@ -1,7 +1,7 @@
-import React from 'react';
 import type { Post } from '@/types/api/post';
 import Image from 'next/image';
 import dummyImage from '@/assets/images/dummy-image.png';
+import { formatDateTime } from '@/lib/utils/dateFormat';
 
 interface PostProps {
   post: Post;
@@ -10,25 +10,32 @@ interface PostProps {
 
 function Post({ post, handleClickPost }: PostProps) {
   const thumbnailUrl = post.thumbnail_url || dummyImage;
-  const width = 150;
-  const height = 100;
+
   return (
     <>
-      <div className="w-full h-full flex flex-col justify-start items-center gap-4">
+      <div
+        className="w-full h-full flex flex-col justify-start items-center gap-1"
+        onClick={() => handleClickPost(post.post_id)}
+      >
         <div
-          className="w-full h-full flex justify-center items-center rounded-md overflow-hidden shadow-md hover:cursor-pointer hover:bg-gray-100 duration-200"
+          className="relative w-full aspect-video rounded-md overflow-hidden shadow-md hover:cursor-pointer hover:opacity-80 hover:scale-102 duration-200"
           onClick={() => handleClickPost(post.post_id)}
         >
           <Image
             src={thumbnailUrl}
             alt={post.title}
-            width={width}
-            height={height}
             unoptimized
+            fill
+            className="object-contain"
           />
         </div>
-        <div className="h-15 flex justify-center items-center">
-          <p className="text-md truncate">{post.title}</p>
+        <div className="flex justify-center items-center">
+          <p className="text-md truncate">{post.title || 'タイトル未設定'}</p>
+        </div>
+        <div className="w-full flex justify-end items-center">
+          <p className="w-full text-right text-xs text-gray-500">
+            {formatDateTime(post.createdAt)}
+          </p>
         </div>
       </div>
     </>

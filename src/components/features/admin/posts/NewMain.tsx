@@ -6,7 +6,7 @@ import { PostEditorProvider } from '@/contexts/admin/posts/PostEditorContext';
 function NewMain() {
   return (
     <PostEditorProvider>
-      <div className="h-full w-6xl flex flex-col mx-auto">
+      <div className="w-6xl flex flex-col mx-auto mb-20">
         <PostEditor />
       </div>
     </PostEditorProvider>

@@ -42,7 +42,7 @@ function EditMain() {
           })),
         }}
       >
-        <div className="h-full w-6xl flex flex-col mx-auto">
+        <div className="w-6xl flex flex-col mx-auto mb-20">
           <PostEditEditor />
         </div>
       </PostEditProvider>

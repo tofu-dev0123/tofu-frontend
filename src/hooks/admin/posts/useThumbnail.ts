@@ -9,6 +9,7 @@ import { exceptErrorHandling } from '@/lib/utils/exceptErrorHandling';
 import { validate } from '@/lib/utils/validation';
 import { MESSAGES } from '@/constants/messages';
 import { THUMBNAIL_MAX_FILE_SIZE } from '@/constants/admin/fileFormats';
+import { cropImageToBlob } from '@/lib/utils/imageCrop';
 
 interface UseThumbnailProps {
   showError: (message: string[]) => void;
@@ -127,9 +128,22 @@ export function useThumbnail({ showError }: UseThumbnailProps) {
     setLoadingType('upload');
 
     try {
+      // プレビューURLを使用して画像をトリミング
+      if (!previewImageUrl) {
+        throw new Error('Preview image URL is not available');
+      }
+
+      const croppedBlob = await cropImageToBlob(previewImageUrl, 16 / 9);
+
+      // 元のファイル名を保持しつつ、拡張子を.jpgに統一
+      const fileName = file.name.replace(/\.[^/.]+$/, '') + '.jpg';
+      const croppedFile = new File([croppedBlob], fileName, {
+        type: 'image/jpeg',
+      });
+
       const formData = new FormData();
-      formData.append('image_file', file);
-      formData.append('alt_text', file.name);
+      formData.append('image_file', croppedFile);
+      formData.append('alt_text', fileName);
 
       const response = await uploadFile<ImagesUploadResponse>(
         API_ENDPOINTS.images.post,

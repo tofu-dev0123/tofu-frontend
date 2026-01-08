@@ -1,6 +1,5 @@
 'use client';
 
-import Title from '@/components/features/admin/common/Title';
 import PostEditEditor from '@/components/features/admin/posts/Editor/PostEditEditor';
 import { PostEditProvider } from '@/contexts/admin/posts/PostEditContext';
 import { useEditMain } from '@/hooks/admin/posts/useEditMain';
@@ -44,7 +43,6 @@ function EditMain() {
         }}
       >
         <div className="h-full w-6xl flex flex-col mx-auto">
-          <Title title="記事編集" />
           <PostEditEditor />
         </div>
       </PostEditProvider>

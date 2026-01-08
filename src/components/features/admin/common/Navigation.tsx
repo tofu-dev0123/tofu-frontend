@@ -3,11 +3,11 @@
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 import logoutIcon from '@/assets/images/logout-icon.png';
-import homeGrayIcon from '@/assets/images/home-gray-icon.png';
-import listIcon from '@/assets/images/list-icon.png';
-import addIcon from '@/assets/images/add-icon.png';
 import useHeader from '@/hooks/admin/common/useHeader';
-
+import {
+  NAVIGATION_ITEMS,
+  getActiveIndex,
+} from '@/constants/admin/navigationItem';
 interface NavigationProps {
   loginFlag: boolean;
   handleClickLogout?: () => void;
@@ -21,40 +21,7 @@ function Navigation({ loginFlag = false, handleClickLogout }: NavigationProps) {
   const pathname = usePathname();
   const router = useRouter();
 
-  // ナビゲーションアイコンの定義
-  const navigationItems = [
-    {
-      icon: homeGrayIcon,
-      alt: 'home',
-      path: '/admin/home',
-    },
-    {
-      icon: listIcon,
-      alt: 'list',
-      path: '/admin/posts',
-    },
-    {
-      icon: addIcon,
-      alt: 'add',
-      path: '/admin/posts/new',
-    },
-  ];
-
-  // アクティブなアイコンのインデックスを計算
-  const getActiveIndex = (): number => {
-    if (pathname === '/admin/home') {
-      return 0;
-    }
-    if (pathname === '/admin/posts/new') {
-      return 2;
-    }
-    if (pathname.startsWith('/admin/posts')) {
-      return 1;
-    }
-    return -1; // アクティブなアイコンがない場合
-  };
-
-  const activeIndex = getActiveIndex();
+  const activeIndex = getActiveIndex(pathname);
 
   // アイコンクリックハンドラー
   const handleIconClick = (path: string) => {
@@ -104,7 +71,7 @@ function Navigation({ loginFlag = false, handleClickLogout }: NavigationProps) {
             )}
 
             {/* ナビゲーションアイコン */}
-            {navigationItems.map((item, index) => (
+            {NAVIGATION_ITEMS.map((item) => (
               <Image
                 key={item.path}
                 src={item.icon}

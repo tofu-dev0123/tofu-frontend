@@ -1,6 +1,5 @@
 'use client';
 
-import Title from '@/components/features/admin/common/Title';
 import ErrorModal from '@/components/features/admin/common/ErrorModal';
 import SummaryArea from '@/components/features/admin/home/SummaryArea';
 import CreateArea from '@/components/features/admin/home/CreateArea';
@@ -25,7 +24,6 @@ function HomeMain() {
 
   return (
     <div className="h-full w-6xl flex flex-col mx-auto">
-      <Title title="ホーム" />
       <div className="flex-1 grid grid-cols-12 grid-rows-[auto_1fr_1fr] gap-4 py-4 px-20">
         {/* サマリ */}
         <div className="col-span-8 h-full">

@@ -9,6 +9,7 @@ import {
   AlertDialogCancel,
   AlertDialogAction,
 } from '@/components/ui/alert-dialog';
+import Image from 'next/image';
 import CropMask from './CropMask';
 
 interface ThumbnailConfirmProps {
@@ -40,17 +41,21 @@ function ThumbnailConfirm({
       <AlertDialogContent className="max-w-2xl">
         <AlertDialogHeader>
           <AlertDialogTitle>サムネイルをアップロードします</AlertDialogTitle>
-          {previewImageUrl && (
-            <div className="w-full relative">
-              <img
-                src={previewImageUrl}
-                alt="プレビュー画像"
-                className="w-full h-full object-cover"
-              />
-              <CropMask />
-            </div>
-          )}
         </AlertDialogHeader>
+        {previewImageUrl && (
+          <div className="w-full relative">
+            <Image
+              src={previewImageUrl}
+              alt="プレビュー画像"
+              width={1}
+              height={1}
+              className="w-full h-auto object-cover"
+              unoptimized
+            />
+            <CropMask />
+          </div>
+        )}
+
         <AlertDialogFooter>
           <AlertDialogCancel onClick={handleCancel}>
             キャンセル

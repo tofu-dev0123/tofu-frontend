@@ -12,6 +12,7 @@ interface UsePostListProps {
 
 function usePostList({ showError }: UsePostListProps) {
   const [postList, setPostList] = useState<Post[]>([]);
+  const [draftPostList, setDraftPostList] = useState<Post[]>([]);
   const [totalCount, setTotalCount] = useState<number>(0);
   const [totalPages, setTotalPages] = useState<number>(0);
 
@@ -34,7 +35,11 @@ function usePostList({ showError }: UsePostListProps) {
         const response = await get<PostResponse>(
           `${API_ENDPOINTS.posts.get}?${queryParams.toString()}`
         );
-        setPostList(response.posts);
+        if (status === 'DRAFT') {
+          setDraftPostList(response.posts);
+        } else {
+          setPostList(response.posts);
+        }
         setTotalCount(response.total_count);
         setTotalPages(response.total_pages);
       } catch (error) {
@@ -46,6 +51,7 @@ function usePostList({ showError }: UsePostListProps) {
 
   return {
     postList,
+    draftPostList,
     totalCount,
     totalPages,
     getPostList,

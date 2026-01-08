@@ -1,21 +1,29 @@
-import homeIcon from '@/assets/images/home-icon.png';
-import articleIcon from '@/assets/images/articles-icon.png';
-import createIcon from '@/assets/images/create-icon.png';
+import homeGrayIcon from '@/assets/images/home-gray-icon.png';
+import listIcon from '@/assets/images/list-icon.png';
+import addIcon from '@/assets/images/add-icon.png';
 
 export const NAVIGATION_ITEMS = [
   {
-    icon: homeIcon,
-    label: 'ホーム',
-    href: '/home',
+    icon: homeGrayIcon,
+    alt: 'home',
+    path: '/admin/home',
+    title: 'ホーム',
   },
   {
-    icon: articleIcon,
-    label: '記事一覧',
-    href: '/posts',
+    icon: listIcon,
+    alt: 'list',
+    path: '/admin/posts',
+    title: '投稿一覧',
   },
   {
-    icon: createIcon,
-    label: '記事作成',
-    href: '/posts/new',
+    icon: addIcon,
+    alt: 'add',
+    path: '/admin/posts/new',
+    title: '投稿作成',
   },
 ];
+
+// アクティブなアイコンのインデックスを計算
+export const getActiveIndex = (pathname: string): number => {
+  return NAVIGATION_ITEMS.findIndex((item) => item.path === pathname);
+};

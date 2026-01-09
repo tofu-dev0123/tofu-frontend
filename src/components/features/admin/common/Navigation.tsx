@@ -8,7 +8,7 @@ import {
   NAVIGATION_ITEMS,
   getActiveIndex,
 } from '@/constants/admin/navigationItem';
-import { DISPLAY_SIZE } from '@/constants/admin/displaySize';
+import useCheckMobile from '@/hooks/admin/common/useCheckMobile';
 interface NavigationProps {
   handleClickLogout?: () => void;
   keyword?: string;
@@ -20,6 +20,7 @@ function Navigation({ handleClickLogout }: NavigationProps) {
   const { handleClickLogo } = useHeader();
   const pathname = usePathname();
   const router = useRouter();
+  const isMobile = useCheckMobile();
 
   const activeIndex = getActiveIndex(pathname);
 
@@ -27,8 +28,6 @@ function Navigation({ handleClickLogout }: NavigationProps) {
   const handleIconClick = (path: string) => {
     router.push(path);
   };
-
-  const isMobile = window.innerWidth < DISPLAY_SIZE.MOBILE;
 
   return (
     <nav className="w-full h-full py-2 flex lg:flex-col justify-start items-center">

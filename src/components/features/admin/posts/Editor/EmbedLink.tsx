@@ -1,10 +1,12 @@
+'use client';
+
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { usePostEditorContext } from '@/hooks/admin/posts/usePostEditorContext';
 import addGreyIcon from '@/assets/images/add-grey-icon.png';
 import Image from 'next/image';
-import { DISPLAY_SIZE } from '@/constants/admin/displaySize';
+import useCheckMobile from '@/hooks/admin/common/useCheckMobile';
 
 interface EmbedLinkProps {
   open: boolean;
@@ -13,10 +15,9 @@ interface EmbedLinkProps {
 
 function EmbedLink({ open, onClose }: EmbedLinkProps) {
   const { state, actions } = usePostEditorContext();
+  const isMobile = useCheckMobile();
 
   if (!open) return null;
-
-  const isMobile = window.innerWidth < DISPLAY_SIZE.MOBILE;
 
   return (
     <Card

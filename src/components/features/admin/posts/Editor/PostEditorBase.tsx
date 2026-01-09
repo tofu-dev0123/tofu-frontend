@@ -16,7 +16,7 @@ function PostEditorBase({ contextValue }: PostEditorBaseProps) {
   const { state, actions } = contextValue;
 
   return (
-    <div className="w-full min-h-screen p-10 flex items-center justify-center gap-0">
+    <div className="w-full min-h-screen lg:p-10 p-4 flex items-center justify-center gap-0">
       <Card className="w-full h-full flex flex-col items-center justify-start gap-0 border-none shadow pb-40">
         <EditorHeader />
         <EditorBody />

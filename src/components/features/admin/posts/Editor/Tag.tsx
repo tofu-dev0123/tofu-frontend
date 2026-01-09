@@ -27,7 +27,7 @@ function Tag() {
           type="text"
           placeholder={state.isPreview ? '' : 'タグの追加'}
           size={50}
-          className="border-none focus:outline-none focus:ring-0 text-sm font-bold placeholder:text-gray-400 resize-none"
+          className="w-full border-none focus:outline-none focus:ring-0 text-sm font-bold placeholder:text-gray-400 resize-none"
           value={state.inputValue}
           readOnly={state.isPreview}
           onChange={(e) => actions.setInputValue(e.target.value)}

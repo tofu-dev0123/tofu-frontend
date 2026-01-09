@@ -18,8 +18,8 @@ function EditorHeader() {
 
   return (
     <>
-      <CardContent className="w-full h-20 p-4 flex items-center justify-between gap-4 border-b border-gray-200">
-        <div className="flex items-center justify-start pl-10 gap-2">
+      <CardContent className="w-full h-20 lg:p-4 p-2 flex items-center justify-between gap-4 border-b border-gray-200">
+        <div className="flex items-center justify-start lg:pl-10 pl-2 gap-2">
           <div
             className="relative w-18 h-8 rounded-full bg-gray-300 flex items-center justify-between mr-4"
             onClick={actions.togglePreview}
@@ -89,7 +89,7 @@ function EditorHeader() {
             </button>
           </div>
         </div>
-        <div className="flex items-center justify-end gap-2 pr-10">
+        <div className="flex items-center justify-end gap-2 lg:pr-10 pr-2">
           <div className="w-10 h-full rounded-full flex items-center justify-center">
             <button
               className="w-8 h-8 border border-gray-300 rounded-full flex items-center justify-center hover:cursor-pointer hover:opacity-60 duration-200"

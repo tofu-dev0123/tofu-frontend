@@ -15,14 +15,23 @@ function EmbedLink({ open, onClose }: EmbedLinkProps) {
 
   if (!open) return null;
 
+  const isMobile = window.innerWidth < 768;
+
   return (
     <Card
-      className="w-80 h-12 flex items-center justify-start border border-gray-200 shadow p-2 absolute"
-      style={{
-        top: state.cursorPosition.y,
-        left: state.cursorPosition.x,
-        transform: 'translate(10%, -50%)',
-      }}
+      className="fixed lg:absolute w-80 h-12 flex items-center justify-start border border-gray-200 shadow p-2 lg:translate-x-[10%] lg:translate-y-[-50%]"
+      style={
+        isMobile
+          ? {
+              top: '30%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+            }
+          : {
+              top: state.cursorPosition.y,
+              left: state.cursorPosition.x,
+            }
+      }
     >
       <Input
         type="url"

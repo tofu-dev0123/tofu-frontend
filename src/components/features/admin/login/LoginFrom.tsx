@@ -22,7 +22,7 @@ function LoginFrom() {
         </div>
       ) : (
         <div className="flex justify-center items-center flex-1">
-          <Card className="w-100 bg-gray-100/50">
+          <Card className="w-100 bg-gray-100/50 mx-10">
             <div className="flex justify-center items-center my-16">
               <Image
                 src={loginIcon}

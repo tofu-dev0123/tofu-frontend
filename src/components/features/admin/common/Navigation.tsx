@@ -28,9 +28,9 @@ function Navigation({ handleClickLogout }: NavigationProps) {
   };
 
   return (
-    <nav className="w-full h-full py-2 flex flex-col justify-start items-center">
+    <nav className="w-full h-full py-2 flex lg:flex-col justify-start items-center">
       {/* ロゴ */}
-      <div className="flex items-center cursor-pointer gap-4">
+      <div className="flex items-center cursor-pointer gap-4 p-2">
         <span
           className="text-2xl font-bold cursor-pointer"
           onClick={handleClickLogo}
@@ -54,8 +54,8 @@ function Navigation({ handleClickLogout }: NavigationProps) {
       </div> */}
 
       {/* ナビゲーションアイコン */}
-      <div className="flex flex-1 justify-center items-center w-full">
-        <div className="w-15 mx-auto flex flex-col justify-center items-center gap-10 shadow-lg border border-gray-300/50 rounded-full px-2 py-8 bg-white relative">
+      <div className="flex flex-1 justify-center items-center w-full p-2">
+        <div className="lg:w-15 mx-auto flex lg:flex-col justify-center items-center gap-10 shadow-lg border border-gray-300/50 rounded-full lg:px-2 lg:py-8 bg-white relative px-6 py-4">
           {/* アニメーション背景 */}
           {activeIndex >= 0 && (
             <div

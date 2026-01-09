@@ -13,7 +13,7 @@ function Thumbnail() {
   const { state, actions, ui } = usePostEditorContext();
 
   return (
-    <CardContent className="w-full h-80 p-4 flex items-center justify-center">
+    <CardContent className="w-full aspect-video  lg:p-4 p-2 flex items-center justify-center">
       <div className="w-full h-full rounded-lg relative">
         {!state.isThumbnailLoading && state.thumbnailUrl && (
           <>

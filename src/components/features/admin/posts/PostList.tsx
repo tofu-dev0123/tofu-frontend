@@ -7,20 +7,9 @@ import {
   InputGroupAddon,
 } from '@/components/ui/input-group';
 import { SearchIcon } from 'lucide-react';
-import {
-  Select,
-  SelectTrigger,
-  SelectValue,
-  SelectContent,
-  SelectGroup,
-  SelectLabel,
-  SelectItem,
-} from '@/components/ui/select';
-import { PostStatus } from '@/types/api/post';
 import PostInfo from '@/components/features/admin/posts/PostInfo';
 import Alert from '@/components/features/admin/common/Alert';
 import useSearchPost from '@/hooks/admin/posts/useSearchPost';
-import useStatus from '@/hooks/admin/posts/useStatus';
 import usePostDeleteAlert from '@/hooks/admin/posts/usePostDeleteAlert';
 import usePatchStatusAlert from '@/hooks/admin/posts/usePatchStatusAlert';
 import reloadIcon from '@/assets/images/reload-icon.png';
@@ -28,7 +17,6 @@ import Image from 'next/image';
 
 interface PostListProps {
   searchPost: ReturnType<typeof useSearchPost>;
-  status: ReturnType<typeof useStatus>;
   deleteAlert: ReturnType<typeof usePostDeleteAlert>;
   patchStatusAlert: ReturnType<typeof usePatchStatusAlert>;
   handleClickEdit: (postId: number) => void;
@@ -36,15 +24,14 @@ interface PostListProps {
 
 function PostList({
   searchPost,
-  status,
   deleteAlert,
   patchStatusAlert,
   handleClickEdit,
 }: PostListProps) {
   return (
     <Card className="min-h-screen w-full flex flex-col gap-4 justify-start border-none shadow-lg">
-      <CardContent className="flex items-center justify-between p-4">
-        <div className="w-100 flex items-center gap-4">
+      <CardContent className="flex flex-col lg:flex-row items-end lg:items-center justify-between lg:p-4 p-2 lg:gap-4 gap-2">
+        <div className="lg:w-100 w-full flex items-center justify-between lg:justify-start gap-4 px-2 lg:px-0">
           <InputGroup className="rounded-full">
             <InputGroupInput
               placeholder="Search..."
@@ -71,28 +58,8 @@ function PostList({
             />
           </button>
         </div>
-        <div className="w-40 flex items-center">
-          <Select
-            value={status.status || 'ALL'}
-            onValueChange={(value) =>
-              status.handleStatusChange(value as PostStatus)
-            }
-          >
-            <SelectTrigger className="w-full">
-              <SelectValue placeholder="公開ステータス" />
-            </SelectTrigger>
-            <SelectContent className="border border-gray-200 rounded-md">
-              <SelectGroup>
-                <SelectLabel>公開ステータス</SelectLabel>
-                <SelectItem value="ALL">全て</SelectItem>
-                <SelectItem value="PUBLISHED">公開</SelectItem>
-                <SelectItem value="DRAFT">下書き</SelectItem>
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-        </div>
       </CardContent>
-      <CardContent>
+      <CardContent className="px-4 lg:px-0">
         <hr className="w-full border-gray-200" />
         {searchPost.postList.map((post) => (
           <div

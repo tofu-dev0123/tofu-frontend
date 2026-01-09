@@ -14,15 +14,16 @@ function PostListMain() {
     handleClickEdit,
   } = usePostList();
   return (
-    <div className="h-full w-6xl flex flex-col mx-auto">
-      <div className="h-full w-200 mx-auto flex flex-col">
+    // PostListMain.tsx の17-18行目
+    <div className="h-full w-full lg:w-6xl flex flex-col mx-auto px-4 lg:px-0">
+      <div className="h-full lg:w-200 w-full lg:mx-auto flex flex-col">
         <PostSearchInfo
           totalPosts={searchPost.totalCount}
           keyword={displayedKeyword}
+          status={statusHook}
         />
         <PostList
           searchPost={searchPost}
-          status={statusHook}
           deleteAlert={deleteAlert}
           patchStatusAlert={patchStatusAlert}
           handleClickEdit={handleClickEdit}

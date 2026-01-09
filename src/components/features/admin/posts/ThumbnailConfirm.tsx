@@ -38,7 +38,7 @@ function ThumbnailConfirm({
 
   return (
     <AlertDialog open={open} onOpenChange={onOpenChange}>
-      <AlertDialogContent className="max-w-2xl">
+      <AlertDialogContent className="lg:max-w-2xl w-11/12 rounded-lg">
         <AlertDialogHeader>
           <AlertDialogTitle>サムネイルをアップロードします</AlertDialogTitle>
         </AlertDialogHeader>

@@ -17,7 +17,7 @@ function EditorBody() {
           {state.content.length}/{POST_MAX_CHARACTERS}文字
         </span>
       </div>
-      <CardContent className="w-150 h-full flex flex-col items-center justify-start gap-0">
+      <CardContent className="lg:w-150 w-full h-full flex flex-col items-center justify-start gap-0">
         <Thumbnail />
         <PostTitle />
         <Tag />

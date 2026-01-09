@@ -24,27 +24,27 @@ function PostInfo({
 }: PostInfoProps) {
   return (
     <>
-      <div className="w-150 h-25 mx-auto flex justify-between items-center gap-4">
-        <div className="w-100 flex flex-col justify-center items-start gap-4 p-4">
+      <div className="lg:w-150 w-full h-25 lg:mx-auto flex justify-between items-center lg:gap-4 gap-2">
+        <div className="lg:w-100 min-w-50 flex flex-col justify-center items-start lg:gap-4 gap-2 lg:p-4 p-0">
           <h4 className="text-md font-bold">
             {post.title ? post.title : 'タイトル未設定'}
           </h4>
-          <div className="w-full flex justify-start items-center gap-4">
-            <div className="flex justify-start items-center gap-2">
+          <div className="w-full flex justify-start items-center lg:gap-4 gap-2">
+            <div className="flex justify-start items-center lg:gap-2 gap-1">
               <span
                 className={`h-2 w-2 rounded-full ${post.status === 'PUBLISHED' ? 'bg-green-400' : 'bg-gray-400'}`}
               ></span>
-              <span className="text-sm text-gray-500">
+              <span className="lg:text-sm text-[10px] lg:text-xs text-gray-500">
                 {post.status === 'PUBLISHED' ? '公開' : '下書き'}
               </span>
             </div>
-            <span className="text-sm text-gray-500">
+            <span className="lg:text-sm text-[10px] lg:text-xs text-gray-500">
               {formatDateTime(post.createdAt)}
             </span>
           </div>
         </div>
         <div
-          className={`h-20 w-20 relative overflow-hidden ${post.thumbnail_url ? 'rounded-md border border-gray-200' : ''}`}
+          className={`lg:h-20 h-15 lg:w-20 w-15 relative overflow-hidden ${post.thumbnail_url ? 'rounded-md border border-gray-200' : ''}`}
         >
           {post.thumbnail_url && (
             <Image
@@ -56,7 +56,7 @@ function PostInfo({
             />
           )}
         </div>
-        <div className="h-20 w-20 flex justify-center items-center">
+        <div className="lg:h-20 lg:w-20 flex justify-center items-center">
           <Popover>
             <PopoverTrigger asChild>
               <Image

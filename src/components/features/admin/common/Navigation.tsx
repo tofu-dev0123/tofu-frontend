@@ -7,7 +7,6 @@ import {
   NAVIGATION_ITEMS,
   getActiveIndex,
 } from '@/constants/admin/navigationItem';
-import useCheckMobile from '@/hooks/admin/common/useCheckMobile';
 
 interface NavigationProps {
   handleClickLogout?: () => void;
@@ -16,7 +15,6 @@ interface NavigationProps {
 function Navigation({ handleClickLogout }: NavigationProps) {
   const pathname = usePathname();
   const router = useRouter();
-  const isMobile = useCheckMobile();
 
   const activeIndex = getActiveIndex(pathname);
 

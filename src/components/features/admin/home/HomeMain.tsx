@@ -23,10 +23,10 @@ function HomeMain() {
   } = useHome();
 
   return (
-    <div className="h-full w-6xl flex flex-col mx-auto">
-      <div className="flex-1 grid grid-cols-12 grid-rows-[auto_1fr_1fr] gap-4 py-4 px-20">
+    <div className="h-full w-full lg:w-6xl flex flex-col mx-auto">
+      <div className="flex-1 grid lg:grid-cols-12 grid-cols-1 grid-rows-[auto_1fr_1fr] gap-4 py-4 lg:px-20 px-10">
         {/* サマリ */}
-        <div className="col-span-8 h-full">
+        <div className="lg:col-span-8 h-full">
           <BaseArea title="投稿のサマリ">
             <SummaryArea
               totalPosts={totalPosts}
@@ -37,21 +37,21 @@ function HomeMain() {
         </div>
 
         {/* 投稿一覧 */}
-        <div className="col-span-2 h-full">
+        <div className="lg:col-span-2 h-full w-full">
           <BaseArea title="投稿一覧">
             <ListArea handleClickList={handleClickList} />
           </BaseArea>
         </div>
 
         {/* ブログを書く */}
-        <div className="col-span-2 h-full">
+        <div className="lg:col-span-2 h-full w-full">
           <BaseArea title="ブログを書く">
             <CreateArea handleClickCreate={handleClickCreate} />
           </BaseArea>
         </div>
 
         {/* 最近の投稿 */}
-        <div className="col-span-12 h-full">
+        <div className="lg:col-span-12 h-full w-full">
           <BaseArea title="最近の投稿">
             <RecentPostsArea
               postList={postList}
@@ -60,7 +60,7 @@ function HomeMain() {
           </BaseArea>
         </div>
         {/* 下書き */}
-        <div className="col-span-12 h-full">
+        <div className="lg:col-span-12 h-full w-full">
           <BaseArea title="下書き">
             <DraftPostsArea
               draftPostList={draftPostList}

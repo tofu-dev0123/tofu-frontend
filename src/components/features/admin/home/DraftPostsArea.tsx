@@ -13,11 +13,11 @@ function DraftPostsArea({
 }: DraftPostsAreaProps) {
   return (
     <div className="w-full h-full">
-      <CardContent className="grid grid-cols-3 gap-2 w-full">
+      <CardContent className="grid lg:grid-cols-3 grid-cols-1 gap-2 w-full">
         {draftPostList.map((post) => (
           <div
             key={post.post_id}
-            className="col-span-1 flex flex-col justify-start items-center mb-4 p-1 border border-white rounded-md"
+            className="lg:col-span-1 col-span-full flex flex-col justify-start items-center mb-4 p-1 border border-white rounded-md"
           >
             <Post
               key={post.post_id}

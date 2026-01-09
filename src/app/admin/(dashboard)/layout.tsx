@@ -17,7 +17,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
   return (
     <div className="w-full min-h-screen bg-gray-100/50">
       {/* ナビゲーション サイドに固定で配置 */}
-      <aside className="fixed top-0 left-0 h-full w-40">
+      <aside className="lg:fixed top-0 left-0 lg:h-full w-full h-20 lg:w-40">
         <Navigation
           handleClickLogout={handleClickLogout}
           keyword={searchPostHook.keyword}
@@ -27,7 +27,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
       </aside>
       {/* メインコンテンツ */}
       <div className="w-full h-full flex flex-col justify-center items-center">
-        <main className="flex-1 overflow-auto">
+        <main className="flex-1 overflow-auto w-full">
           <Title title={pageTitle} />
           {children}
         </main>

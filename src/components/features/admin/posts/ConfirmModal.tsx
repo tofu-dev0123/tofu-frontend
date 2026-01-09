@@ -33,7 +33,7 @@ function ConfirmModal({ isOpen, onClose, title, tags }: ConfirmModalProps) {
       className="bg-black/20 fixed top-0 left-0 w-full h-full flex items-center justify-center z-50"
       onClick={handleClose}
     >
-      <Card className="w-150 border-gray-200 shadow absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50">
+      <Card className="lg:w-150 w-11/12 border-gray-200 shadow absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50">
         <CardHeader>
           <Image src={confirmIcon} alt="confirm" width={24} height={24} />
         </CardHeader>

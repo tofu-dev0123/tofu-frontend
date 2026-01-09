@@ -104,14 +104,7 @@ export function useThumbnail({ showError }: UseThumbnailProps) {
       setIsLoading(false);
       setLoadingType(null);
     }
-  }, [
-    imageId,
-    thumbnailUrl,
-    altText,
-    thumbnailDeleteFlag,
-    showError,
-    setThumbnailUrl,
-  ]);
+  }, [imageId, showError, setThumbnailUrl]);
 
   /* 編集画面での画像削除処理 */
   const handleDeleteThumbnailInEdit = useCallback(() => {

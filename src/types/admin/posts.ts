@@ -57,6 +57,7 @@ export interface PostEditorActions {
   setInputValue: (value: string) => void;
   togglePreview: () => void;
   reset: () => void;
+  // サムネイル関連
   handleThumbnailClick: () => void;
   handleFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleDeleteThumbnail: () => void;

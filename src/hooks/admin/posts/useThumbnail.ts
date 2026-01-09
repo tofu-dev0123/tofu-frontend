@@ -34,7 +34,9 @@ export function useThumbnail({ showError }: UseThumbnailProps) {
     thumbnailInputRef.current?.click();
   };
 
-  // ファイル選択でアラートを表示する
+  /* 
+  ファイル選択でアラートを表示する
+  */
   const handleFileChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const file = e.target.files?.[0];
@@ -74,12 +76,8 @@ export function useThumbnail({ showError }: UseThumbnailProps) {
     setThumbnailUrlState(url);
   }, []);
 
-  // 画像を削除する
+  /* 画像を削除する */
   const handleDeleteThumbnail = useCallback(async () => {
-    console.log('handleDeleteThumbnail', imageId);
-    console.log('thumbnailUrl', thumbnailUrl);
-    console.log('altText', altText);
-    console.log('thumbnailDeleteFlag', thumbnailDeleteFlag);
     if (!imageId) return;
     setIsLoading(true);
     setLoadingType('delete');
@@ -115,7 +113,27 @@ export function useThumbnail({ showError }: UseThumbnailProps) {
     setThumbnailUrl,
   ]);
 
-  // アラートの保存ボタン押下時にアップロード処理を実行
+  /* 編集画面での画像削除処理 */
+  const handleDeleteThumbnailInEdit = useCallback(() => {
+    if (!imageId) return;
+    setThumbnailUrl(null);
+    setImageId(null);
+    setAltText(null);
+    setThumbnailDeleteFlag(true);
+    // ファイル入力の値をリセット
+    if (thumbnailInputRef.current) {
+      thumbnailInputRef.current.value = '';
+    }
+  }, [
+    imageId,
+    setThumbnailUrl,
+    setImageId,
+    setAltText,
+    setThumbnailDeleteFlag,
+    thumbnailInputRef,
+  ]);
+
+  /* アラートの保存ボタン押下時にアップロード処理を実行 */
   const handleConfirmUpload = useCallback(async () => {
     const file = pendingFileRef.current;
     if (!file) {
@@ -179,7 +197,7 @@ export function useThumbnail({ showError }: UseThumbnailProps) {
     }
   }, [showError, setThumbnailUrl, previewImageUrl]);
 
-  // アラートのキャンセルボタン押下時の処理
+  /* アラートのキャンセルボタン押下時の処理 */
   const handleCancelUpload = useCallback(() => {
     pendingFileRef.current = null;
     // プレビューURLを解放
@@ -193,7 +211,7 @@ export function useThumbnail({ showError }: UseThumbnailProps) {
     }
   }, [previewImageUrl]);
 
-  // アラートの開閉を制御する（ダイアログの外側クリックやESCキーで閉じられた場合の処理）
+  /* アラートの開閉を制御する（ダイアログの外側クリックやESCキーで閉じられた場合の処理） */
   const handleAlertOpenChange = useCallback(
     (open: boolean) => {
       setIsAlertOpen(open);
@@ -214,7 +232,7 @@ export function useThumbnail({ showError }: UseThumbnailProps) {
     [previewImageUrl]
   );
 
-  // コンポーネントのアンマウント時にプレビューURLを解放
+  /* コンポーネントのアンマウント時にプレビューURLを解放 */
   useEffect(() => {
     return () => {
       if (previewImageUrl) {
@@ -242,5 +260,6 @@ export function useThumbnail({ showError }: UseThumbnailProps) {
     setThumbnailUrl,
     setImageId,
     setAltText,
+    handleDeleteThumbnailInEdit,
   };
 }

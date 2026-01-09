@@ -26,7 +26,7 @@ function Navigation({ handleClickLogout }: NavigationProps) {
   };
 
   return (
-    <nav className="w-full h-20 px-4 flex lg:flex-col justify-center items-center mx-auto fixed bottom-5 z-50">
+    <nav className="w-full lg:w-15 h-20 px-4 flex lg:flex-col justify-center items-center mx-auto fixed bottom-5 lg:top-[50%] lg:translate-y-[-50%] lg:left-20 lg:translate-x-[-50%] z-50">
       <div className="lg:w-15 mx-auto bg-white flex lg:flex-col justify-center items-center gap-15 shadow-lg border border-gray-300/50 rounded-full lg:px-2 lg:py-8 bg-white relative py-4 px-10">
         {/* アニメーション背景 */}
         {activeIndex >= 0 && !isMobile && (

@@ -4,8 +4,7 @@ import LoginFrom from './LoginFrom';
 function LoginMain() {
   return (
     <>
-      <div className="min-h-screen flex flex-col bg-admin-main">
-        <Header loginFlag={false} />
+      <div className="h-full flex flex-col bg-admin-main">
         <LoginFrom />
       </div>
     </>

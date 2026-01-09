@@ -35,6 +35,7 @@ function EmbedLink({ open, onClose }: EmbedLinkProps) {
                 left: state.cursorPosition.x,
               }
         }
+        onClick={(e) => e.stopPropagation()}
       >
         <Input
           type="url"

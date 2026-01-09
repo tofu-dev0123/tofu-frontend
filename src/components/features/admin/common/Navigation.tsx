@@ -8,6 +8,7 @@ import {
   NAVIGATION_ITEMS,
   getActiveIndex,
 } from '@/constants/admin/navigationItem';
+import { DISPLAY_SIZE } from '@/constants/admin/displaySize';
 interface NavigationProps {
   handleClickLogout?: () => void;
   keyword?: string;
@@ -27,6 +28,8 @@ function Navigation({ handleClickLogout }: NavigationProps) {
     router.push(path);
   };
 
+  const isMobile = window.innerWidth < DISPLAY_SIZE.MOBILE;
+
   return (
     <nav className="w-full h-full py-2 flex lg:flex-col justify-start items-center">
       {/* ロゴ */}
@@ -39,20 +42,6 @@ function Navigation({ handleClickLogout }: NavigationProps) {
         </span>
       </div>
 
-      {/* 検索バー */}
-      {/* <div className="flex items-center w-full px-4">
-        <InputGroup className="rounded-full">
-          <InputGroupInput
-            placeholder="Search..."
-            value={keyword}
-            onChange={handleInputChange}
-          />
-          <InputGroupAddon className="rounded-full" onClick={handleSearch}>
-            <SearchIcon className="cursor-pointer" />
-          </InputGroupAddon>
-        </InputGroup>
-      </div> */}
-
       {/* ナビゲーションアイコン */}
       <div className="flex flex-1 justify-center items-center w-full p-2">
         <div className="lg:w-15 mx-auto flex lg:flex-col justify-center items-center gap-10 shadow-lg border border-gray-300/50 rounded-full lg:px-2 lg:py-8 bg-white relative px-6 py-4">
@@ -61,9 +50,13 @@ function Navigation({ handleClickLogout }: NavigationProps) {
             <div
               className="absolute top-0 left-0 w-10 h-10 bg-gray-200 rounded-full transition-transform duration-300 ease-in-out z-0"
               style={{
-                transform: `translateY(${22 + activeIndex * 60}px)`,
-                left: '50%',
-                marginLeft: '-20px',
+                transform: isMobile
+                  ? `translateX(${14 + activeIndex * 60}px)`
+                  : `translateY(${22 + activeIndex * 60}px)`,
+                top: isMobile ? '50%' : '0',
+                left: isMobile ? '0' : '50%',
+                marginTop: isMobile ? '-20px' : '0',
+                marginLeft: isMobile ? '0' : '-20px',
               }}
             />
           )}

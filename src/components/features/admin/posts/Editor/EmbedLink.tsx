@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { usePostEditorContext } from '@/hooks/admin/posts/usePostEditorContext';
 import addGreyIcon from '@/assets/images/add-grey-icon.png';
 import Image from 'next/image';
+import { DISPLAY_SIZE } from '@/constants/admin/displaySize';
 
 interface EmbedLinkProps {
   open: boolean;
@@ -15,7 +16,7 @@ function EmbedLink({ open, onClose }: EmbedLinkProps) {
 
   if (!open) return null;
 
-  const isMobile = window.innerWidth < 768;
+  const isMobile = window.innerWidth < DISPLAY_SIZE.MOBILE;
 
   return (
     <Card

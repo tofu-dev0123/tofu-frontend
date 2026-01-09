@@ -11,7 +11,7 @@ function PostTitle() {
       <TextareaAutosize
         minRows={1}
         placeholder={state.isPreview ? '' : 'タイトル'}
-        className="w-full text-4xl font-bold border-none focus:outline-none resize-none placeholder:text-gray-400"
+        className="w-full lg:text-4xl text-3xl font-bold border-none focus:outline-none resize-none placeholder:text-gray-400"
         value={state.title}
         maxLength={50}
         readOnly={state.isPreview}

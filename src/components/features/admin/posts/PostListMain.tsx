@@ -15,7 +15,7 @@ function PostListMain() {
   } = usePostList();
   return (
     // PostListMain.tsx の17-18行目
-    <div className="h-full w-full lg:w-6xl flex flex-col mx-auto px-4 lg:px-0">
+    <div className="h-full w-full lg:w-6xl flex flex-col mx-auto p-4 lg:px-0">
       <div className="h-full lg:w-200 w-full lg:mx-auto flex flex-col">
         <PostSearchInfo
           totalPosts={searchPost.totalCount}

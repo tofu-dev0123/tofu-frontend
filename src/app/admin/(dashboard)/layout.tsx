@@ -19,7 +19,6 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
       {/* ナビゲーション サイドに固定で配置 */}
       <aside className="fixed top-0 left-0 h-full w-40">
         <Navigation
-          loginFlag={true}
           handleClickLogout={handleClickLogout}
           keyword={searchPostHook.keyword}
           handleInputChange={searchPostHook.handleInputChange}

@@ -25,7 +25,7 @@ function PostSearchInfo({ totalPosts, keyword, status }: PostSearchInfoProps) {
           <span className="text-sm text-gray-500">キーワード: {keyword}</span>
         )}
       </div>
-      <div className="w-40 flex items-center px-4 lg:px-0 bg-white rounded-md">
+      <div className="w-40 flex items-center px-0 bg-white rounded-md">
         <Select
           value={status.status || 'ALL'}
           onValueChange={(value) =>

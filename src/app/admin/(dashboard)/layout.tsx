@@ -7,24 +7,21 @@ import Navigation from '@/components/features/admin/common/Navigation';
 import Title from '@/components/features/admin/common/Title';
 import { usePathname } from 'next/navigation';
 import { getPageTitle } from '@/constants/admin/pageTitle';
+import Logo from '@/components/features/admin/common/Logo';
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
-  const { handleClickLogout, errorModalHook, searchPostHook } = useDashboard();
+  const { handleClickLogout, errorModalHook } = useDashboard();
 
   const pathname = usePathname();
   const pageTitle = getPageTitle(pathname);
 
   return (
     <div className="w-full min-h-screen bg-gray-100/50">
-      {/* ナビゲーション サイドに固定で配置 */}
-      <aside className="lg:fixed top-0 left-0 lg:h-full w-full h-20 lg:w-40">
-        <Navigation
-          handleClickLogout={handleClickLogout}
-          keyword={searchPostHook.keyword}
-          handleInputChange={searchPostHook.handleInputChange}
-          handleSearch={searchPostHook.handleSearch}
-        />
-      </aside>
+      {/* ロゴ */}
+      <Logo />
+
+      {/* ナビゲーション */}
+      <Navigation handleClickLogout={handleClickLogout} />
       {/* メインコンテンツ */}
       <div className="w-full h-full flex flex-col justify-center items-center">
         <main className="flex-1 overflow-auto w-full">

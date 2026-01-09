@@ -57,7 +57,7 @@ function Navigation({ loginFlag = false, handleClickLogout }: NavigationProps) {
       {/* ナビゲーションアイコン */}
       <div className="flex flex-1 justify-center items-center w-full">
         {loginFlag && (
-          <div className="w-15 mx-auto flex flex-col justify-center items-center gap-10 border border-gray-300/50 rounded-full px-2 py-8 bg-white relative">
+          <div className="w-15 mx-auto flex flex-col justify-center items-center gap-10 shadow-lg border border-gray-300/50 rounded-full px-2 py-8 bg-white relative">
             {/* アニメーション背景 */}
             {activeIndex >= 0 && (
               <div

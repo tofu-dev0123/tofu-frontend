@@ -20,10 +20,12 @@ function useLoginForm() {
   const formHook = useForm<LoginForm>();
 
   const [errorMessage, setErrorMessage] = useState<string[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   // ログイン処理
   const onSubmit = async (data: LoginForm) => {
     setErrorMessage([]);
+    setIsLoading(true);
     const request: LoginRequest = {
       username: data.username,
       password: data.password,
@@ -48,6 +50,8 @@ function useLoginForm() {
       } else {
         setErrorMessage([MESSAGES.errors.login.failed]);
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -55,6 +59,7 @@ function useLoginForm() {
     formHook,
     onSubmit: formHook.handleSubmit(onSubmit),
     errorMessage,
+    isLoading,
   };
 }
 

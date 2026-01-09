@@ -9,14 +9,13 @@ import {
   getActiveIndex,
 } from '@/constants/admin/navigationItem';
 interface NavigationProps {
-  loginFlag: boolean;
   handleClickLogout?: () => void;
   keyword?: string;
   handleInputChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleSearch?: () => void;
 }
 
-function Navigation({ loginFlag = false, handleClickLogout }: NavigationProps) {
+function Navigation({ handleClickLogout }: NavigationProps) {
   const { handleClickLogo } = useHeader();
   const pathname = usePathname();
   const router = useRouter();
@@ -56,44 +55,42 @@ function Navigation({ loginFlag = false, handleClickLogout }: NavigationProps) {
 
       {/* ナビゲーションアイコン */}
       <div className="flex flex-1 justify-center items-center w-full">
-        {loginFlag && (
-          <div className="w-15 mx-auto flex flex-col justify-center items-center gap-10 border border-gray-300/50 rounded-full px-2 py-8 bg-white relative">
-            {/* アニメーション背景 */}
-            {activeIndex >= 0 && (
-              <div
-                className="absolute top-0 left-0 w-10 h-10 bg-gray-200 rounded-full transition-transform duration-300 ease-in-out z-0"
-                style={{
-                  transform: `translateY(${22 + activeIndex * 60}px)`,
-                  left: '50%',
-                  marginLeft: '-20px',
-                }}
-              />
-            )}
+        <div className="w-15 mx-auto flex flex-col justify-center items-center gap-10 shadow-lg border border-gray-300/50 rounded-full px-2 py-8 bg-white relative">
+          {/* アニメーション背景 */}
+          {activeIndex >= 0 && (
+            <div
+              className="absolute top-0 left-0 w-10 h-10 bg-gray-200 rounded-full transition-transform duration-300 ease-in-out z-0"
+              style={{
+                transform: `translateY(${22 + activeIndex * 60}px)`,
+                left: '50%',
+                marginLeft: '-20px',
+              }}
+            />
+          )}
 
-            {/* ナビゲーションアイコン */}
-            {NAVIGATION_ITEMS.map((item) => (
-              <Image
-                key={item.path}
-                src={item.icon}
-                alt={item.alt}
-                width={20}
-                height={20}
-                className="cursor-pointer hover:opacity-60 duration-200 z-10"
-                onClick={() => handleIconClick(item.path)}
-              />
-            ))}
-
-            {/* ログアウトアイコン */}
+          {/* ナビゲーションアイコン */}
+          {NAVIGATION_ITEMS.map((item) => (
             <Image
-              src={logoutIcon}
-              alt="logout"
+              key={item.path}
+              src={item.icon}
+              alt={item.alt}
               width={20}
               height={20}
-              className="cursor-pointer hover:opacity-60 duration-200"
-              onClick={handleClickLogout}
+              className="cursor-pointer hover:opacity-60 duration-200 z-10"
+              onClick={() => handleIconClick(item.path)}
             />
-          </div>
-        )}
+          ))}
+
+          {/* ログアウトアイコン */}
+          <Image
+            src={logoutIcon}
+            alt="logout"
+            width={20}
+            height={20}
+            className="cursor-pointer hover:opacity-60 duration-200"
+            onClick={handleClickLogout}
+          />
+        </div>
       </div>
     </nav>
   );

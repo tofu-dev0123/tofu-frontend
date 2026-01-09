@@ -151,7 +151,7 @@ export function usePostEditState({
       // UI状態関連
       handleThumbnailClick: thumbnailHooks.handleThumbnailClick,
       handleFileChange: thumbnailHooks.handleFileChange,
-      handleDeleteThumbnail: thumbnailHooks.handleDeleteThumbnail,
+      handleDeleteThumbnail: thumbnailHooks.handleDeleteThumbnailInEdit,
       handleConfirmUpload: thumbnailHooks.handleConfirmUpload,
       handleCancelUpload: thumbnailHooks.handleCancelUpload,
       handleAlertOpenChange: thumbnailHooks.handleAlertOpenChange,
@@ -191,7 +191,7 @@ export function usePostEditState({
       tagsHooks.setInputValue,
       thumbnailHooks.handleThumbnailClick,
       thumbnailHooks.handleFileChange,
-      thumbnailHooks.handleDeleteThumbnail,
+      thumbnailHooks.handleDeleteThumbnailInEdit,
       thumbnailHooks.handleConfirmUpload,
       thumbnailHooks.handleCancelUpload,
       thumbnailHooks.handleAlertOpenChange,

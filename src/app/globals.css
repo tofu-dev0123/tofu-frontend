@@ -45,6 +45,9 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-admin-main: var(--admin-main);
+  --color-public-main: var(--public-main);
+  --font-logo: var(--font-logo);
+  --font-grotesk: var(--font-grotesk);
 }
 
 :root {
@@ -81,6 +84,9 @@
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
   --admin-main: #143046;
+  --public-main: #f6efdb;
+  --font-logo: var(--font-logo);
+  --font-grotesk: var(--font-grotesk);
 }
 
 .dark {

@@ -14,7 +14,7 @@ module.exports = {
       },
       fontFamily: {
         logo: ['var(--font-logo)'],
-        grotesk: ['var(--font-grotesk)'],
+        subLogo: ['var(--font-sub-logo)'],
       },
     },
   },

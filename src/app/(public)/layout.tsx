@@ -1,19 +1,15 @@
 import React from 'react';
-import Image from 'next/image';
-import tofuIconImage from '@/assets/images/tofu-icon.png';
+import BackGroundImage from '@/components/features/public/common/BackGroundImage';
+import PublicHeader from '@/components/features/public/common/PublicHeader';
 
 function PublicLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="w-full min-h-screen bg-public-main">
-      <div className="w-full h-full opacity-5 fixed lg:left-1/2 lg:-translate-x-1/3">
-        <Image
-          src={tofuIconImage}
-          alt="tofu icon"
-          fill
-          className="lg:object-contain object-cover"
-        />
-      </div>
-      {children}
+    <div className="w-full h-screen bg-public-main fixed inset-0 overflow-auto flex flex-col">
+      <header className="w-full h-15">
+        <PublicHeader />
+      </header>
+      <main className="w-full h-full flex-1">{children}</main>
+      <BackGroundImage />
     </div>
   );
 }

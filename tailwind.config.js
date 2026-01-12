@@ -8,6 +8,13 @@ module.exports = {
         admin: {
           main: '#143046',
         },
+        public: {
+          main: '#f6efdb',
+        },
+      },
+      fontFamily: {
+        logo: ['var(--font-logo)'],
+        grotesk: ['var(--font-grotesk)'],
       },
     },
   },

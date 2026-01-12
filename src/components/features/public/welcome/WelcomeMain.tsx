@@ -61,16 +61,6 @@ function WelcomeMain() {
                 </motion.button>
               </div>
             </div>
-            <div className="h-full lg:w-1/2 w-full lg:relative ">
-              <motion.div className="absolute top-0 left-0 lg:translate-x-[-5%] w-full h-full lg:scale-140">
-                <Image
-                  src={tofuIconImage}
-                  alt="welcome"
-                  fill
-                  className="opacity-10 object-cover"
-                />
-              </motion.div>
-            </div>
           </div>
         </motion.div>
       )}

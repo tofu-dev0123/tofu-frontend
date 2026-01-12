@@ -54,7 +54,7 @@ function WelcomeMain() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 2, delay: 3.5 }}
-                  className="rounded-none text-lg lg:text-xl text-sm tracking-wider text-public-main border-2 bg-black font-grotesk p-2 font-bold hover:cursor-pointer hover:bg-public-main hover:text-black transition-all duration-300"
+                  className="rounded-none text-lg lg:text-xl text-sm tracking-wider border-2 border-black font-grotesk p-2 font-bold hover:cursor-pointer hover:bg-black hover:text-public-main transition-all duration-300"
                   onClick={handleStart}
                 >
                   Start reading

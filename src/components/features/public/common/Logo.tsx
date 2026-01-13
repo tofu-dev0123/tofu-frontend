@@ -3,7 +3,7 @@ import logoImage from '@/assets/images/tofu-logo.png';
 
 function Logo() {
   return (
-    <div className="absolute top-0 left-0 w-40 h-15 z-5 relative">
+    <div className="lg:w-40 w-20 lg:h-15 h-10 relative">
       <Image src={logoImage} alt="logo" fill className="object-contain" />
     </div>
   );

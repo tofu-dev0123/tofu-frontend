@@ -2,6 +2,7 @@
 
 import Logo from '@/components/features/public/common/Logo';
 import { motion } from 'framer-motion';
+import Navigation from './Navigation';
 
 function PublicHeader() {
   return (
@@ -11,7 +12,12 @@ function PublicHeader() {
       animate={{ opacity: 1 }}
       transition={{ duration: 2, delay: 3.5 }}
     >
-      <Logo />
+      <div className="w-1/2 h-full lg:pl-[10%] flex items-end justify-start">
+        <Logo />
+      </div>
+      <div className="w-1/2 h-full flex items-end justify-start">
+        <Navigation />
+      </div>
     </motion.div>
   );
 }

@@ -1,9 +1,9 @@
 'use client';
 
-import Image from 'next/image';
-import tofuIconImage from '@/assets/images/tofu-icon.png';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
+import BackGroundImage from '@/components/features/public/welcome/BackGroundImage';
+import FeatureLinks from '@/components/features/public/welcome/FeatureLinks';
 
 function WelcomeMain() {
   const [isStart, setIsStart] = useState(false);
@@ -19,47 +19,52 @@ function WelcomeMain() {
           exit={{ opacity: 0 }}
           transition={{ duration: 1 }}
           animate={{ opacity: 1 }}
-          className="h-screen w-full relative overflow-hidden"
+          className="h-full w-full relative overflow-hidden"
         >
-          <div className="h-full w-full lg:flex ">
+          <div className="h-[80%] w-full lg:flex ">
             <div className="h-full lg:w-1/2 w-full flex flex-col justify-center">
-              <div>
-                <motion.p
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 2, delay: 3.5 }}
-                  className="font-subLogo font-bold lg:text-xl text-sm tracking-wider lg:mr-10 mr-2 pl-20 text-right "
-                >
-                  Welcome to
-                </motion.p>
-                <motion.h1
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 2, delay: 1 }}
-                  className="lg:mr-10 mr-2 font-logo lg:text-[160px] text-[90px] font-bold text-right leading-none lg:pb-7 pb-3 "
-                >
-                  Tofu blog
-                </motion.h1>
-                <motion.p
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 2, delay: 3.5 }}
-                  className="font-subLogo font-bold lg:text-xl text-sm tracking-wider lg:mr-10 mr-2 pl-20 text-right"
-                >
-                  develop and learning and growing
-                </motion.p>
+              <div className="h-full pl-[20%] flex flex-col justify-between">
+                <div className="mt-[20%]">
+                  <motion.h1
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 2, delay: 1 }}
+                    className="font-logo lg:text-[250px] text-[90px] font-bold leading-none inline-block translate-y-[0.125em]"
+                  >
+                    Tofu
+                  </motion.h1>
+                  <motion.p
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 2, delay: 3.5 }}
+                    className="font-sub-logo font-semibold lg:text-lg text-sm tracking-[0.3em]"
+                  >
+                    Web Developer / Software Engineer
+                  </motion.p>
+                </div>
+                <div>
+                  <motion.p
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 2, delay: 3.5 }}
+                    className="font-sub-logo lg:text-lg text-sm font-semibold tracking-[0.3em]"
+                  >
+                    Tofuの個人サイトです。
+                  </motion.p>
+                  <motion.p
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 2, delay: 3.5 }}
+                    className="font-sub-logo lg:text-lg text-sm font-semibold tracking-[0.3em]"
+                  >
+                    ブログ発信や技術書・個人プロダクトの紹介をしています。
+                  </motion.p>
+                </div>
               </div>
-              <div className="w-full flex justify-end items-center lg:pr-10 pr-2 mt-40 z-10">
-                <motion.button
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 2, delay: 3.5 }}
-                  className="rounded-none text-lg lg:text-xl text-sm tracking-wider border-2 border-black font-subLogo p-2 font-bold hover:cursor-pointer hover:bg-black hover:text-public-main transition-all duration-300"
-                  onClick={handleStart}
-                >
-                  Start reading
-                </motion.button>
-              </div>
+            </div>
+            <div className="h-full lg:w-1/2 w-full relative flex flex-col justify-end">
+              <BackGroundImage />
+              <FeatureLinks />
             </div>
           </div>
         </motion.div>

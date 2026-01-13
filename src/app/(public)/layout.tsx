@@ -1,5 +1,4 @@
 import React from 'react';
-import BackGroundImage from '@/components/features/public/welcome/BackGroundImage';
 import PublicHeader from '@/components/features/public/common/PublicHeader';
 
 function PublicLayout({ children }: { children: React.ReactNode }) {

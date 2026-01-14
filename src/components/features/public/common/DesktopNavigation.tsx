@@ -1,21 +1,30 @@
 'use client';
 
-import Link from 'next/link';
 import { PUBLIC_NAVIGATION_ITEMS } from '@/constants/public/navigationItems';
+import Link from 'next/link';
+import { motion } from 'framer-motion';
+import useIsMobile from '@/hooks/public/common/useIsMobile';
 
-function DesktopNavigation() {
+function DesktopNavigation({ isTop }: { isTop: boolean }) {
+  const isMobile = useIsMobile();
+  if (isMobile) return null;
+
   return (
-    <div className="flex items-center justify-start gap-10">
+    <motion.nav
+      initial={{ opacity: 0 }}
+      animate={{ opacity: isTop ? 1 : 0, display: isTop ? 'flex' : 'none' }}
+      transition={{ duration: 1 }}
+      className="flex items-center justify-start gap-10"
+    >
       {PUBLIC_NAVIGATION_ITEMS.map((item) => (
-        <Link
-          href={item.href}
+        <li
           key={item.label}
-          className="text-lg font-semibold tracking-[0.3em] font-sub-logo text-black/50 hover:text-black hover:translate-y-[-1px] transition-all duration-300"
+          className="list-none text-lg font-semibold tracking-[0.3em] font-sub-logo cursor-pointer hover:text-black hover:translate-y-[-1px] transition-all duration-300 text-black/50"
         >
-          {item.label}
-        </Link>
+          <Link href={item.href}>{item.label}</Link>
+        </li>
       ))}
-    </div>
+    </motion.nav>
   );
 }
 

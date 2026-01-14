@@ -1,12 +1,16 @@
 'use client';
 
 import Link from 'next/link';
-import { PUBLIC_NAVIGATION_ITEMS } from '@/constants/public/navigationItems';
+import { PUBLIC_SIDEBAR_NAVIGATION_ITEMS } from '@/constants/public/navigationItems';
 import { useState } from 'react';
 import HamburgerMenu from '@/components/features/public/common/HamburgerMenu';
 import { motion } from 'framer-motion';
 
-function MobileNavigation() {
+function MobileNavigation({
+  isActive,
+}: {
+  isActive: (href: string) => boolean;
+}) {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleClickMenu = () => {
@@ -18,14 +22,14 @@ function MobileNavigation() {
       <motion.nav
         animate={{ opacity: isOpen ? 1 : 0, x: isOpen ? 0 : '120%' }}
         transition={{ duration: 0.8, ease: 'easeInOut' }}
-        className="w-2/5 h-full flex flex-col gap-10 bg-black/90 shadow-lg pt-30 pl-4 fixed top-0 right-0 z-20"
+        className="w-2/5 h-full flex flex-col gap-10 bg-public-main pt-30 pl-8 fixed top-0 right-0 z-20 border-l border-black/10"
       >
-        {PUBLIC_NAVIGATION_ITEMS.map((item) => (
+        {PUBLIC_SIDEBAR_NAVIGATION_ITEMS.map((item) => (
           <Link
             href={item.href}
             key={item.label}
-            className="text-lg font-bold tracking-[0.3em] font-sub-logo text-public-main"
             onClick={handleClickMenu}
+            className={`text-lg font-sub-logo ${isActive(item.href) ? 'opacity-100 font-bold' : 'opacity-50'}`}
           >
             {item.label}
           </Link>

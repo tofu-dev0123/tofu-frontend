@@ -1,0 +1,29 @@
+import Logo from '@/components/features/public/common/Logo';
+import BackGroundImage from '@/components/features/public/common/BackGroundImage';
+import Link from 'next/link';
+
+export default function NotFound() {
+  return (
+    <div className="w-full h-screen flex flex-col relative">
+      <div className="w-1/2 h-1/2 absolute top-1/2 left-1/2 -translate-y-1/2">
+        <BackGroundImage />
+      </div>
+      <header className="w-full h-15 lg:mt-30">
+        <div className="lg:pl-[10%] flex lg:items-end items-center justify-start lg:ml-0 ml-2">
+          <Logo />
+        </div>
+      </header>
+      <div className="w-1/2 flex flex-col items-center justify-center lg:mr-0 mr-2 translate-y-[90px]">
+        <p className="text-[110px] font-sub-logo font-semibold translate-y-[30px]">
+          404
+        </p>
+        <p className="text-2xl font-sub-logo font-semibold">Page Not Found</p>
+        <div className="flex justify-center mt-10">
+          <button className="text-lg font-sub-logo font-semibold border-2 bg-black text-white px-4 py-2 hover:bg-white hover:text-black transition-all duration-300">
+            <Link href="/">Topに戻る</Link>
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}

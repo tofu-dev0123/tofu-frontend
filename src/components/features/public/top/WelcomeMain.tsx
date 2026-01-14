@@ -1,8 +1,8 @@
 'use client';
 
 import { motion, AnimatePresence } from 'framer-motion';
-import BackGroundImage from '@/components/features/public/welcome/BackGroundImage';
-import FeatureLinks from '@/components/features/public/welcome/FeatureLinks';
+import BackGroundImage from '@/components/features/public/common/BackGroundImage';
+import FeatureLinks from '@/components/features/public/top/FeatureLinks';
 import useIsMobile from '@/hooks/public/common/useIsMobile';
 import Loading from '@/components/features/public/common/Loading';
 import { useState, useEffect } from 'react';

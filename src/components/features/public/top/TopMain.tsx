@@ -1,4 +1,4 @@
-import WelcomeMain from '@/components/features/public/welcome/WelcomeMain';
+import WelcomeMain from '@/components/features/public/top/WelcomeMain';
 
 function TopMain() {
   return (

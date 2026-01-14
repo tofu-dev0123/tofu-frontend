@@ -4,8 +4,8 @@ export const PUBLIC_NAVIGATION_ITEMS = [
     href: '/about',
   },
   {
-    label: 'Blog',
-    href: '/blog',
+    label: 'Blogs',
+    href: '/blogs',
   },
   {
     label: 'Products',

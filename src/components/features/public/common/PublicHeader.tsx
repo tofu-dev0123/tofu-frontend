@@ -6,12 +6,18 @@ import DesktopNavigation from '@/components/features/public/common/DesktopNaviga
 import useIsMobile from '@/hooks/public/common/useIsMobile';
 import MobileNavigation from '@/components/features/public/common/MobileNavigation';
 
-function PublicHeader() {
+function PublicHeader({
+  isActive,
+  isTop,
+}: {
+  isActive: (href: string) => boolean;
+  isTop: boolean;
+}) {
   const isMobile = useIsMobile();
   return (
     <motion.div
       className="w-full h-full flex items-center justify-between"
-      initial={{ opacity: 0 }}
+      initial={{ opacity: isTop ? 0 : 1 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 2, delay: 6.5 }}
     >
@@ -19,7 +25,11 @@ function PublicHeader() {
         <Logo />
       </div>
       <div className="w-1/2 h-full flex lg:items-end items-center lg:justify-start justify-end lg:mr-0 mr-2">
-        {isMobile ? <MobileNavigation /> : <DesktopNavigation />}
+        {isMobile ? (
+          <MobileNavigation />
+        ) : (
+          <DesktopNavigation isActive={isActive} />
+        )}
       </div>
     </motion.div>
   );

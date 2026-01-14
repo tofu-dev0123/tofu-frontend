@@ -1,21 +1,24 @@
 'use client';
 
-import Link from 'next/link';
 import { PUBLIC_NAVIGATION_ITEMS } from '@/constants/public/navigationItems';
+import Link from 'next/link';
 
-function DesktopNavigation() {
+function DesktopNavigation({
+  isActive,
+}: {
+  isActive: (href: string) => boolean;
+}) {
   return (
-    <div className="flex items-center justify-start gap-10">
+    <nav className="flex items-center justify-start gap-10">
       {PUBLIC_NAVIGATION_ITEMS.map((item) => (
-        <Link
-          href={item.href}
+        <li
           key={item.label}
-          className="text-lg font-semibold tracking-[0.3em] font-sub-logo text-black/50 hover:text-black hover:translate-y-[-1px] transition-all duration-300"
+          className={`list-none text-lg font-semibold tracking-[0.3em] font-sub-logo cursor-pointer hover:text-black hover:translate-y-[-1px] transition-all duration-300 ${isActive(item.href) ? 'text-black' : 'text-black/50'}`}
         >
-          {item.label}
-        </Link>
+          <Link href={item.href}>{item.label}</Link>
+        </li>
       ))}
-    </div>
+    </nav>
   );
 }
 

@@ -9,7 +9,7 @@ module.exports = {
           main: '#143046',
         },
         public: {
-          main: '#f6efdb',
+          main: '#ffffff',
         },
       },
       fontFamily: {

@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import PublicHeader from '@/components/features/public/common/PublicHeader';
 

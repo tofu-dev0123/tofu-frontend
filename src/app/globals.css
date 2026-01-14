@@ -84,7 +84,7 @@
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
   --admin-main: #143046;
-  --public-main: #f6efdb;
+  --public-main: #ffffff;
   --font-logo: var(--font-logo);
   --font-sub-logo: var(--font-sub-logo);
 }

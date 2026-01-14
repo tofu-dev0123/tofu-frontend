@@ -5,7 +5,7 @@ import Link from 'next/link';
 export default function Page() {
   return (
     <div className="w-full h-screen flex flex-col relative">
-      <div className="w-1/2 h-1/2 absolute top-1/2 left-1/2 -translate-y-1/2">
+      <div className="w-1/2 h-[70%] absolute top-1/2 left-1/2 -translate-y-1/2">
         <BackGroundImage />
       </div>
       <header className="w-full h-15 lg:mt-30">
@@ -13,11 +13,11 @@ export default function Page() {
           <Logo />
         </div>
       </header>
-      <div className="w-1/2 flex flex-col items-center justify-center lg:mr-0 mr-2 translate-y-[90px]">
+      <div className="w-1/2 flex flex-col items-start justify-center lg:mr-0 mr-2 translate-y-[90px] lg:pl-[10%]">
         <p className="text-lg font-sub-logo font-semibold">
           ただいまメンテナンス中です...
         </p>
-        <div className="flex justify-center mt-10">
+        <div className="flex justify-center items-start mt-10">
           <button className="text-lg font-sub-logo font-semibold border-2 bg-black text-white px-4 py-2 hover:bg-white hover:text-black transition-all duration-300">
             <Link href="/">Topに戻る</Link>
           </button>

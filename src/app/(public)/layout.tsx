@@ -2,13 +2,12 @@
 
 import React from 'react';
 import PublicHeader from '@/components/features/public/common/PublicHeader';
-import { usePathname } from 'next/navigation';
+import usePageNavigation from '@/hooks/public/common/usePageNavigation';
 import { motion } from 'framer-motion';
 
 function PublicLayout({ children }: { children: React.ReactNode }) {
-  const pathname = usePathname();
-  const isActive = (href: string) => pathname === href;
-  const isTop = pathname === '/';
+  const { isTop } = usePageNavigation();
+
   return (
     <div className="w-full h-screen bg-public-main fixed inset-0 overflow-auto flex flex-col">
       <motion.header
@@ -21,7 +20,7 @@ function PublicLayout({ children }: { children: React.ReactNode }) {
           ease: 'easeInOut',
         }}
       >
-        <PublicHeader isActive={isActive} isTop={isTop} />
+        <PublicHeader isTop={isTop} />
       </motion.header>
       <main className="w-full flex-1">{children}</main>
     </div>

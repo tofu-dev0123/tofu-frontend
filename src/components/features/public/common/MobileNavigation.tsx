@@ -14,7 +14,7 @@ function MobileNavigation() {
   };
 
   return (
-    <div className="flex  items-center justify-start gap-10">
+    <div className="flex items-center justify-start gap-10">
       <motion.nav
         animate={{ opacity: isOpen ? 1 : 0, x: isOpen ? 0 : '120%' }}
         transition={{ duration: 0.8, ease: 'easeInOut' }}

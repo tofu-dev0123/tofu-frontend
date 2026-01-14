@@ -3,15 +3,17 @@
 import { useState, useEffect } from 'react';
 
 function useIsMobile() {
-  const [isMobile, setIsMobile] = useState(() => {
-    if (typeof window === 'undefined') return false;
-    return window.innerWidth < 768;
-  });
+  // 初期値は常にfalseにして、SSRとクライアントで一貫性を保つ
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+    // クライアント側でのみ実行される
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768);
     };
+
+    // 初回レンダリング時に値を設定
+    handleResize();
 
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);

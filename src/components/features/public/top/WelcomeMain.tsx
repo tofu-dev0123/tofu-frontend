@@ -13,7 +13,7 @@ function WelcomeMain() {
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(false);
-    }, 3000);
+    }, 1000);
   }, []);
 
   const isMobile = useIsMobile();
@@ -38,9 +38,9 @@ function WelcomeMain() {
             <div className="h-full lg:pl-[20%] pl-4 flex flex-col justify-between">
               <div className="mt-[20%]">
                 <motion.h1
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 2, delay: isLoading ? 0 : 1 }}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 1, delay: 0 }}
                   className="font-logo lg:text-[250px] text-[150px] font-bold leading-none inline-block translate-y-[0.125em]"
                 >
                   Tofu
@@ -48,7 +48,7 @@ function WelcomeMain() {
                 <motion.p
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  transition={{ duration: 2, delay: isLoading ? 0 : 3.5 }}
+                  transition={{ duration: 1, delay: isLoading ? 0 : 2 }}
                   className="font-sub-logo font-semibold lg:text-lg text-xs lg:tracking-[0.3em] tracking-[0.22em]"
                 >
                   Web Developer / Software Engineer
@@ -58,7 +58,7 @@ function WelcomeMain() {
                 <motion.p
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  transition={{ duration: 2, delay: isLoading ? 0 : 3.5 }}
+                  transition={{ duration: 1, delay: isLoading ? 0 : 2 }}
                   className="font-sub-logo lg:text-lg text-xs font-semibold lg:tracking-[0.3em] tracking-[0.22em]"
                 >
                   Tofuの個人サイトです。
@@ -66,7 +66,7 @@ function WelcomeMain() {
                 <motion.p
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  transition={{ duration: 2, delay: isLoading ? 0 : 3.5 }}
+                  transition={{ duration: 1, delay: isLoading ? 0 : 2 }}
                   className="font-sub-logo lg:text-lg text-xs font-semibold lg:tracking-[0.3em] tracking-[0.22em]"
                 >
                   ブログ発信や技術書・個人プロダクトの紹介をしています。

@@ -3,8 +3,12 @@
 import { PUBLIC_NAVIGATION_ITEMS } from '@/constants/public/navigationItems';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import useIsMobile from '@/hooks/public/common/useIsMobile';
 
 function DesktopNavigation({ isTop }: { isTop: boolean }) {
+  const isMobile = useIsMobile();
+  if (isMobile) return null;
+
   return (
     <motion.nav
       initial={{ opacity: 0 }}

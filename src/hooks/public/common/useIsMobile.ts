@@ -9,7 +9,7 @@ function useIsMobile() {
   useEffect(() => {
     // クライアント側でのみ実行される
     const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
+      setIsMobile(window.innerWidth < 1024);
     };
 
     // 初回レンダリング時に値を設定

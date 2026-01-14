@@ -14,7 +14,7 @@ function PublicHeader({ isTop }: { isTop: boolean }) {
     if (isTop) {
       setTimeout(() => {
         setIsLoading(false);
-      }, 3000);
+      }, 1000);
     } else {
       setIsLoading(false);
     }
@@ -26,7 +26,7 @@ function PublicHeader({ isTop }: { isTop: boolean }) {
         className="w-full h-full flex items-center justify-between"
         initial={{ opacity: isTop ? 0 : 1 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 2, delay: 3.5 }}
+        transition={{ duration: 1, delay: 2 }}
       >
         <div className="w-1/2 h-full lg:pl-[10%] flex lg:items-end items-center justify-start lg:ml-0 ml-2">
           <Logo />

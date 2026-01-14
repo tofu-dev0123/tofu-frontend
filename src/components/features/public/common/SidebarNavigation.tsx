@@ -3,12 +3,15 @@
 import { PUBLIC_SIDEBAR_NAVIGATION_ITEMS } from '@/constants/public/navigationItems';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import useIsMobile from '@/hooks/public/common/useIsMobile';
 
 function SidebarNavigation({
   isActive,
 }: {
   isActive: (href: string) => boolean;
 }) {
+  const isMobile = useIsMobile();
+  if (isMobile) return null;
   return (
     <motion.nav
       className="absolute left-[10%] top-10 h-full w-[10%] py-10 flex flex-col"

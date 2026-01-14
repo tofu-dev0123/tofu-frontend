@@ -12,28 +12,25 @@ function HamburgerMenu({ onClick, isOpen }: HamburgerMenuProps) {
       className="w-full h-full flex flex-col py-3 px-2 justify-between items-center"
     >
       <motion.span
-        className={`w-full h-0.5`}
+        className="w-full h-0.5 bg-black"
         animate={{
           rotate: isOpen ? 45 : 0,
           y: isOpen ? 11 : 0,
-          backgroundColor: isOpen ? '#f6efdb' : '#000000',
         }}
         transition={{ duration: 0.3, delay: 0.3 }}
       ></motion.span>
       <motion.span
-        className={`w-full h-0.5`}
+        className="w-full h-0.5 bg-black"
         animate={{
           opacity: isOpen ? 0 : 1,
-          backgroundColor: isOpen ? '#f6efdb' : '#000000',
         }}
         transition={{ duration: 0.3, delay: 0.3 }}
       ></motion.span>
       <motion.span
-        className={`w-full h-0.5`}
+        className="w-full h-0.5 bg-black"
         animate={{
           rotate: isOpen ? -45 : 0,
           y: isOpen ? -11 : 0,
-          backgroundColor: isOpen ? '#f6efdb' : '#000000',
         }}
         transition={{ duration: 0.3, delay: 0.3 }}
       ></motion.span>

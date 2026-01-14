@@ -7,7 +7,13 @@ import useIsMobile from '@/hooks/public/common/useIsMobile';
 import MobileNavigation from '@/components/features/public/common/MobileNavigation';
 import { useState, useEffect } from 'react';
 
-function PublicHeader({ isTop }: { isTop: boolean }) {
+function PublicHeader({
+  isTop,
+  isActive,
+}: {
+  isTop: boolean;
+  isActive: (href: string) => boolean;
+}) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -33,7 +39,7 @@ function PublicHeader({ isTop }: { isTop: boolean }) {
         </div>
         <div className="w-1/2 h-full flex lg:items-end items-center lg:justify-start justify-end lg:mr-0 mr-2">
           {isMobile ? (
-            <MobileNavigation />
+            <MobileNavigation isActive={isActive} />
           ) : (
             <DesktopNavigation isTop={isTop} />
           )}

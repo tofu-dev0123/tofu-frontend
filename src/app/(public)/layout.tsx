@@ -6,7 +6,7 @@ import usePageNavigation from '@/hooks/public/common/usePageNavigation';
 import { motion } from 'framer-motion';
 
 function PublicLayout({ children }: { children: React.ReactNode }) {
-  const { isTop } = usePageNavigation();
+  const { isTop, isActive } = usePageNavigation();
 
   return (
     <div className="w-full h-screen bg-public-main fixed inset-0 overflow-auto flex flex-col">
@@ -20,7 +20,7 @@ function PublicLayout({ children }: { children: React.ReactNode }) {
           ease: 'easeInOut',
         }}
       >
-        <PublicHeader isTop={isTop} />
+        <PublicHeader isTop={isTop} isActive={isActive} />
       </motion.header>
       <main className="w-full flex-1">{children}</main>
     </div>

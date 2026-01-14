@@ -22,7 +22,9 @@ function PublicHeader({
         setIsLoading(false);
       }, 1000);
     } else {
-      setIsLoading(false);
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 0);
     }
   }, [isTop]);
   const isMobile = useIsMobile();

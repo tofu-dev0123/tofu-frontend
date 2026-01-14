@@ -14,12 +14,12 @@ module.exports = {
       },
       fontFamily: {
         logo: ['var(--font-logo)'],
-        grotesk: ['var(--font-grotesk)'],
+        subLogo: ['var(--font-sub-logo)'],
       },
     },
   },
   plugins: [
     // eslint-disable-next-line @typescript-eslint/no-require-imports
-    require('@tailwindcss/typography'), // ← これ必須
+    require('@tailwindcss/typography'),
   ],
 };

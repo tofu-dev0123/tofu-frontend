@@ -1,16 +1,14 @@
 'use client';
 
-import Image from 'next/image';
-import tofuIconImage from '@/assets/images/tofu-icon.png';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useState } from 'react';
+import BackGroundImage from '@/components/features/public/welcome/BackGroundImage';
+import FeatureLinks from '@/components/features/public/welcome/FeatureLinks';
+import useIsMobile from '@/hooks/public/common/useIsMobile';
 
 function WelcomeMain() {
-  const [isStart, setIsStart] = useState(false);
+  const isStart = false;
 
-  const handleStart = () => {
-    setIsStart(true);
-  };
+  const isMobile = useIsMobile();
 
   return (
     <AnimatePresence>
@@ -19,57 +17,57 @@ function WelcomeMain() {
           exit={{ opacity: 0 }}
           transition={{ duration: 1 }}
           animate={{ opacity: 1 }}
-          className="h-screen w-full relative overflow-hidden"
+          className="h-full w-full relative overflow-hidden"
         >
-          <div className="h-full w-full lg:flex ">
-            <div className="h-full lg:w-1/2 w-full flex flex-col justify-center">
-              <div>
-                <motion.p
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 2, delay: 3.5 }}
-                  className="font-grotesk font-bold lg:text-xl text-sm tracking-wider mr-10 pl-20 text-right "
-                >
-                  Welcome to
-                </motion.p>
-                <motion.h1
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 2, delay: 1 }}
-                  className="mr-10 font-logo lg:text-[140px] text-[4rem] font-bold text-right leading-none lg:pb-7 pb-3"
-                >
-                  Tofu blog
-                </motion.h1>
-                <motion.p
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 2, delay: 3.5 }}
-                  className="font-grotesk font-bold lg:text-xl text-sm tracking-wider mr-10 pl-20 text-right"
-                >
-                  develop and learning and growing
-                </motion.p>
-              </div>
-              <div className="w-full flex justify-end items-center pr-10 mt-40 z-10">
-                <motion.button
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 2, delay: 3.5 }}
-                  className="rounded-none text-lg lg:text-xl text-sm tracking-wider border-2 border-black font-grotesk p-2 font-bold hover:cursor-pointer hover:bg-black hover:text-public-main transition-all duration-300"
-                  onClick={handleStart}
-                >
-                  Start reading
-                </motion.button>
+          {isMobile && (
+            <div className="h-full w-full absolute top-0 left-0">
+              <BackGroundImage />
+            </div>
+          )}
+          <div className="lg:h-[80%] h-full w-full lg:flex ">
+            <div className="lg:h-full h-[70%] lg:w-1/2 w-full flex flex-col justify-center">
+              <div className="h-full lg:pl-[20%] pl-4 flex flex-col justify-between">
+                <div className="mt-[20%]">
+                  <motion.h1
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 2, delay: 1 }}
+                    className="font-logo lg:text-[250px] text-[180px] font-bold leading-none inline-block translate-y-[0.125em]"
+                  >
+                    Tofu
+                  </motion.h1>
+                  <motion.p
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 2, delay: 3.5 }}
+                    className="font-sub-logo font-semibold lg:text-lg text-sm lg:tracking-[0.3em] tracking-[0.24em]"
+                  >
+                    Web Developer / Software Engineer
+                  </motion.p>
+                </div>
+                <div>
+                  <motion.p
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 2, delay: 3.5 }}
+                    className="font-sub-logo lg:text-lg text-sm font-semibold lg:tracking-[0.3em] tracking-[0.24em]"
+                  >
+                    Tofuの個人サイトです。
+                  </motion.p>
+                  <motion.p
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 2, delay: 3.5 }}
+                    className="font-sub-logo lg:text-lg text-sm font-semibold lg:tracking-[0.3em] tracking-[0.24em]"
+                  >
+                    ブログ発信や技術書・個人プロダクトの紹介をしています。
+                  </motion.p>
+                </div>
               </div>
             </div>
-            <div className="h-full lg:w-1/2 w-full lg:relative ">
-              <motion.div className="absolute top-0 left-0 lg:translate-x-[-5%] w-full h-full lg:scale-140">
-                <Image
-                  src={tofuIconImage}
-                  alt="welcome"
-                  fill
-                  className="opacity-10 object-cover"
-                />
-              </motion.div>
+            <div className="lg:h-full lg:w-1/2 w-full relative flex flex-col justify-end relative">
+              {!isMobile && <BackGroundImage />}
+              <FeatureLinks />
             </div>
           </div>
         </motion.div>

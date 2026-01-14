@@ -1,15 +1,14 @@
-import { IBM_Plex_Serif, Space_Grotesk } from 'next/font/google';
+import { Roboto, Noto_Serif_JP } from 'next/font/google';
 
-export const logo = IBM_Plex_Serif({
+export const logo = Roboto({
   subsets: ['latin'],
-  weight: ['400', '600', '700'], // ロゴ用に少し太さを持たせる
+  weight: ['400', '600', '700'],
   variable: '--font-logo',
   display: 'swap',
 });
 
-export const grotesk = Space_Grotesk({
-  subsets: ['latin'],
+export const subLogo = Noto_Serif_JP({
   weight: ['400', '600', '700'],
-  variable: '--font-grotesk',
+  variable: '--font-sub-logo',
   display: 'swap',
 });

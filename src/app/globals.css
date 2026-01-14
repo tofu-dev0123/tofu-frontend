@@ -47,7 +47,7 @@
   --color-admin-main: var(--admin-main);
   --color-public-main: var(--public-main);
   --font-logo: var(--font-logo);
-  --font-grotesk: var(--font-grotesk);
+  --font-sub-logo: var(--font-sub-logo);
 }
 
 :root {
@@ -86,7 +86,7 @@
   --admin-main: #143046;
   --public-main: #f6efdb;
   --font-logo: var(--font-logo);
-  --font-grotesk: var(--font-grotesk);
+  --font-sub-logo: var(--font-sub-logo);
 }
 
 .dark {

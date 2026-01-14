@@ -1,19 +1,14 @@
 'use client';
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { useState } from 'react';
 import BackGroundImage from '@/components/features/public/welcome/BackGroundImage';
 import FeatureLinks from '@/components/features/public/welcome/FeatureLinks';
 import useIsMobile from '@/hooks/public/common/useIsMobile';
 
 function WelcomeMain() {
-  const [isStart, setIsStart] = useState(false);
+  const isStart = false;
 
   const isMobile = useIsMobile();
-
-  const handleStart = () => {
-    setIsStart(true);
-  };
 
   return (
     <AnimatePresence>
@@ -37,7 +32,7 @@ function WelcomeMain() {
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 2, delay: 1 }}
-                    className="font-logo lg:text-[250px] text-[150px] font-bold leading-none inline-block translate-y-[0.125em]"
+                    className="font-logo lg:text-[250px] text-[180px] font-bold leading-none inline-block translate-y-[0.125em]"
                   >
                     Tofu
                   </motion.h1>
@@ -45,7 +40,7 @@ function WelcomeMain() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 2, delay: 3.5 }}
-                    className="font-sub-logo font-semibold lg:text-lg text-xs lg:tracking-[0.3em] tracking-[0.22em]"
+                    className="font-sub-logo font-semibold lg:text-lg text-sm lg:tracking-[0.3em] tracking-[0.24em]"
                   >
                     Web Developer / Software Engineer
                   </motion.p>
@@ -55,7 +50,7 @@ function WelcomeMain() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 2, delay: 3.5 }}
-                    className="font-sub-logo lg:text-lg text-xs font-semibold lg:tracking-[0.3em] tracking-[0.22em]"
+                    className="font-sub-logo lg:text-lg text-sm font-semibold lg:tracking-[0.3em] tracking-[0.24em]"
                   >
                     Tofuの個人サイトです。
                   </motion.p>
@@ -63,7 +58,7 @@ function WelcomeMain() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 2, delay: 3.5 }}
-                    className="font-sub-logo lg:text-lg text-xs font-semibold lg:tracking-[0.3em] tracking-[0.22em]"
+                    className="font-sub-logo lg:text-lg text-sm font-semibold lg:tracking-[0.3em] tracking-[0.24em]"
                   >
                     ブログ発信や技術書・個人プロダクトの紹介をしています。
                   </motion.p>

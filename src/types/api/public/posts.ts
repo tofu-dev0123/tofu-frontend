@@ -2,8 +2,8 @@ export type Post = {
   post_id: number;
   title: string;
   slug: string;
-  thumbnail_url: string | null;
-  published_at: string | null;
+  thumbnail_url: string;
+  published_at: string;
 };
 
 export type PostGetResponse = {

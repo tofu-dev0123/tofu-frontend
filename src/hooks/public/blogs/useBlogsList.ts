@@ -5,6 +5,7 @@ import { API_ENDPOINTS } from '@/lib/api/endpoint';
 import { useSearchParams } from 'next/navigation';
 
 function useBlogsList() {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [blogsList, setBlogsList] = useState<Post[]>([]);
   const [totalCount, setTotalCount] = useState<number>(0);
   const [totalPages, setTotalPages] = useState<number>(0);
@@ -22,6 +23,7 @@ function useBlogsList() {
       if (pageNum) queryParams.append('page', pageNum.toString());
 
       try {
+        setIsLoading(true);
         const response = await get<PostGetResponse>(
           `${API_ENDPOINTS.blogs.get}?${queryParams.toString()}`
         );
@@ -31,6 +33,8 @@ function useBlogsList() {
         setPage(response.page);
       } catch {
         throw new Error('記事の取得に失敗しました...');
+      } finally {
+        setIsLoading(false);
       }
     },
     []
@@ -53,7 +57,15 @@ function useBlogsList() {
     void fetchData();
   }, [paramsKeyword, paramsPage, getBlogsList, keyword]);
 
-  return { blogsList, totalCount, totalPages, page, keyword, getBlogsList };
+  return {
+    isLoading,
+    blogsList,
+    totalCount,
+    totalPages,
+    page,
+    keyword,
+    getBlogsList,
+  };
 }
 
 export default useBlogsList;

@@ -28,9 +28,9 @@ function BlogDetailMain({ slug }: { slug: string }) {
           transition={{ duration: 0.5 }}
         >
           <Back href="/blogs" />
-          <Links position="right" />
+          <Links position="right" title={blogDetail.title} />
           <BlogContent blogDetail={blogDetail} />
-          <BlogFooter />
+          <BlogFooter title={blogDetail.title} />
         </motion.div>
       )}
     </>

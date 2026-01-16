@@ -15,6 +15,7 @@ function PublicHeader({
   isActive: (href: string) => boolean;
 }) {
   const [isLoading, setIsLoading] = useState(true);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     if (isTop) {
@@ -27,7 +28,7 @@ function PublicHeader({
       }, 0);
     }
   }, [isTop]);
-  const isMobile = useIsMobile();
+
   return (
     !isLoading && (
       <motion.div

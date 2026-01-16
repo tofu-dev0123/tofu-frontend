@@ -20,4 +20,7 @@ export const API_ENDPOINTS = {
     post: '/admin/images/upload',
     delete: (id: number) => `/admin/images/${id}`,
   },
+  blogs: {
+    get: '/posts/',
+  },
 };

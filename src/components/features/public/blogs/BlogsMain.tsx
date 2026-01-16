@@ -1,22 +1,26 @@
 'use client';
 
-import BlogsList from '@/components/features/public/blogs/BlogsList';
-import SidebarNavigation from '@/components/features/public/common/SidebarNavigation';
-import usePageNavigation from '@/hooks/public/common/usePageNavigation';
-import { motion } from 'framer-motion';
+import Search from '@/components/features/public/blogs/Search';
+import useBlogsList from '@/hooks/public/blogs/useBlogsList';
+import Blog from '@/components/features/public/blogs/Blog';
 
 function BlogsMain() {
-  const { isActive } = usePageNavigation();
+  const { blogsList, getBlogsList } = useBlogsList();
+  const handleSearch = (value: string) => {
+    getBlogsList(value);
+  };
+
   return (
-    <motion.div
-      className="h-full w-full pt-10 flex relative justify-center items-start"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 2, delay: 1 }}
-    >
-      <SidebarNavigation isActive={isActive} />
-      <BlogsList />
-    </motion.div>
+    <div className="h-full w-full px-2">
+      <Search handleSearch={handleSearch} />
+      <div className="flex-1 overflow-y-auto py-4">
+        {blogsList.map((blog, index) => (
+          <div key={blog.post_id}>
+            <Blog blog={blog} index={index} />
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }
 

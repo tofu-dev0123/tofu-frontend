@@ -17,7 +17,7 @@ function Blog({ blog, index }: BlogProps) {
       className="w-full flex items-center justify-between gap-6 hover:bg-gray-100/50 transition-all duration-500 cursor-pointer"
       onClick={() => router.push(`/blogs/${blog.slug}`)}
     >
-      <div className="lg:w-65 lg:h-30 w-20 h-20 flex-shrink-0 flex item-center justify-center relative overflow-hidden">
+      <div className="lg:w-50 lg:h-30 w-20 h-20 flex-shrink-0 flex item-center justify-center relative overflow-hidden">
         <Image
           src={blog.thumbnail_url}
           alt={blog.title}

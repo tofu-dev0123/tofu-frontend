@@ -34,12 +34,18 @@ export default function Search() {
   return (
     <div className="w-full h-10">
       <motion.div
+        initial={{ width: 40 }}
         animate={{ width: isOpen ? 300 : 40 }}
         transition={{ duration: 0.5, ease: 'easeInOut' }}
         className="h-full rounded-full border border-black/10 flex items-center justify-end"
       >
         <motion.div
           className="w-full items-center justify-start gap-2"
+          initial={{
+            opacity: 0,
+            width: 0,
+            display: 'none',
+          }}
           animate={{
             opacity: isOpen ? 1 : 0,
             width: isOpen ? 260 : 0,

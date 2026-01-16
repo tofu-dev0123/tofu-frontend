@@ -4,12 +4,19 @@ import Search from '@/components/features/public/blogs/Search';
 import useBlogsList from '@/hooks/public/blogs/useBlogsList';
 import Blog from '@/components/features/public/blogs/Blog';
 import Keyword from '@/components/features/public/blogs/Keyword';
+import { motion } from 'framer-motion';
 
 function BlogsMain() {
   const { blogsList, keyword, totalCount } = useBlogsList();
 
   return (
-    <div className="h-full w-full px-2">
+    <motion.div
+      className="h-full w-full px-2"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.5 }}
+    >
       <Search />
       <Keyword keyword={keyword} />
       {totalCount === 0 ? (
@@ -27,7 +34,7 @@ function BlogsMain() {
           ))}
         </div>
       )}
-    </div>
+    </motion.div>
   );
 }
 

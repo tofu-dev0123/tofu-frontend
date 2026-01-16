@@ -4,27 +4,28 @@ import useBlogDetail from '@/hooks/public/blogs/useBlogDetail';
 import Image from 'next/image';
 import HtmlContent from '@/components/features/public/blogs/slug/HtmlContent';
 import { formatDate } from '@/lib/utils/dateFormat';
-import { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import Loading from '@/components/features/public/common/Loading';
 
-interface BlogDetailMainProps {
-  slug: string;
-}
+function BlogDetailMain({ slug }: { slug: string }) {
+  const { blogDetail, isLoading } = useBlogDetail(slug);
 
-function BlogDetailMain({ slug }: BlogDetailMainProps) {
-  const { blogDetail } = useBlogDetail(slug);
-
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 5000);
-  }, []);
+  if (!blogDetail) return;
 
   return (
     <>
-      {blogDetail ? (
-        <div className="w-full min-h-screen flex flex-col mb-20 lg:px-20">
+      {isLoading ? (
+        <div className="w-full full relative">
+          <Loading />
+        </div>
+      ) : (
+        <motion.div
+          className="w-full min-h-screen flex flex-col mb-20 lg:px-20"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.5 }}
+        >
           <div className="w-full aspect-video overflow-hidden relative">
             <Image
               src={blogDetail.thumbnail_url}
@@ -57,11 +58,7 @@ function BlogDetailMain({ slug }: BlogDetailMainProps) {
               </span>
             ))}
           </div>
-        </div>
-      ) : (
-        <div>
-          <p>ブログの詳細情報の取得に失敗しました</p>
-        </div>
+        </motion.div>
       )}
     </>
   );

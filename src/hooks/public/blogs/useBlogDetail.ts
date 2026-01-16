@@ -7,23 +7,27 @@ import { API_ENDPOINTS } from '@/lib/api/endpoint';
 
 function useBlogDetail(slug: string) {
   const [blogDetail, setBlogDetail] = useState<PostDetailResponse | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if (!slug) return;
     const fetchBlogDetail = async (slug: string) => {
       try {
+        setIsLoading(true);
         const blogDetail = await get<PostDetailResponse>(
           API_ENDPOINTS.blogs.detail(slug)
         );
         setBlogDetail(blogDetail);
       } catch (error) {
         throw new Error('ブログの詳細情報の取得に失敗しました');
+      } finally {
+        setIsLoading(false);
       }
     };
     fetchBlogDetail(slug);
   }, [slug]);
 
-  return { blogDetail };
+  return { blogDetail, isLoading };
 }
 
 export default useBlogDetail;

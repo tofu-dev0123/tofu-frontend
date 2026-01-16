@@ -2,7 +2,7 @@
 
 import type { Post } from '@/types/api/public/posts';
 import Image from 'next/image';
-import { formatDateTime } from '@/lib/utils/dateFormat';
+import { formatDate } from '@/lib/utils/dateFormat';
 import { useRouter } from 'next/navigation';
 
 interface BlogProps {
@@ -43,8 +43,8 @@ function Blog({ blog, index }: BlogProps) {
               </p>
             ))}
           </div>
-          <p className="w-full font-sub-logo text-xs text-gray-500">
-            {formatDateTime(blog.published_at)}
+          <p className="w-full font-sub-logo text-xs text-gray-500 tracking-[0.05em]">
+            {formatDate(blog.published_at)}
           </p>
         </div>
       </div>

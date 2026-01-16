@@ -20,3 +20,13 @@ export type PostGetResponse = {
   limit: number;
   posts: Post[];
 };
+
+export type PostDetailResponse = {
+  post_id: number;
+  title: string;
+  slug: string;
+  content_html: string;
+  thumbnail_url: string;
+  tags: Tag[];
+  published_at: string;
+};

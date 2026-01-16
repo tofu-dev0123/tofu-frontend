@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 function Profile() {
   return (
-    <div className="w-full flex justify-start items-center my-10 gap-4">
+    <div className="w-full flex justify-start items-center my-5 lg:my-10 gap-4">
       <div className="w-16 h-16 bg-white p-2 overflow-hidden">
         <Link href="/">
           <Image

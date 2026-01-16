@@ -21,7 +21,7 @@ function BlogDetailMain({ slug }: { slug: string }) {
         </div>
       ) : (
         <motion.div
-          className="w-full min-h-screen flex flex-col mb-20 lg:px-20"
+          className="w-full min-h-screen flex flex-col mb-20 lg:px-20 px-2"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}

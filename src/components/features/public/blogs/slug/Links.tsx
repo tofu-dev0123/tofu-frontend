@@ -43,7 +43,7 @@ function Links({ position, title }: LinksProps) {
   ];
 
   return (
-    <div className={`w-full h-10 my-2 flex ${justify} items-center gap-4`}>
+    <div className={`w-full h-10 lg:my-2 flex ${justify} items-center gap-4`}>
       {linkItems.map((item) => (
         <Tooltip key={item.tooltip} content={item.tooltip}>
           <button

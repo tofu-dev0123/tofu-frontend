@@ -23,7 +23,7 @@ function BlogContent({ blogDetail }: { blogDetail: PostDetailResponse }) {
         </h1>
       </div>
       <div className="w-full">
-        <p className="text-sm text-gray-500 text-right tracking-[0.02em]">
+        <p className="text-sm text-gray-500 text-right tracking-[0.02em] my-2">
           {formatDate(blogDetail.published_at)}
         </p>
       </div>

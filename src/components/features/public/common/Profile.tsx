@@ -1,17 +1,20 @@
 import Image from 'next/image';
 import tofuIcon from '@/assets/images/tofu-icon.png';
+import Link from 'next/link';
 
 function Profile() {
   return (
     <div className="w-full flex justify-start items-center my-10 gap-4">
       <div className="w-16 h-16 bg-white p-2 overflow-hidden">
-        <Image
-          src={tofuIcon}
-          alt="tofu"
-          width={48}
-          height={48}
-          className="object-contain"
-        />
+        <Link href="/">
+          <Image
+            src={tofuIcon}
+            alt="tofu"
+            width={48}
+            height={48}
+            className="object-contain"
+          />
+        </Link>
       </div>
       <div className="flex-1 flex flex-col">
         <p className="text-lg tracking-[0.02em] font-bold">Tofu</p>

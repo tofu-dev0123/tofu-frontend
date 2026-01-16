@@ -6,6 +6,7 @@ import HtmlContent from '@/components/features/public/blogs/slug/HtmlContent';
 import { formatDate } from '@/lib/utils/dateFormat';
 import { motion } from 'framer-motion';
 import Loading from '@/components/features/public/common/Loading';
+import Back from '@/components/features/public/common/Back';
 
 function BlogDetailMain({ slug }: { slug: string }) {
   const { blogDetail, isLoading } = useBlogDetail(slug);
@@ -26,6 +27,7 @@ function BlogDetailMain({ slug }: { slug: string }) {
           exit={{ opacity: 0 }}
           transition={{ duration: 0.5 }}
         >
+          <Back href="/blogs" />
           <div className="w-full aspect-video overflow-hidden relative">
             <Image
               src={blogDetail.thumbnail_url}

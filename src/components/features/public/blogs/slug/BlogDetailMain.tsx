@@ -6,6 +6,7 @@ import Loading from '@/components/features/public/common/Loading';
 import Back from '@/components/features/public/common/Back';
 import Links from '@/components/features/public/blogs/slug/Links';
 import BlogContent from '@/components/features/public/blogs/slug/BlogContent';
+import BlogFooter from '@/components/features/public/blogs/slug/BlogFooter';
 
 function BlogDetailMain({ slug }: { slug: string }) {
   const { blogDetail, isLoading } = useBlogDetail(slug);
@@ -27,8 +28,9 @@ function BlogDetailMain({ slug }: { slug: string }) {
           transition={{ duration: 0.5 }}
         >
           <Back href="/blogs" />
-          <Links />
+          <Links position="right" />
           <BlogContent blogDetail={blogDetail} />
+          <BlogFooter />
         </motion.div>
       )}
     </>

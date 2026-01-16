@@ -36,15 +36,22 @@ function useBlogsList() {
     []
   );
 
+  // URLパラメータの変更を監視してデータを取得
   useEffect(() => {
-    if (paramsKeyword) {
-      setKeyword(paramsKeyword);
-    }
-    if (paramsPage) {
-      setPage(parseInt(paramsPage));
-    }
-    getBlogsList(paramsKeyword || null, paramsPage ? parseInt(paramsPage) : 1);
-  }, [paramsKeyword, paramsPage]);
+    const currentKeyword = paramsKeyword || null;
+    const currentPage = paramsPage ? parseInt(paramsPage) : 1;
+
+    // 非同期で実行してeffect内での同期的なsetStateを避ける
+    const fetchData = async () => {
+      await getBlogsList(currentKeyword, currentPage);
+      // データ取得後に状態を更新
+      if (currentKeyword !== keyword) {
+        setKeyword(currentKeyword);
+      }
+    };
+
+    void fetchData();
+  }, [paramsKeyword, paramsPage, getBlogsList, keyword]);
 
   return { blogsList, totalCount, totalPages, page, keyword, getBlogsList };
 }

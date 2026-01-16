@@ -18,7 +18,7 @@ function useBlogDetail(slug: string) {
           API_ENDPOINTS.blogs.detail(slug)
         );
         setBlogDetail(blogDetail);
-      } catch (error) {
+      } catch {
         throw new Error('ブログの詳細情報の取得に失敗しました');
       } finally {
         setIsLoading(false);

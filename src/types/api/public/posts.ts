@@ -4,6 +4,13 @@ export type Post = {
   slug: string;
   thumbnail_url: string;
   published_at: string;
+  tags: Tag[];
+};
+
+export type Tag = {
+  tag_id: number;
+  name: string;
+  slug: string;
 };
 
 export type PostGetResponse = {

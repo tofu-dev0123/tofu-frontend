@@ -31,12 +31,18 @@ export function LoadingProvider({
     }
 
     if (isTop) {
-      setIsLoading(true);
+      // setTimeoutを使って非同期に状態を更新
+      timeoutRef.current = setTimeout(() => {
+        setIsLoading(true);
+        timeoutRef.current = setTimeout(() => {
+          setIsLoading(false);
+        }, 1000);
+      }, 0);
+    } else {
+      // setTimeoutを使って非同期に状態を更新
       timeoutRef.current = setTimeout(() => {
         setIsLoading(false);
-      }, 1000);
-    } else {
-      setIsLoading(false);
+      }, 0);
     }
 
     // クリーンアップ関数

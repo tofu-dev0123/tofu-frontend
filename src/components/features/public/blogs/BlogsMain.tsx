@@ -5,13 +5,14 @@ import useBlogsList from '@/hooks/public/blogs/useBlogsList';
 import Blog from '@/components/features/public/blogs/Blog';
 import Keyword from '@/components/features/public/blogs/Keyword';
 import { motion } from 'framer-motion';
+import Loading from '@/components/features/public/common/Loading';
 
 function BlogsMain() {
-  const { blogsList, keyword, totalCount } = useBlogsList();
+  const { isLoading, blogsList, keyword, totalCount } = useBlogsList();
 
   return (
     <motion.div
-      className="h-full w-full px-2"
+      className="h-full w-full px-2 relative"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -19,7 +20,9 @@ function BlogsMain() {
     >
       <Search />
       <Keyword keyword={keyword} />
-      {totalCount === 0 ? (
+      {isLoading ? (
+        <Loading />
+      ) : totalCount === 0 ? (
         <div className="w-full flex items-center py-4">
           <p className="text-sm text-gray-500 font-sub-logo">
             条件に一致する記事はありませんでした...

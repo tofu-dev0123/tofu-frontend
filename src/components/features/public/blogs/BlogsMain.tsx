@@ -5,8 +5,7 @@ import useBlogsList from '@/hooks/public/blogs/useBlogsList';
 import Blog from '@/components/features/public/blogs/Blog';
 
 function BlogsMain() {
-  const { blogsList, totalCount, totalPages, page, getBlogsList } =
-    useBlogsList();
+  const { blogsList, getBlogsList } = useBlogsList();
   const handleSearch = (value: string) => {
     getBlogsList(value);
   };

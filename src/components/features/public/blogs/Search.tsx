@@ -21,7 +21,7 @@ export default function Search({ handleSearch }: SearchProps) {
     <div className="w-full h-10">
       <motion.div
         animate={{ width: isOpen ? 300 : 40 }}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 0.5, ease: 'easeInOut' }}
         className="h-full rounded-full border border-black/10 flex items-center justify-end"
       >
         <motion.div
@@ -31,7 +31,7 @@ export default function Search({ handleSearch }: SearchProps) {
             width: isOpen ? 260 : 0,
             display: isOpen ? 'flex' : 'none',
           }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.5, ease: 'easeInOut' }}
         >
           <Image
             src={searchIcon}

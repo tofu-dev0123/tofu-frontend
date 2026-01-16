@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import backIcon from '@/assets/images/back-icon.png';
 import { useRouter } from 'next/navigation';
-import Tooltip from './Tooltip';
+import Tooltip from '@/components/features/public/common/Tooltip';
 
 function Back({ href }: { href: string }) {
   const router = useRouter();

@@ -2,6 +2,7 @@
 
 import { ReactNode, useState } from 'react';
 import { motion } from 'framer-motion';
+import useIsMobile from '@/hooks/public/common/useIsMobile';
 
 type Placement = 'top' | 'bottom' | 'left' | 'right';
 
@@ -19,6 +20,7 @@ export default function Tooltip({
   offset = 8,
 }: TooltipProps) {
   const [open, setOpen] = useState(false);
+  const isMobile = useIsMobile();
 
   const basePosition =
     'absolute z-50 whitespace-nowrap rounded bg-white px-2 py-1 text-xs shadow border border-black/10';
@@ -33,15 +35,15 @@ export default function Tooltip({
   return (
     <span
       className="relative inline-flex"
-      onMouseEnter={() => setOpen(true)}
-      onMouseLeave={() => setOpen(false)}
-      onFocus={() => setOpen(true)}
-      onBlur={() => setOpen(false)}
+      onMouseEnter={() => !isMobile && setOpen(true)}
+      onMouseLeave={() => !isMobile && setOpen(false)}
+      onFocus={() => !isMobile && setOpen(true)}
+      onBlur={() => !isMobile && setOpen(false)}
       tabIndex={0}
     >
       {children}
 
-      {open && (
+      {open && !isMobile && (
         <motion.span
           initial={{ opacity: 0 }}
           animate={{ opacity: open ? 1 : 0 }}

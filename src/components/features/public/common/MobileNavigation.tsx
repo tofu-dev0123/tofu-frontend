@@ -20,6 +20,7 @@ function MobileNavigation({
   return (
     <div className="flex items-center justify-start gap-10">
       <motion.nav
+        initial={{ opacity: 0, x: '120%' }}
         animate={{ opacity: isOpen ? 1 : 0, x: isOpen ? 0 : '120%' }}
         transition={{ duration: 0.8, ease: 'easeInOut' }}
         className="w-2/5 h-full flex flex-col gap-10 bg-public-main pt-30 pl-8 fixed top-0 right-0 z-20 border-l border-black/10"

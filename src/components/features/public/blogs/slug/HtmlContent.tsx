@@ -1,7 +1,7 @@
 export default function HtmlContent({ html }: { html: string }) {
   return (
     <article
-      className="prose prose-neutral max-w-none"
+      className="markdown-body"
       dangerouslySetInnerHTML={{ __html: html }}
     />
   );

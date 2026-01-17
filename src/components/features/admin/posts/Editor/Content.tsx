@@ -26,7 +26,7 @@ function MDContent({ className }: { className?: string }) {
   return (
     <div className={cn('w-full flex-1 min-h-0 py-10', className)}>
       {state.isPreview ? (
-        <article className="prose max-w-none my-0">
+        <article className="markdown-body max-w-none my-0">
           <ReactMarkdown remarkPlugins={[remarkGfm]}>
             {state.content}
           </ReactMarkdown>

@@ -29,7 +29,7 @@ function PostList({
   handleClickEdit,
 }: PostListProps) {
   return (
-    <Card className="min-h-screen w-full flex flex-col gap-4 justify-start border-none shadow-lg">
+    <Card className="min-h-screen w-full flex flex-col gap-4 justify-start border-none shadow-none">
       <CardContent className="flex flex-col lg:flex-row items-end lg:items-center justify-between lg:p-4 p-2 lg:gap-4 gap-2">
         <div className="lg:w-100 w-full flex items-center justify-between lg:justify-start gap-4 px-2 lg:px-0">
           <InputGroup className="rounded-full">

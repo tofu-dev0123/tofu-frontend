@@ -1,36 +1,34 @@
 'use client';
 
-import { API_ENDPOINTS } from '@/lib/api/endpoint';
-import { post } from '@/lib/api/http';
-import { exceptErrorHandling } from '@/lib/utils/exceptErrorHandling';
-import { MeResponse } from '@/types/api/account';
-import { useCallback, useEffect, useState } from 'react';
-import useErrorModal from '../common/useErrorModal';
+import useErrorModal from '@/hooks/admin/common/useErrorModal';
+import useAccountMe from './useAccountMe';
+import useAccountEdit from './useAccountEdit';
 
 function useAccountMain() {
-  const [account, setAccount] = useState<MeResponse | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const errorModalHooks = useErrorModal();
+  const accountMeHooks = useAccountMe({ showError: errorModalHooks.showError });
+  const accountEditHooks = useAccountEdit();
 
-  const { showError } = useErrorModal();
-
-  const getAccount = useCallback(async () => {
-    setIsLoading(true);
-    try {
-      const response = await post<MeResponse>(API_ENDPOINTS.account.me);
-      setAccount(response);
-    } catch (error) {
-      exceptErrorHandling(error, showError);
-      setAccount(null);
-    } finally {
-      setIsLoading(false);
-    }
-  }, [showError]);
-
-  useEffect(() => {
-    getAccount();
-  }, []);
-
-  return { account, isLoading, getAccount };
+  return {
+    accountName: accountMeHooks.accountName,
+    username: accountMeHooks.username,
+    editAccountName: accountEditHooks.editAccountName,
+    editUsername: accountEditHooks.editUsername,
+    editPassword: accountEditHooks.editPassword,
+    editConfirmPassword: accountEditHooks.editConfirmPassword,
+    isLoading: accountMeHooks.isLoading,
+    userId: accountMeHooks.userId,
+    accountNameEditFlag: accountEditHooks.accountNameEditFlag,
+    usernameEditFlag: accountEditHooks.usernameEditFlag,
+    passwordEditFlag: accountEditHooks.passwordEditFlag,
+    handleAccountNameEdit: accountEditHooks.handleAccountNameEdit,
+    handleUsernameEdit: accountEditHooks.handleUsernameEdit,
+    handlePasswordEdit: accountEditHooks.handlePasswordEdit,
+    handleAccountNameChange: accountEditHooks.handleAccountNameChange,
+    handleUsernameChange: accountEditHooks.handleUsernameChange,
+    handlePasswordChange: accountEditHooks.handlePasswordChange,
+    handleConfirmPasswordChange: accountEditHooks.handleConfirmPasswordChange,
+  };
 }
 
 export default useAccountMain;

@@ -5,7 +5,6 @@ import { post } from '@/lib/api/http';
 import { exceptErrorHandling } from '@/lib/utils/exceptErrorHandling';
 import { MeResponse } from '@/types/api/account';
 import { useCallback, useEffect, useState } from 'react';
-import useErrorModal from '@/hooks/admin/common/useErrorModal';
 
 interface UseAccountMeProps {
   showError: (message: string[]) => void;

@@ -34,7 +34,6 @@ function AccountMain() {
               label="アカウント名"
               value={accountName}
               editValue={editAccountName}
-              confirmValue={editAccountName}
               placeholder="変更後のアカウント名"
               type="text"
               onEditChange={handleAccountNameChange}
@@ -47,7 +46,6 @@ function AccountMain() {
               label="ユーザー名"
               value={username}
               editValue={editUsername}
-              confirmValue={editUsername}
               placeholder="変更後のユーザー名"
               type="text"
               onEditChange={handleUsernameChange}

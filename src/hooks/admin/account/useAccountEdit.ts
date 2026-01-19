@@ -6,14 +6,24 @@ function useAccountEdit() {
   const [passwordEditFlag, setPasswordEditFlag] = useState(false);
 
   const handleAccountNameEdit = () => {
+    if (accountNameEditFlag) {
+      setEditAccountName('');
+    }
     setAccountNameEditFlag(!accountNameEditFlag);
   };
 
   const handleUsernameEdit = () => {
+    if (usernameEditFlag) {
+      setEditUsername('');
+    }
     setUsernameEditFlag(!usernameEditFlag);
   };
 
   const handlePasswordEdit = () => {
+    if (passwordEditFlag) {
+      setEditPassword('');
+      setEditConfirmPassword('');
+    }
     setPasswordEditFlag(!passwordEditFlag);
   };
 

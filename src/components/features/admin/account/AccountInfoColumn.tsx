@@ -60,6 +60,7 @@ function AccountInfoColumn({
                     type={type}
                     placeholder={placeholder}
                     onChange={onEditChange}
+                    autoComplete="off"
                   />
                   {type === 'password' && (
                     <Input
@@ -68,6 +69,7 @@ function AccountInfoColumn({
                       type="password"
                       placeholder="確認用パスワード"
                       onChange={onConfirmChange}
+                      autoComplete="off"
                     />
                   )}
                 </div>

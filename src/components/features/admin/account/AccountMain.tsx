@@ -46,7 +46,7 @@ function AccountMain() {
               label="ユーザー名"
               value={username}
               editValue={editUsername}
-              placeholder="変更後のユーザー名"
+              placeholder="変更後のユーザーID"
               type="text"
               onEditChange={handleUsernameChange}
               onEdit={handleUsernameEdit}

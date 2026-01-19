@@ -1,8 +1,8 @@
 'use client';
 
 import useErrorModal from '@/hooks/admin/common/useErrorModal';
-import useAccountMe from './useAccountMe';
-import useAccountEdit from './useAccountEdit';
+import useAccountMe from '@/hooks/admin/account/useAccountMe';
+import useAccountEdit from '@/hooks/admin/account/useAccountEdit';
 
 function useAccountMain() {
   const errorModalHooks = useErrorModal();

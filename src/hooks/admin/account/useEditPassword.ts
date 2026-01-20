@@ -56,7 +56,7 @@ function useEditUsername({ showError }: UseEditUsernameProps) {
     } finally {
       setIsLoading(false);
     }
-  }, [showError, currentPassword, editPassword]);
+  }, [showError, currentPassword, editPassword, confirmPassword]);
 
   const handlePasswordEdit = () => {
     if (editFlag) {

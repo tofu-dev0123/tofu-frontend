@@ -35,7 +35,7 @@ function useAccountMe({ showError }: UseAccountMeProps) {
 
   useEffect(() => {
     getAccount();
-  }, []);
+  }, [getAccount]);
 
   return {
     userId,

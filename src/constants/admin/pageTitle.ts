@@ -4,6 +4,10 @@ export const PAGE_TITLES = [
     title: 'ホーム',
   },
   {
+    path: '/admin/account',
+    title: 'アカウント管理',
+  },
+  {
     path: '/admin/posts',
     title: '投稿一覧',
   },

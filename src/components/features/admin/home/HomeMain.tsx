@@ -8,7 +8,7 @@ import useHome from '@/hooks/admin/home/useHome';
 import ListArea from '@/components/features/admin/home/ListArea';
 import BaseArea from '@/components/features/admin/home/BaseArea';
 import DraftPostsArea from '@/components/features/admin/home/DraftPostsArea';
-
+import AccountArea from '@/components/features/admin/home/AccountArea';
 function HomeMain() {
   const {
     totalPosts,
@@ -20,11 +20,27 @@ function HomeMain() {
     handleClickPost,
     postList,
     draftPostList,
+    accountName,
+    username,
   } = useHome();
 
   return (
     <div className="h-full w-full lg:w-6xl flex flex-col mx-auto">
-      <div className="flex-1 grid lg:grid-cols-12 grid-cols-1 grid-rows-[auto_1fr_1fr] gap-4 py-4 lg:px-20 px-10">
+      <div className="flex-1 flex flex-col lg:grid lg:grid-cols-12 grid-cols-1 grid-rows-[auto_1fr_1fr] gap-4 py-4 lg:px-20 px-10">
+        {/* アカウント名 */}
+        <div className="lg:col-span-6 h-full">
+          <BaseArea title="アカウント名">
+            <AccountArea value={accountName} />
+          </BaseArea>
+        </div>
+
+        {/* ユーザー名 */}
+        <div className="lg:col-span-6 h-full">
+          <BaseArea title="ユーザー名">
+            <AccountArea value={username} />
+          </BaseArea>
+        </div>
+
         {/* サマリ */}
         <div className="lg:col-span-8 h-full">
           <BaseArea title="投稿のサマリ">

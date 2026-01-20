@@ -5,6 +5,12 @@ export const API_ENDPOINTS = {
   logout: {
     post: '/admin/auth/logout',
   },
+  account: {
+    me: '/admin/auth/me',
+    patch: '/admin/account',
+    password: '/admin/account/password',
+    email: '/admin/account/email',
+  },
   posts: {
     get: '/admin/posts/',
     post: '/admin/posts/',

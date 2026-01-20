@@ -6,12 +6,17 @@ import { useEffect } from 'react';
 import useErrorModal from '@/hooks/admin/common/useErrorModal';
 import { useRouter } from 'next/navigation';
 import { PostStatus } from '@/types/api/post';
-
+import useAccountMe from '@/hooks/admin/account/useAccountMe';
 function useHome() {
   const router = useRouter();
 
   // エラーモーダル状態管理フック
   const errorModalHook = useErrorModal();
+
+  // アカウント名の状態管理フック
+  const { accountName, username, getAccount } = useAccountMe({
+    showError: errorModalHook.showError,
+  });
 
   // サマリの状態管理フック
   const { totalPosts, publishedPosts, draftPosts, getSummary } = useSummary({
@@ -37,12 +42,15 @@ function useHome() {
 
   useEffect(() => {
     // 初期処理
+    getAccount();
     getSummary();
     getPostList({ limit: 3, status: 'PUBLISHED' as PostStatus });
     getPostList({ limit: 3, status: 'DRAFT' as PostStatus });
-  }, [getSummary, getPostList]);
+  }, [getAccount, getSummary, getPostList]);
 
   return {
+    accountName,
+    username,
     totalPosts,
     publishedPosts,
     draftPosts,

@@ -7,6 +7,9 @@ export const API_ENDPOINTS = {
   },
   account: {
     me: '/admin/auth/me',
+    patch: '/admin/account',
+    password: '/admin/account/password',
+    email: '/admin/account/email',
   },
   posts: {
     get: '/admin/posts/',

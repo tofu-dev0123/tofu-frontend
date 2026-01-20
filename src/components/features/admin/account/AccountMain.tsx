@@ -2,27 +2,16 @@
 
 import { Card, CardContent } from '@/components/ui/card';
 import useAccountMain from '@/hooks/admin/account/useAccountMain';
-import AccountInfoColumn from './AccountInfoColumn';
+import AccountInfoColumn from '@/components/features/admin/account/AccountInfoColumn';
+import ErrorModal from '@/components/features/admin/common/ErrorModal';
 
 function AccountMain() {
   const {
-    accountName,
-    username,
-    editAccountName,
-    editUsername,
-    editPassword,
-    editConfirmPassword,
-    isLoading,
-    accountNameEditFlag,
-    usernameEditFlag,
-    passwordEditFlag,
-    handleAccountNameEdit,
-    handleUsernameEdit,
-    handlePasswordEdit,
-    handleAccountNameChange,
-    handleUsernameChange,
-    handlePasswordChange,
-    handleConfirmPasswordChange,
+    accountMeHooks,
+    editAccountNameHooks,
+    editUsernameHooks,
+    editPasswordHooks,
+    errorModalHooks,
   } = useAccountMain();
   return (
     <div className="h-full w-full lg:w-6xl flex flex-col mx-auto p-4 lg:px-0">
@@ -32,44 +21,57 @@ function AccountMain() {
             {/* アカウント名 */}
             <AccountInfoColumn
               label="アカウント名"
-              value={accountName}
-              editValue={editAccountName}
+              value={accountMeHooks.accountName}
+              editValue={editAccountNameHooks.editAccountName}
               placeholder="変更後のアカウント名"
               type="text"
-              onEditChange={handleAccountNameChange}
-              onEdit={handleAccountNameEdit}
-              editFlag={accountNameEditFlag}
-              onSubmit={() => {}}
+              onEditChange={editAccountNameHooks.handleAccountNameChange}
+              onEdit={editAccountNameHooks.handleAccountNameEdit}
+              editFlag={editAccountNameHooks.editFlag}
+              onSubmit={editAccountNameHooks.updateAccountName}
             />
             {/* ユーザー名 */}
             <AccountInfoColumn
               label="ユーザー名"
-              value={username}
-              editValue={editUsername}
-              placeholder="変更後のユーザーID"
+              value={accountMeHooks.username}
+              editValue={editUsernameHooks.editUsername}
+              placeholder="変更後のユーザー名"
               type="text"
-              onEditChange={handleUsernameChange}
-              onEdit={handleUsernameEdit}
-              editFlag={usernameEditFlag}
-              onSubmit={() => {}}
+              onEditChange={editUsernameHooks.handleUsernameChange}
+              onEdit={editUsernameHooks.handleUsernameEdit}
+              editFlag={editUsernameHooks.editFlag}
+              onSubmit={() =>
+                editUsernameHooks.changeEmail(accountMeHooks.username)
+              }
+              requiredPassword={true}
+              passwordValue={editUsernameHooks.password}
+              onPasswordChange={editUsernameHooks.handlePasswordChange}
             />
             {/* パスワード */}
             <AccountInfoColumn
               label="パスワード"
-              value=""
-              editValue={editPassword}
-              confirmValue={editConfirmPassword}
+              value={''}
+              editValue={editPasswordHooks.editPassword}
+              confirmValue={editPasswordHooks.confirmPassword}
               placeholder="変更後のパスワード"
               type="password"
-              onEditChange={handlePasswordChange}
-              onConfirmChange={handleConfirmPasswordChange}
-              onEdit={handlePasswordEdit}
-              editFlag={passwordEditFlag}
-              onSubmit={() => {}}
+              onEditChange={editPasswordHooks.handlePasswordChange}
+              onConfirmChange={editPasswordHooks.handleConfirmPasswordChange}
+              onEdit={editPasswordHooks.handlePasswordEdit}
+              editFlag={editPasswordHooks.editFlag}
+              onSubmit={editPasswordHooks.changePassword}
+              requiredPassword={true}
+              passwordValue={editPasswordHooks.currentPassword}
+              onPasswordChange={editPasswordHooks.handleCurrentPasswordChange}
             />
           </CardContent>
         </Card>
       </div>
+      <ErrorModal
+        isOpen={errorModalHooks.isOpen}
+        errorMessage={errorModalHooks.errorMessage}
+        onClose={errorModalHooks.onClose}
+      />
     </div>
   );
 }

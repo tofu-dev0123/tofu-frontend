@@ -15,6 +15,9 @@ interface AccountInfoColumnProps {
   onEdit: () => void;
   onSubmit: () => void;
   editFlag: boolean;
+  requiredPassword?: boolean;
+  passwordValue?: string;
+  onPasswordChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 function AccountInfoColumn({
@@ -29,6 +32,9 @@ function AccountInfoColumn({
   onEdit,
   editFlag,
   onSubmit,
+  requiredPassword = false,
+  passwordValue,
+  onPasswordChange,
 }: AccountInfoColumnProps) {
   return (
     <>
@@ -54,8 +60,9 @@ function AccountInfoColumn({
             >
               <div className="flex items-end justify-between gap-2 w-full">
                 <div className="flex flex-col flex-1 gap-2 w-full">
+                  <Label className="block font-bold">新しい{label}</Label>
                   <Input
-                    className="w-full text-sm border-none shadow-none focus-visible:ring-0 focus-visible:ring-offset-0 p-0"
+                    className="w-full text-sm shadow-none focus-visible:ring-0 focus-visible:ring-offset-0 p-2"
                     value={editValue}
                     type={type}
                     placeholder={placeholder}
@@ -64,13 +71,28 @@ function AccountInfoColumn({
                   />
                   {type === 'password' && (
                     <Input
-                      className="w-full text-sm border-none shadow-none focus-visible:ring-0 focus-visible:ring-offset-0 p-0"
+                      className="w-full text-sm shadow-none focus-visible:ring-0 focus-visible:ring-offset-0 p-2"
                       value={confirmValue}
                       type="password"
                       placeholder="確認用パスワード"
                       onChange={onConfirmChange}
                       autoComplete="off"
                     />
+                  )}
+                  {requiredPassword && (
+                    <div className="flex flex-col justify-between gap-2 w-full mt-2">
+                      <Label className="block font-bold">
+                        現在のパスワードを入力
+                      </Label>
+                      <Input
+                        className="w-full text-sm shadow-none focus-visible:ring-0 focus-visible:ring-offset-0 p-2"
+                        value={passwordValue}
+                        type="password"
+                        placeholder="現在のパスワード"
+                        onChange={onPasswordChange}
+                        autoComplete="off"
+                      />
+                    </div>
                   )}
                 </div>
                 <Button

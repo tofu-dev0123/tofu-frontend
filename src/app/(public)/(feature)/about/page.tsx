@@ -1,3 +1,9 @@
+import AboutMain from '@/components/features/public/about/AboutMain';
+
 export default function Page() {
-  return <div></div>;
+  return (
+    <div>
+      <AboutMain />
+    </div>
+  );
 }

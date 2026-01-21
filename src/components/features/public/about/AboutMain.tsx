@@ -8,7 +8,7 @@ import AboutMe from '@/components/features/public/about/AboutMe';
 function AboutMain() {
   return (
     <motion.div
-      className="h-full w-full px-2 relative"
+      className="h-full w-full px-2 relative pb-20"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}

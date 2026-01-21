@@ -1,4 +1,4 @@
-import { backgroundList } from '@/constants/admin/backgroundList';
+import { backgroundList } from '@/constants/public/backgroundList';
 
 function Background() {
   return (

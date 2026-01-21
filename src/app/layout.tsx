@@ -41,6 +41,10 @@ export const metadata: Metadata = {
       'Tofuの個人サイト。日々の学習内容や個人開発を通して得た気づきや知見を、エンジニア視点でまとめています。',
     images: ['https://www.tofubase.com/ogp/default.png'],
   },
+  icons: {
+    apple: '/icons/apple-touch-icon.png',
+  },
+  manifest: '/manifest.json',
 };
 
 export default function RootLayout({

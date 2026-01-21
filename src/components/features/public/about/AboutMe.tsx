@@ -15,7 +15,7 @@ function AboutMe() {
         ) : (
           <p
             key={item}
-            className="w-full lg:text-lg text-base font-sub-logo tracking-[0.02em] mb-1"
+            className="w-full lg:text-base text-sm font-sub-logo tracking-[0.02em] mb-1"
           >
             {item}
           </p>

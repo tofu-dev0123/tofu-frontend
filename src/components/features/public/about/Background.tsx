@@ -19,12 +19,12 @@ function Background() {
                     key={`${yearEvent.year}-${event.month}`}
                     className="flex w-full"
                   >
-                    <label className="lg:w-10 w-8 lg:text-lg text-base font-sub-logo tracking-[0.02em]">
+                    <label className="lg:w-10 w-8 lg:text-base text-sm font-sub-logo tracking-[0.02em]">
                       {event.month}
                     </label>
                     <li
                       key={`${yearEvent.year}-${event.month}`}
-                      className="flex-1 list-none lg:text-lg text-base font-sub-logo tracking-[0.02em]"
+                      className="flex-1 list-none lg:text-base text-sm font-sub-logo tracking-[0.02em]"
                     >
                       {event.title}
                     </li>

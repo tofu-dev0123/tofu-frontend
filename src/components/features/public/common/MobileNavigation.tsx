@@ -47,10 +47,10 @@ function MobileNavigation({
       <motion.div
         animate={{ opacity: isOpen ? 1 : 0, x: isOpen ? 0 : '120%' }}
         transition={{ duration: 1 }}
-        className="w-full h-full fixed top-0 left-0 z-10"
+        className="w-full h-full z-10"
         onClick={handleClickMenu}
       ></motion.div>
-      <div className="w-12 h-12 flex items-center justify-center z-30">
+      <div className="fixed top-0 right-0 w-12 h-12 flex items-center justify-center z-30">
         <HamburgerMenu onClick={handleClickMenu} isOpen={isOpen} />
       </div>
     </div>

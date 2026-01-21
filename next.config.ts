@@ -19,16 +19,6 @@ const nextConfig: NextConfig = {
         destination: '/maintenance',
         permanent: true,
       },
-      {
-        source: '/products',
-        destination: '/maintenance',
-        permanent: true,
-      },
-      {
-        source: '/contact',
-        destination: '/maintenance',
-        permanent: true,
-      },
     ];
   },
 };

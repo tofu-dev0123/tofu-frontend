@@ -30,10 +30,7 @@ function useLoginForm() {
       password: data.password,
     };
     try {
-      await post<LoginResponse>(
-        API_ENDPOINTS.login.post,
-        request
-      );
+      await post<LoginResponse>(API_ENDPOINTS.login.post, request);
 
       router.push('/admin/home');
     } catch (error) {

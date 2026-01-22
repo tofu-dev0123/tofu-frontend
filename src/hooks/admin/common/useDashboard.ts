@@ -9,7 +9,6 @@ import axios from 'axios';
 import { getErrorMessage } from '@/lib/utils/getErrorMessage';
 import { MESSAGES } from '@/constants/messages';
 import useErrorModal from './useErrorModal';
-import { removeToken } from '@/lib/utils/token';
 import useSearchPost from '@/hooks/admin/posts/useSearchPost';
 
 function useDashboard() {
@@ -31,8 +30,6 @@ function useDashboard() {
       const result = await confirm('ログアウトしますか？');
       if (result) {
         await post<LogoutResponse>(API_ENDPOINTS.logout.post);
-        // トークンをlocalStorageから削除
-        removeToken();
         router.push('/admin/login');
       }
     } catch (error) {

@@ -1,8 +1,8 @@
 'use client';
 import { useForm } from 'react-hook-form';
-import { post } from '@/lib/api/http';
+import { postToNextApi } from '@/lib/api/http';
 import { API_ENDPOINTS } from '@/lib/api/endpoint';
-import { LoginRequest, LoginResponse } from '@/types/api/login';
+import { LoginRequest } from '@/types/api/login';
 import { useState } from 'react';
 import { MESSAGES } from '@/constants/messages';
 import axios from 'axios';
@@ -30,7 +30,7 @@ function useLoginForm() {
       password: data.password,
     };
     try {
-      await post<LoginResponse>(API_ENDPOINTS.login.post, request);
+      await postToNextApi<{ ok: boolean }>(API_ENDPOINTS.login.post, request);
 
       router.push('/admin/home');
     } catch (error) {

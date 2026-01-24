@@ -1,9 +1,9 @@
 export const API_ENDPOINTS = {
   login: {
-    post: '/admin/auth/login',
+    post: '/api/auth/login',
   },
   logout: {
-    post: '/admin/auth/logout',
+    post: '/api/auth/logout',
   },
   account: {
     me: '/admin/auth/me',

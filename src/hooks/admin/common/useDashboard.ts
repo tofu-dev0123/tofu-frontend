@@ -1,9 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { post } from '@/lib/api/http';
+import { postToNextApi } from '@/lib/api/http';
 import { API_ENDPOINTS } from '@/lib/api/endpoint';
-import { LogoutResponse } from '@/types/api/logout';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import { getErrorMessage } from '@/lib/utils/getErrorMessage';
@@ -29,7 +28,7 @@ function useDashboard() {
     try {
       const result = await confirm('ログアウトしますか？');
       if (result) {
-        await post<LogoutResponse>(API_ENDPOINTS.logout.post);
+        await postToNextApi<{ ok: boolean }>(API_ENDPOINTS.logout.post);
         router.push('/admin/login');
       }
     } catch (error) {

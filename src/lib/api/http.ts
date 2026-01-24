@@ -8,7 +8,9 @@ export const get = async <T>(
   url: string,
   config?: AxiosRequestConfig
 ): Promise<T> => {
-  const res = await apiClient.get<T>(url, config);
+  // 管理画面用API（/api/admin/**）の場合はNext.jsルート経由で呼び出す
+  const client = url.startsWith('/api/admin/') ? nextApiClient : apiClient;
+  const res = await client.get<T>(url, config);
   return res.data;
 };
 
@@ -20,7 +22,9 @@ export const post = async <T, D = unknown>(
   data?: D,
   config?: AxiosRequestConfig
 ): Promise<T> => {
-  const res = await apiClient.post<T>(url, data, config);
+  // 管理画面用API（/api/admin/**）の場合はNext.jsルート経由で呼び出す
+  const client = url.startsWith('/api/admin/') ? nextApiClient : apiClient;
+  const res = await client.post<T>(url, data, config);
   return res.data;
 };
 
@@ -32,7 +36,9 @@ export const put = async <T, D = unknown>(
   data?: D,
   config?: AxiosRequestConfig
 ): Promise<T> => {
-  const res = await apiClient.put<T>(url, data, config);
+  // 管理画面用API（/api/admin/**）の場合はNext.jsルート経由で呼び出す
+  const client = url.startsWith('/api/admin/') ? nextApiClient : apiClient;
+  const res = await client.put<T>(url, data, config);
   return res.data;
 };
 
@@ -44,7 +50,9 @@ export const patch = async <T, D = unknown>(
   data?: D,
   config?: AxiosRequestConfig
 ): Promise<T> => {
-  const res = await apiClient.patch<T>(url, data, config);
+  // 管理画面用API（/api/admin/**）の場合はNext.jsルート経由で呼び出す
+  const client = url.startsWith('/api/admin/') ? nextApiClient : apiClient;
+  const res = await client.patch<T>(url, data, config);
   return res.data;
 };
 
@@ -55,7 +63,9 @@ export const del = async <T>(
   url: string,
   config?: AxiosRequestConfig
 ): Promise<T> => {
-  const res = await apiClient.delete<T>(url, config);
+  // 管理画面用API（/api/admin/**）の場合はNext.jsルート経由で呼び出す
+  const client = url.startsWith('/api/admin/') ? nextApiClient : apiClient;
+  const res = await client.delete<T>(url, config);
   return res.data;
 };
 
@@ -67,12 +77,14 @@ export const uploadFile = async <T>(
   formData: FormData,
   config?: AxiosRequestConfig
 ): Promise<T> => {
+  // 管理画面用API（/api/admin/**）の場合はNext.jsルート経由で呼び出す
+  const client = url.startsWith('/api/admin/') ? nextApiClient : apiClient;
   // FormDataの場合はContent-Typeを削除してaxiosに自動設定させる
   const headers = config?.headers ? { ...config.headers } : {};
   if ('Content-Type' in headers) {
     delete (headers as Record<string, unknown>)['Content-Type'];
   }
-  const res = await apiClient.post<T>(url, formData, {
+  const res = await client.post<T>(url, formData, {
     ...config,
     headers,
   });

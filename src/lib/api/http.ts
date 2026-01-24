@@ -1,5 +1,5 @@
 import { AxiosRequestConfig } from 'axios';
-import { apiClient } from './client';
+import { apiClient, nextApiClient } from './client';
 
 /**
  * GET
@@ -76,5 +76,17 @@ export const uploadFile = async <T>(
     ...config,
     headers,
   });
+  return res.data;
+};
+
+/**
+ * POST to Next.js API Route Handler
+ */
+export const postToNextApi = async <T, D = unknown>(
+  url: string,
+  data?: D,
+  config?: AxiosRequestConfig
+): Promise<T> => {
+  const res = await nextApiClient.post<T>(url, data, config);
   return res.data;
 };

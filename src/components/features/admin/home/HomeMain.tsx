@@ -26,7 +26,7 @@ function HomeMain() {
 
   return (
     <div className="h-full w-full lg:w-6xl flex flex-col mx-auto">
-      <div className="flex-1 flex flex-col lg:grid lg:grid-cols-12 grid-cols-1 grid-rows-[auto_1fr_1fr] gap-4 py-4 lg:px-20 px-10">
+      <div className="flex-1 flex flex-col lg:grid lg:grid-cols-12 grid-cols-1 gap-4 py-4 lg:px-20 px-10">
         {/* アカウント名 */}
         <div className="lg:col-span-6 h-full">
           <BaseArea title="アカウント名">

@@ -135,3 +135,13 @@ body {
 .cm-editor * {
   font-family: var(--font-geist-sans), sans-serif !important;
 }
+
+.markdown-body ul {
+  list-style: disc !important;
+  padding-left: 2em;
+}
+
+.markdown-body ol {
+  list-style: decimal !important;
+  padding-left: 2em;
+}

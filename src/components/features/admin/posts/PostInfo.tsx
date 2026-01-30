@@ -24,8 +24,8 @@ function PostInfo({
 }: PostInfoProps) {
   return (
     <>
-      <div className="lg:w-150 w-full h-25 lg:mx-auto flex justify-between items-center lg:gap-4 gap-2">
-        <div className="lg:w-100 min-w-50 flex flex-col justify-center items-start lg:gap-4 gap-2 lg:p-4 p-0">
+      <div className="lg:w-150 w-full min-h-25 lg:mx-auto flex justify-between items-center lg:gap-4 gap-2">
+        <div className="lg:w-100 w-50 flex flex-col justify-center items-start lg:gap-4 gap-2 lg:p-4 p-0">
           <h4 className="text-md font-bold">
             {post.title ? post.title : 'タイトル未設定'}
           </h4>

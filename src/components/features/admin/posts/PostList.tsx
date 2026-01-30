@@ -64,7 +64,7 @@ function PostList({
         {searchPost.postList.map((post) => (
           <div
             key={post.post_id}
-            className="w-full h-25 hover:bg-gray-100/50 duration-200 cursor-pointer"
+            className="w-full min-h-25 hover:bg-gray-100/50 duration-200 cursor-pointer"
           >
             <PostInfo
               key={post.post_id}

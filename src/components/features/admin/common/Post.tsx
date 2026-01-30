@@ -29,8 +29,10 @@ function Post({ post, handleClickPost }: PostProps) {
             className="object-contain"
           />
         </div>
-        <div className="flex justify-center items-center">
-          <p className="text-md truncate">{post.title || 'タイトル未設定'}</p>
+        <div className="w-full flex justify-center items-center">
+          <p className="w-full text-md truncate whitespace-normal break-words">
+            {post.title || 'タイトル未設定'}
+          </p>
         </div>
         <div className="w-full flex justify-end items-center">
           <p className="w-full text-right text-xs text-gray-500">

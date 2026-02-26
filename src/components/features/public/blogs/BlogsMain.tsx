@@ -4,11 +4,12 @@ import Search from '@/components/features/public/blogs/Search';
 import useBlogsList from '@/hooks/public/blogs/useBlogsList';
 import Blog from '@/components/features/public/blogs/Blog';
 import Keyword from '@/components/features/public/blogs/Keyword';
+import Pagination from '@/components/features/public/blogs/Pagination';
 import { motion } from 'framer-motion';
 import Loading from '@/components/features/public/common/Loading';
 
 function BlogsMain() {
-  const { isLoading, blogsList, keyword, totalCount } = useBlogsList();
+  const { isLoading, blogsList, keyword, totalCount, page, totalPages } = useBlogsList();
 
   return (
     <motion.div
@@ -35,6 +36,9 @@ function BlogsMain() {
               <Blog blog={blog} index={index} />
             </div>
           ))}
+          {totalPages > 1 && (
+            <Pagination page={page} totalPages={totalPages} keyword={keyword} />
+          )}
         </div>
       )}
     </motion.div>

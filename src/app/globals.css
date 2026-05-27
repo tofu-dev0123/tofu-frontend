@@ -145,3 +145,14 @@ body {
   list-style: decimal !important;
   padding-left: 2em;
 }
+
+.mermaid {
+  display: flex;
+  justify-content: center;
+  margin: 1em 0;
+}
+
+.mermaid svg {
+  max-width: 100%;
+  height: auto;
+}

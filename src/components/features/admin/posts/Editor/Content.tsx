@@ -1,11 +1,25 @@
 'use client';
 
 import { useEffect } from 'react';
-import ReactMarkdown from 'react-markdown';
+import ReactMarkdown, { type Components } from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { usePostEditorContext } from '@/hooks/admin/posts/usePostEditorContext';
 import { cn } from '@/lib/utils';
 import { useMarkdownEditor } from '@/hooks/admin/editor/useMarkdownEditor';
+import Mermaid from '@/components/common/Mermaid';
+
+const markdownComponents: Components = {
+  code({ className, children, ...props }) {
+    if (/\blanguage-mermaid\b/.test(className ?? '')) {
+      return <Mermaid code={String(children).replace(/\n$/, '')} />;
+    }
+    return (
+      <code className={className} {...props}>
+        {children}
+      </code>
+    );
+  },
+};
 
 function MDContent({ className }: { className?: string }) {
   const { state, actions, ui } = usePostEditorContext();
@@ -27,7 +41,10 @@ function MDContent({ className }: { className?: string }) {
     <div className={cn('w-full flex-1 min-h-0 py-10', className)}>
       {state.isPreview ? (
         <article className="markdown-body max-w-none my-0">
-          <ReactMarkdown remarkPlugins={[remarkGfm]}>
+          <ReactMarkdown
+            remarkPlugins={[remarkGfm]}
+            components={markdownComponents}
+          >
             {state.content}
           </ReactMarkdown>
         </article>

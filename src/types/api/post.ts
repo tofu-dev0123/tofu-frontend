@@ -18,27 +18,6 @@ export type PostResponse = {
   posts: Post[];
 };
 
-export type PostRequest = {
-  title: string;
-  content_md: string;
-  thumbnail_url: string | null;
-  status: PostStatus;
-  images: number[];
-  tags: string[];
-};
-
-export type PostDeleteResponse = {
-  message: string;
-};
-
-export type PostStatusPatchRequest = {
-  status: PostStatus;
-};
-
-export type PostStatusPatchResponse = {
-  message: string;
-};
-
 export type PostImage = {
   image_id: number;
   url: string;
@@ -66,20 +45,4 @@ export type PostDetail = {
   published_at: string | null;
   created_at: string;
   updated_at: string;
-};
-
-export type PostPutRequest = {
-  title: string;
-  content_md: string;
-  thumbnail_url: string | null;
-  thumbnail_delete_flag?: boolean;
-  status?: PostStatus;
-  delete_images?: number[];
-  new_images?: number[];
-  tags?: string[];
-};
-
-export type PostPutResponse = {
-  message: string;
-  post_id: number;
 };

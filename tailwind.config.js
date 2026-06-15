@@ -4,17 +4,9 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // admin
-        admin: {
-          main: '#143046',
-        },
         public: {
           main: '#ffffff',
         },
-      },
-      fontFamily: {
-        logo: ['var(--font-logo)'],
-        subLogo: ['var(--font-sub-logo)'],
       },
     },
   },

@@ -1,9 +1,17 @@
+'use client';
+
 import Image from 'next/image';
 import tofuIcon from '@/assets/images/tofu-icon.png';
+import { motion } from 'framer-motion';
 
 function PublicFooter() {
   return (
-    <footer className="w-full lg:h-10 h-30 bg-public-main flex lg:flex-row flex-col justify-center items-center lg:mt-10 lg:gap-10 gap-5">
+    <motion.footer
+      className="w-full lg:h-10 h-30 bg-public-main flex lg:flex-row flex-col justify-center items-center lg:mt-10 lg:gap-10 gap-5"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.3 }}
+    >
       <div className="w-full lg:w-auto">
         <Image src={tofuIcon} alt="Tofu" width={30} height={30} />
       </div>
@@ -15,7 +23,7 @@ function PublicFooter() {
           All rights reserved.
         </p>
       </div>
-    </footer>
+    </motion.footer>
   );
 }
 

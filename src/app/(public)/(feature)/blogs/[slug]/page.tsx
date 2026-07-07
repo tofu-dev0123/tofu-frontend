@@ -15,8 +15,14 @@ type Props = {
 export const revalidate = 3600;
 
 export async function generateStaticParams() {
-  const response = await get<PostSlugsResponse>(API_ENDPOINTS.blogs.slugs);
-  return response.slugs.map((slug) => ({ slug }));
+  try {
+    const response = await get<PostSlugsResponse>(API_ENDPOINTS.blogs.slugs);
+    return response.slugs.map((slug) => ({ slug }));
+  } catch (error) {
+    // バックエンド不通時はビルドを止めず on-demand ISR にフォールバックさせる
+    console.warn('[generateStaticParams] slug 取得に失敗:', error);
+    return [];
+  }
 }
 
 /**

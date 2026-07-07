@@ -1,16 +1,27 @@
 'use client';
 
 import Search from '@/components/features/public/blogs/Search';
-import useBlogsList from '@/hooks/public/blogs/useBlogsList';
 import Blog from '@/components/features/public/blogs/Blog';
 import Keyword from '@/components/features/public/blogs/Keyword';
 import Pagination from '@/components/features/public/blogs/Pagination';
 import { motion } from 'framer-motion';
-import Loading from '@/components/features/public/common/Loading';
+import type { Post } from '@/types/api/public/posts';
 
-function BlogsMain() {
-  const { isLoading, blogsList, keyword, totalCount, page, totalPages } = useBlogsList();
+type Props = {
+  blogsList: Post[];
+  keyword: string | null;
+  totalCount: number;
+  page: number;
+  totalPages: number;
+};
 
+function BlogsMain({
+  blogsList,
+  keyword,
+  totalCount,
+  page,
+  totalPages,
+}: Props) {
   return (
     <motion.div
       className="h-full w-full px-2 relative"
@@ -21,9 +32,7 @@ function BlogsMain() {
     >
       <Search />
       <Keyword keyword={keyword} />
-      {isLoading ? (
-        <Loading />
-      ) : totalCount === 0 ? (
+      {totalCount === 0 ? (
         <div className="w-full flex items-center py-4">
           <p className="text-sm text-gray-500 font-sub-logo">
             条件に一致する記事はありませんでした...

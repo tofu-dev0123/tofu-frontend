@@ -40,12 +40,12 @@ src/
 
 ### 命名規則
 
-| 種類 | 命名パターン | 例 |
-|------|-------------|---|
-| hooks | `use[機能名].ts` | `usePostList.ts`, `useLoginForm.ts` |
-| 型定義 | `[リソース名].ts` | `post.ts`, `login.ts` |
-| リクエスト型 | `[機能名]Request` | `LoginRequest`, `PostRequest` |
-| レスポンス型 | `[機能名]Response` | `LoginResponse`, `PostResponse` |
+| 種類         | 命名パターン       | 例                                  |
+| ------------ | ------------------ | ----------------------------------- |
+| hooks        | `use[機能名].ts`   | `usePostList.ts`, `useLoginForm.ts` |
+| 型定義       | `[リソース名].ts`  | `post.ts`, `login.ts`               |
+| リクエスト型 | `[機能名]Request`  | `LoginRequest`, `PostRequest`       |
+| レスポンス型 | `[機能名]Response` | `LoginResponse`, `PostResponse`     |
 
 ---
 
@@ -68,10 +68,7 @@ const response = await get<PostResponse>(API_ENDPOINTS.posts.get);
 #### POST
 
 ```typescript
-const response = await post<LoginResponse>(
-  API_ENDPOINTS.login.post,
-  request
-);
+const response = await post<LoginResponse>(API_ENDPOINTS.login.post, request);
 ```
 
 #### PATCH
@@ -415,7 +412,7 @@ const handleSubmit = async () => {
   } catch (error) {
     exceptErrorHandling(error, showError);
   } finally {
-    setIsLoading(false);  // 必ず実行される
+    setIsLoading(false); // 必ず実行される
   }
 };
 ```

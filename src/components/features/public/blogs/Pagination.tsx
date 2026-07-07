@@ -36,7 +36,11 @@ function getPageNumbers(page: number, totalPages: number): (number | '...')[] {
   return pages;
 }
 
-export default function Pagination({ page, totalPages, keyword }: PaginationProps) {
+export default function Pagination({
+  page,
+  totalPages,
+  keyword,
+}: PaginationProps) {
   const router = useRouter();
 
   const buildUrl = (targetPage: number) => {
@@ -51,7 +55,8 @@ export default function Pagination({ page, totalPages, keyword }: PaginationProp
 
   const pageNumbers = getPageNumbers(page, totalPages);
 
-  const boxBase = 'w-9 h-9 flex items-center justify-center text-sm font-sub-logo rounded-sm';
+  const boxBase =
+    'w-9 h-9 flex items-center justify-center text-sm font-sub-logo rounded-sm';
 
   return (
     <div className="flex items-center justify-end gap-1 py-6">
@@ -66,11 +71,17 @@ export default function Pagination({ page, totalPages, keyword }: PaginationProp
 
       {pageNumbers.map((p, i) =>
         p === '...' ? (
-          <span key={`ellipsis-${i}`} className="w-9 h-9 flex items-center justify-center text-sm text-gray-400">
+          <span
+            key={`ellipsis-${i}`}
+            className="w-9 h-9 flex items-center justify-center text-sm text-gray-400"
+          >
             ...
           </span>
         ) : p === page ? (
-          <span key={p} className={`${boxBase} bg-gray-200 text-gray-400 cursor-default`}>
+          <span
+            key={p}
+            className={`${boxBase} bg-gray-200 text-gray-400 cursor-default`}
+          >
             {p}
           </span>
         ) : (

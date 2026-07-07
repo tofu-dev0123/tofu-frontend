@@ -1,9 +1,7 @@
-'use client';
-
 import type { Post } from '@/types/api/public/posts';
 import Image from 'next/image';
+import Link from 'next/link';
 import { formatDate } from '@/lib/utils/dateFormat';
-import { useRouter } from 'next/navigation';
 
 interface BlogProps {
   blog: Post;
@@ -11,11 +9,10 @@ interface BlogProps {
 }
 
 function Blog({ blog, index }: BlogProps) {
-  const router = useRouter();
   return (
-    <div
+    <Link
+      href={`/blogs/${blog.slug}`}
       className="w-full flex items-center justify-between gap-6 hover:bg-gray-100/50 transition-all duration-500 cursor-pointer"
-      onClick={() => router.push(`/blogs/${blog.slug}`)}
     >
       <div className="lg:w-50 lg:h-30 w-20 h-20 flex-shrink-0 flex item-center justify-center relative overflow-hidden">
         <Image
@@ -48,7 +45,7 @@ function Blog({ blog, index }: BlogProps) {
           </p>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }
 

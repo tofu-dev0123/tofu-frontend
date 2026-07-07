@@ -30,3 +30,7 @@ export type PostDetailResponse = {
   tags: Tag[];
   published_at: string;
 };
+
+export type PostSlugsResponse = {
+  slugs: string[];
+};

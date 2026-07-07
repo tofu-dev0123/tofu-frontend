@@ -4,16 +4,22 @@ import { PUBLIC_NAVIGATION_ITEMS } from '@/constants/public/navigationItems';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import useIsMobile from '@/hooks/public/common/useIsMobile';
+import { useState } from 'react';
+import { hasStartedSession } from '@/lib/publicSession';
 
-function DesktopNavigation({ isTop }: { isTop: boolean }) {
+function DesktopNavigation() {
   const isMobile = useIsMobile();
+  const [isInitialVisit] = useState(() => !hasStartedSession());
   if (isMobile) return null;
 
   return (
     <motion.nav
-      initial={{ opacity: 0 }}
-      animate={{ opacity: isTop ? 1 : 0, display: isTop ? 'flex' : 'none' }}
-      transition={{ duration: 1 }}
+      initial={{ opacity: isInitialVisit ? 0 : 1 }}
+      animate={{ opacity: 1 }}
+      transition={{
+        duration: isInitialVisit ? 1.0 : 0,
+        delay: isInitialVisit ? 1.5 : 0,
+      }}
       className="flex items-center justify-start gap-10"
     >
       {PUBLIC_NAVIGATION_ITEMS.map((item) => (

@@ -15,8 +15,9 @@ function SidebarNavigation({
   return (
     <motion.nav
       className="absolute left-[10%] top-10 h-full w-[10%] py-10 flex flex-col"
+      initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ duration: 2 }}
+      transition={{ duration: 0.3 }}
     >
       <ul className="h-full flex flex-col gap-10 border-r border-black/10">
         {PUBLIC_SIDEBAR_NAVIGATION_ITEMS.map((item) => (

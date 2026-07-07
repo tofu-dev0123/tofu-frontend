@@ -3,6 +3,7 @@ import BlogDetailMain from '@/components/features/public/blogs/slug/BlogDetailMa
 import { getOgpPost } from '@/lib/api/ogp';
 import { get } from '@/lib/api/http';
 import { API_ENDPOINTS } from '@/lib/api/endpoint';
+import { extractExcerpt } from '@/lib/utils/extractExcerpt';
 import type {
   PostDetailResponse,
   PostSlugsResponse,
@@ -32,14 +33,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
 
   const post = await getOgpPost(slug);
+  const description = extractExcerpt(post.content_html);
 
   return {
     title: post.title,
-    description: post.content_html,
+    description,
 
     openGraph: {
       title: post.title,
-      description: post.content_html,
+      description,
       type: 'article',
       images: [
         {
@@ -54,7 +56,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     twitter: {
       card: 'summary_large_image',
       title: post.title,
-      description: post.content_html,
+      description,
       images: [post.thumbnail_url],
     },
   };

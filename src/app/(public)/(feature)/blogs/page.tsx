@@ -1,5 +1,8 @@
 import { Suspense } from 'react';
 import BlogsMain from '@/components/features/public/blogs/BlogsMain';
+import BlogsSkeleton from '@/components/features/public/blogs/BlogsSkeleton';
+import Search from '@/components/features/public/blogs/Search';
+import Keyword from '@/components/features/public/blogs/Keyword';
 import { get } from '@/lib/api/http';
 import { API_ENDPOINTS } from '@/lib/api/endpoint';
 import type { PostGetResponse } from '@/types/api/public/posts';
@@ -8,8 +11,13 @@ type Props = {
   searchParams: Promise<{ keyword?: string; page?: string }>;
 };
 
-async function BlogsList({ searchParams }: Props) {
-  const { keyword, page } = await searchParams;
+async function BlogsList({
+  keyword,
+  page,
+}: {
+  keyword: string | null;
+  page: string | null;
+}) {
   const queryParams = new URLSearchParams();
   if (keyword) queryParams.append('keyword', keyword);
   if (page) queryParams.append('page', page);
@@ -22,7 +30,7 @@ async function BlogsList({ searchParams }: Props) {
   return (
     <BlogsMain
       blogsList={response.posts}
-      keyword={keyword ?? null}
+      keyword={keyword}
       totalCount={response.total_count}
       page={response.page}
       totalPages={response.total_pages}
@@ -30,10 +38,21 @@ async function BlogsList({ searchParams }: Props) {
   );
 }
 
-export default function Page({ searchParams }: Props) {
+export default async function Page({ searchParams }: Props) {
+  const { keyword, page } = await searchParams;
+  const keywordValue = keyword ?? null;
+  const pageValue = page ?? null;
+
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <BlogsList searchParams={searchParams} />
-    </Suspense>
+    <div className="h-full w-full px-2 relative">
+      <Search />
+      <Keyword keyword={keywordValue} />
+      <Suspense
+        key={`${keywordValue ?? ''}-${pageValue ?? ''}`}
+        fallback={<BlogsSkeleton />}
+      >
+        <BlogsList keyword={keywordValue} page={pageValue} />
+      </Suspense>
+    </div>
   );
 }

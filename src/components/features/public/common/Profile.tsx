@@ -4,9 +4,13 @@ import Link from 'next/link';
 
 interface ProfileProps {
   aboutType?: boolean;
+  headline?: string;
 }
 
-function Profile({ aboutType = false }: ProfileProps) {
+function Profile({
+  aboutType = false,
+  headline = 'Web Developer / Software Engineer',
+}: ProfileProps) {
   return (
     <div className="w-full flex justify-start items-center my-5 lg:my-10 gap-4">
       <div
@@ -28,9 +32,7 @@ function Profile({ aboutType = false }: ProfileProps) {
         >
           Tofu
         </p>
-        <p className="text-sm tracking-[0.02em] text-gray-500">
-          Web Developer / Software Engineer
-        </p>
+        <p className="text-sm tracking-[0.02em] text-gray-500">{headline}</p>
       </div>
     </div>
   );

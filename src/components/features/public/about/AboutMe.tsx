@@ -1,26 +1,17 @@
-import React from 'react';
+type Props = {
+  bio: string;
+  siteDescription: string;
+};
 
-function AboutMe() {
-  const aboutMe = [
-    'Webエンジニアとして働きながら、個人開発や技術ブログを書いています',
-    '',
-    'このサイトでは、個人開発で作成したものや技術書の紹介をしています',
-    'また個人開発の備忘録や学習した内容もブログとしてまとめています',
-  ];
+function AboutMe({ bio, siteDescription }: Props) {
   return (
-    <div className="w-full py-16">
-      {aboutMe.map((item, index) =>
-        item === '' ? (
-          <br key={index} />
-        ) : (
-          <p
-            key={item}
-            className="w-full lg:text-base text-sm font-sub-logo tracking-[0.02em] mb-1"
-          >
-            {item}
-          </p>
-        )
-      )}
+    <div className="w-full py-16 flex flex-col gap-6">
+      <p className="w-full lg:text-base text-sm font-sub-logo tracking-[0.02em] leading-relaxed">
+        {bio}
+      </p>
+      <p className="w-full lg:text-base text-sm font-sub-logo tracking-[0.02em] leading-relaxed whitespace-pre-line text-gray-600">
+        {siteDescription}
+      </p>
     </div>
   );
 }

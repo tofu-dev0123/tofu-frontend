@@ -4,4 +4,10 @@ export const API_ENDPOINTS = {
     slugs: '/posts/slugs',
     detail: (slug: string) => `/posts/${slug}`,
   },
+  about: {
+    get: '/about',
+  },
+  products: {
+    get: '/products',
+  },
 };

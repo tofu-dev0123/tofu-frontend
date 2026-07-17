@@ -29,6 +29,21 @@ function Product({ product }: ProductProps) {
           </div>
         </div>
         <div className="w-full lg:w-[30%] flex justify-end items-end gap-2">
+          {product.github_url && (
+            <Button
+              variant="outline"
+              className="w-20 h-8 shadow-none rounded-none border-black"
+            >
+              <Link
+                href={product.github_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs font-sub-logo font-bold"
+              >
+                GitHub
+              </Link>
+            </Button>
+          )}
           {product.link_url && (
             <Button
               variant="outline"

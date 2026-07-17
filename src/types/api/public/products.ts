@@ -9,6 +9,7 @@ export type Product = {
   title: string;
   description: string | null;
   link_url: string | null;
+  github_url: string | null;
   published: boolean;
   sort_order: number;
   tags: ProductTag[];

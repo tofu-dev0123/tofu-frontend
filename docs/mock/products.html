@@ -82,13 +82,15 @@
         border-radius: 2px;
         box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
       }
+      /* アクション: GitHub / View Site を右下に横並び */
       .actions {
         width: 30%;
         display: flex;
         align-items: flex-end;
         justify-content: flex-end;
+        gap: 8px;
       }
-      /* 単一リンク（link_url）。アウトラインボタン。GitHub は backend 対応後に追加 */
+      /* リンクボタン。アウトライン。GitHub / View Site とも同一スタイルで統一 */
       .btn {
         display: inline-flex;
         align-items: center;
@@ -105,7 +107,8 @@
   </head>
   <body>
     <div class="page">
-      <!-- product: title / description / tags[].name / link_url(単一) -->
+      <!-- product: title / description / tags[].name / github_url / link_url -->
+      <!-- github_url と link_url の両方あり -->
       <div class="item">
         <h3>個人サイト</h3>
         <div class="row">
@@ -124,6 +127,7 @@
             </div>
           </div>
           <div class="actions">
+            <a class="btn" href="#">GitHub</a>
             <a class="btn" href="#">View Site</a>
           </div>
         </div>
@@ -131,6 +135,7 @@
 
       <hr class="divider" />
 
+      <!-- github_url のみ（link_url なし） -->
       <div class="item">
         <h3>技術ブログ CMS</h3>
         <div class="row">
@@ -147,13 +152,14 @@
             </div>
           </div>
           <div class="actions">
-            <a class="btn" href="#">View Site</a>
+            <a class="btn" href="#">GitHub</a>
           </div>
         </div>
       </div>
 
       <hr class="divider" />
 
+      <!-- link_url のみ（github_url なし）: 従来どおり View Site だけ -->
       <div class="item">
         <h3>ポートフォリオ API</h3>
         <div class="row">

@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Books — Mock</title>
+    <style>
+      /* 現行サイト準拠のトークン（配色・フォント・ボーダーは変更しない） */
+      :root {
+        --fg: #252525;
+        --muted: #6b7280; /* gray-500 */
+        --border: #e5e7eb; /* gray-200 */
+        --bg: #ffffff;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        background: var(--bg);
+        color: var(--fg);
+        font-family:
+          'Geist',
+          system-ui,
+          -apple-system,
+          'Hiragino Kaku Gothic ProN',
+          'Noto Sans JP',
+          sans-serif;
+        letter-spacing: 0.02em;
+        -webkit-font-smoothing: antialiased;
+      }
+      .page {
+        max-width: 720px;
+        margin: 0 auto;
+        padding: 40px 8px 80px;
+      }
+
+      /* Contact 流儀（中央寄せ・h1 + 外部リンク1本）を踏襲 */
+      .wrap {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      h1.title {
+        font-size: 36px;
+        font-weight: 700;
+        text-align: center;
+      }
+
+      /* 紹介画像と名前をひとつのリンクに包む。hover は Contact と同じ opacity 遷移 */
+      .shot {
+        display: block;
+        text-decoration: none;
+        color: var(--fg);
+        margin: 48px 0 36px;
+        opacity: 0.85;
+        transition: opacity 0.3s;
+      }
+      .shot:hover {
+        opacity: 1;
+      }
+      .shot img {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+      /* 影はデバイスフレームごと画像に焼き込み済み。CSS では付けない */
+      .caption {
+        margin-top: 12px;
+        text-align: center;
+        font-size: 18px;
+      }
+      .caption .arrow {
+        font-size: 12px;
+        margin-left: 4px;
+        vertical-align: 2px;
+        color: var(--muted);
+      }
+      .note {
+        font-size: 12px;
+        text-align: center;
+        line-height: 1.9;
+      }
+
+      /* 1024px（Tailwind lg / useIsMobile と同じ境界）で画像を差し替える */
+      .shot-desktop {
+        display: none;
+      }
+      .shot-mobile {
+        width: 260px;
+        max-width: 100%;
+      }
+      @media (min-width: 1024px) {
+        .shot-desktop {
+          display: block;
+          width: 560px;
+          max-width: 100%;
+        }
+        .shot-mobile {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <div class="wrap">
+        <h1 class="title">Books</h1>
+
+        <!-- 導線は外部リンク1本のみ。target="_blank" / rel="noopener noreferrer" -->
+        <a
+          class="shot shot-desktop"
+          href="https://shelfie.jp/users/tofu0123"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <!-- PC: ブラウザウィンドウ + iPhone の合成（public/books/shelfie-desktop.webp） -->
+          <img
+            src="../../public/books/shelfie-desktop.webp"
+            alt="Shelfie の公開本棚"
+          />
+          <p class="caption">Shelfie<span class="arrow">↗</span></p>
+        </a>
+
+        <a
+          class="shot shot-mobile"
+          href="https://shelfie.jp/users/tofu0123"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <!-- モバイル: iPhone 単体（public/books/shelfie-mobile.webp） -->
+          <img
+            src="../../public/books/shelfie-mobile.webp"
+            alt="Shelfie の公開本棚"
+          />
+          <p class="caption">Shelfie<span class="arrow">↗</span></p>
+        </a>
+
+        <p class="note">読書記録は Shelfie の公開本棚で公開しています。</p>
+      </div>
+    </div>
+  </body>
+</html>

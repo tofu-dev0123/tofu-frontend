@@ -12,15 +12,6 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  async redirects() {
-    return [
-      {
-        source: '/books',
-        destination: '/maintenance',
-        permanent: true,
-      },
-    ];
-  },
 };
 
 export default nextConfig;

@@ -1,8 +1,11 @@
 import axios from 'axios';
 
+// ビルド時の SSG / RSC はレイテンシ要件が緩く、重い記事で 10 秒を超えるため長めに取る
+const TIMEOUT = typeof window === 'undefined' ? 30000 : 10000;
+
 export const apiClient = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
-  timeout: 10000,
+  timeout: TIMEOUT,
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
@@ -36,7 +39,7 @@ apiClient.interceptors.response.use(
 
 // Next.jsルートハンドラ用のaxiosインスタンス（baseURLなし）
 export const nextApiClient = axios.create({
-  timeout: 10000,
+  timeout: TIMEOUT,
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json',

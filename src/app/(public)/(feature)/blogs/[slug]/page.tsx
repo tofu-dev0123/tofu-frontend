@@ -1,13 +1,10 @@
 import type { Metadata } from 'next';
 import BlogDetailMain from '@/components/features/public/blogs/slug/BlogDetailMain';
-import { getOgpPost } from '@/lib/api/ogp';
+import { getBlogDetail } from '@/lib/api/blogs';
 import { get } from '@/lib/api/http';
 import { API_ENDPOINTS } from '@/lib/api/endpoint';
 import { extractExcerpt } from '@/lib/utils/extractExcerpt';
-import type {
-  PostDetailResponse,
-  PostSlugsResponse,
-} from '@/types/api/public/posts';
+import type { PostSlugsResponse } from '@/types/api/public/posts';
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -32,7 +29,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
 
-  const post = await getOgpPost(slug);
+  const post = await getBlogDetail(slug);
   const description = extractExcerpt(post.content_html);
 
   return {
@@ -65,9 +62,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function Page({ params }: Props) {
   const { slug } = await params;
 
-  const blogDetail = await get<PostDetailResponse>(
-    API_ENDPOINTS.blogs.detail(slug)
-  );
+  const blogDetail = await getBlogDetail(slug);
 
   return <BlogDetailMain blogDetail={blogDetail} />;
 }

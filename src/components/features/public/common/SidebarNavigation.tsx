@@ -14,7 +14,7 @@ function SidebarNavigation({
   if (isMobile) return null;
   return (
     <motion.nav
-      className="absolute left-[10%] top-10 h-full w-[10%] py-10 flex flex-col"
+      className="fixed left-[10%] top-25 bottom-0 w-[10%] py-10 flex flex-col"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.3 }}

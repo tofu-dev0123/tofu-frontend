@@ -30,6 +30,7 @@
 | agent    | `.claude/agents/code-reviewer.md`               | 差分レビュー（読み取り専用）                                                                  |
 | script   | `scripts/check.sh`                              | lint + type + prettier --check + vitest。成功時に HEAD の sha を `.claude/.last-check` に記録 |
 | hook     | `.claude/hooks/require-check.sh`                | `feature/*` `fix/*` での `git push` / `gh pr create` を、HEAD でチェック未通過ならブロック    |
+| hook     | `.claude/hooks/guard-bash.sh`                   | `.env` 系ファイルを参照する Bash と、git の `--no-index` / `--output` をブロック              |
 | rule     | `.claude/rules/testing-guidelines.md`           | テスト設計・UT の方針                                                                         |
 | template | `.github/ISSUE_TEMPLATE/feature.md` `bugfix.md` | 起票本文の形式（スキルと共通）                                                                |
 | template | `.github/pull_request_template.md`              | PR 本文の形式（スキルと共通）                                                                 |

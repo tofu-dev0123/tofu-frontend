@@ -11,13 +11,15 @@
 
 ## コマンド
 
-| 用途         | コマンド         |
-| ------------ | ---------------- |
-| 開発サーバ   | `npm run dev`    |
-| ビルド       | `npm run build`  |
-| Lint         | `npm run lint`   |
-| フォーマット | `npm run format` |
-| 型チェック   | `npm run type`   |
+| 用途         | コマンド           |
+| ------------ | ------------------ |
+| 開発サーバ   | `npm run dev`      |
+| ビルド       | `npm run build`    |
+| Lint         | `npm run lint`     |
+| フォーマット | `npm run format`   |
+| 型チェック   | `npm run type`     |
+| テスト       | `npm test`         |
+| 一括チェック | `scripts/check.sh` |
 
 ## コーディング規約
 
@@ -39,6 +41,14 @@
 ## API 処理
 
 API 呼び出し・型定義・エラーハンドリングの規約は @docs/api-guidelines.md に従う。
+
+## テスト
+
+Vitest + Testing Library。方針・テスト設計の形式は @.claude/rules/testing-guidelines.md に従う。
+
+## 開発フロー
+
+Issue 駆動（`/feature` `/bugfix` → `/implement` → `/cleanup`）。詳細は @.claude/rules/dev-flow.md を参照。
 
 ## ブランチ・コミット
 

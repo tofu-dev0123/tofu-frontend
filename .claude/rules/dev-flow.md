@@ -66,3 +66,15 @@
 - UI 変更: 計画で「UI 変更あり」とした場合は、PR 作成前に `npm run dev` で目視確認する
 - レビュー↔修正ループは最大 3 回。残った指摘は PR の「未対応事項」に書く
 - PR: base は `develop`、本文に `Closes #<番号>`
+
+## デプロイ（Vercel）
+
+| ブランチ                  | デプロイ先                           |
+| ------------------------- | ------------------------------------ |
+| `main`                    | Production（リリース PR のマージ時） |
+| `develop`                 | Preview                              |
+| `feature/*` `fix/*`（PR） | Preview                              |
+| `release/*`               | なし（`vercel.json` で停止）         |
+
+- Production Branch（`main`）は Vercel ダッシュボードで設定する（`vercel.json` では指定できない）
+- 自動デプロイを止めるブランチは `vercel.json` の `git.deploymentEnabled` で管理する

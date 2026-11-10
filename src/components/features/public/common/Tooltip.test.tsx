@@ -1,9 +1,10 @@
-import { describe, expect, it } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it } from 'vitest';
+import type { ReactElement } from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Tooltip from '@/components/features/public/common/Tooltip';
 
-const hoverTooltip = async (ui: React.ReactElement) => {
+const hoverTooltip = async (ui: ReactElement) => {
   const user = userEvent.setup();
   render(ui);
   await user.hover(screen.getByText('対象'));
@@ -11,6 +12,23 @@ const hoverTooltip = async (ui: React.ReactElement) => {
 };
 
 describe('Tooltip', () => {
+  const originalInnerWidth = window.innerWidth;
+
+  // useIsMobile は innerWidth < 1024 をモバイルと判定し、ツールチップを出さない
+  beforeEach(() => {
+    Object.defineProperty(window, 'innerWidth', {
+      configurable: true,
+      value: 1280,
+    });
+  });
+
+  afterEach(() => {
+    Object.defineProperty(window, 'innerWidth', {
+      configurable: true,
+      value: originalInnerWidth,
+    });
+  });
+
   it('top は下に余白をあけて表示する', async () => {
     const tooltip = await hoverTooltip(
       <Tooltip content="説明">

@@ -1,13 +1,65 @@
 {
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
   "permissions": {
     "allow": [
       "Bash(npm run lint)",
       "Bash(npm run type)",
       "Bash(npm run format)",
-      "Bash(npm run build)"
-    ]
+      "Bash(npm run build)",
+      "Bash(npm test)",
+      "Bash(npm run test)",
+      "Bash(npx vitest run:*)",
+      "Bash(scripts/check.sh)",
+      "Bash(./scripts/check.sh)",
+      "Bash(git status)",
+      "Bash(git status:*)",
+      "Bash(git diff)",
+      "Bash(git diff:*)",
+      "Bash(git log)",
+      "Bash(git log:*)",
+      "Bash(git show:*)",
+      "Bash(git branch)",
+      "Bash(git branch --show-current)",
+      "Bash(git branch -a)",
+      "Bash(git remote -v)",
+      "Bash(git fetch)",
+      "Bash(git fetch origin)",
+      "Bash(git fetch --prune)",
+      "Bash(git stash list)",
+      "Bash(git stash show:*)",
+      "Bash(ls)",
+      "Bash(ls:*)",
+      "Bash(pwd)",
+      "Bash(gh issue list:*)",
+      "Bash(gh issue view:*)",
+      "Bash(gh pr list:*)",
+      "Bash(gh pr view:*)",
+      "Bash(gh label list:*)",
+      "Bash(gh repo view:*)"
+    ],
+    "deny": ["Read(./.env)", "Read(./.env.production)"]
   },
   "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "fp=$(jq -r '.tool_input.file_path // empty'); base=$(basename \"$fp\"); case \"$base\" in .env.example|.env.local) exit 0 ;; .env|.env.*) echo \"Writes to $base are blocked. Allowed: .env.example, .env.local\" >&2; exit 2 ;; esac; exit 0"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/require-check.sh"
+          }
+        ]
+      }
+    ],
     "PostToolUse": [
       {
         "matcher": "Edit|Write",
@@ -15,6 +67,16 @@
           {
             "type": "command",
             "command": "npx prettier --write \"$CLAUDE_FILE_PATHS\" 2>/dev/null || true"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "osascript -e 'display notification \"Claude Code\" with title \"Task complete\" sound name \"Glass\"' 2>/dev/null || true"
           }
         ]
       }

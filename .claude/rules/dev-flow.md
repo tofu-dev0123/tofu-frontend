@@ -21,19 +21,19 @@
 
 ## 構成
 
-| 種別     | パス                                            | 役割                                                                                          |
-| -------- | ----------------------------------------------- | --------------------------------------------------------------------------------------------- |
-| skill    | `.claude/skills/feature/`                       | 機能追加の影響調査 → 起票（`enhancement`）                                                    |
-| skill    | `.claude/skills/bugfix/`                        | バグの原因・影響調査 → 起票（`bug`）                                                          |
-| skill    | `.claude/skills/implement/`                     | 計画 → 実装・UT → チェック → レビュー → PR                                                    |
-| skill    | `.claude/skills/cleanup/`                       | マージ後の後片付け                                                                            |
-| agent    | `.claude/agents/code-reviewer.md`               | 差分レビュー（読み取り専用）                                                                  |
-| script   | `scripts/check.sh`                              | lint + type + prettier --check + vitest。成功時に HEAD の sha を `.claude/.last-check` に記録 |
-| hook     | `.claude/hooks/require-check.sh`                | `feature/*` `fix/*` での `git push` / `gh pr create` を、HEAD でチェック未通過ならブロック    |
-| hook     | `.claude/hooks/guard-bash.sh`                   | `.env` 系ファイルを参照する Bash と、git の `--no-index` / `--output` をブロック              |
-| rule     | `.claude/rules/testing-guidelines.md`           | テスト設計・UT の方針                                                                         |
-| template | `.github/ISSUE_TEMPLATE/feature.md` `bugfix.md` | 起票本文の形式（スキルと共通）                                                                |
-| template | `.github/pull_request_template.md`              | PR 本文の形式（スキルと共通）                                                                 |
+| 種別     | パス                                            | 役割                                                                                                                                                                      |
+| -------- | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| skill    | `.claude/skills/feature/`                       | 機能追加の影響調査 → 起票（`enhancement`）                                                                                                                                |
+| skill    | `.claude/skills/bugfix/`                        | バグの原因・影響調査 → 起票（`bug`）                                                                                                                                      |
+| skill    | `.claude/skills/implement/`                     | 計画 → 実装・UT → チェック → レビュー → PR                                                                                                                                |
+| skill    | `.claude/skills/cleanup/`                       | マージ後の後片付け                                                                                                                                                        |
+| agent    | `.claude/agents/code-reviewer.md`               | 差分レビュー（読み取り専用）                                                                                                                                              |
+| script   | `scripts/check.sh`                              | lint + type + prettier --check + vitest。成功時に HEAD の sha を `.claude/.last-check` に記録                                                                             |
+| hook     | `.claude/hooks/require-check.sh`                | `feature/*` `fix/*` での `git push` / `gh pr create` を、HEAD でチェック未通過ならブロック                                                                                |
+| hook     | `.claude/hooks/guard-bash.sh`                   | 多重防御（ベストエフォート）。`.env` 参照・グロブ / 展開、git の `--no-index` / `--output` をブロック。jq 不在時は fail closed。主たる防御は allow を固定形に限定すること |
+| rule     | `.claude/rules/testing-guidelines.md`           | テスト設計・UT の方針                                                                                                                                                     |
+| template | `.github/ISSUE_TEMPLATE/feature.md` `bugfix.md` | 起票本文の形式（スキルと共通）                                                                                                                                            |
+| template | `.github/pull_request_template.md`              | PR 本文の形式（スキルと共通）                                                                                                                                             |
 
 グローバルの `issue` / `pr` / `commit` スキルとは名前を分けている（同名だとグローバル側が優先されるため）。
 本リポジトリの Issue 対応では、上記のプロジェクトスキルを使う。

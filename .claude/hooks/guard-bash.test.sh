@@ -28,11 +28,21 @@ result() {
   esac
 }
 
+run() {
+  jq -n --arg c "$1" '{tool_input: {command: $c}}' | "$HOOK" 2>/dev/null
+  result $?
+}
+
 while IFS=$'\t' read -r expected cmd; do
   case $expected in '' | '#'*) continue ;; esac
-  jq -n --arg c "$cmd" '{tool_input: {command: $c}}' | "$HOOK" 2>/dev/null
-  check "$expected" "$cmd" "$(result $?)"
+  check "$expected" "$cmd" "$(run "$cmd")"
 done <"$CASES"
+
+# 複数行: コメント・ヒアドキュメント内の ' で走査がずれても拾う
+check block '(コメント内の クォート + 次行のグロブ)' \
+  "$(run $'echo x # it\'s\ncat .e*')"
+check block '(ヒアドキュメント内の クォート + 次行のグロブ)' \
+  "$(run $'cat <<EOF\nit\'s\nEOF\ncat .e*')"
 
 # fail closed: jq がない
 printf '%s' '{"tool_input":{"command":"ls"}}' |

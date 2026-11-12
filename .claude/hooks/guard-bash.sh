@@ -32,20 +32,24 @@ fi
 # クォートを解釈し、シェルが展開しない部分（'.[]' や '*.test.*' など）は対象外にする。
 #   glob_view:   クォート文字を除き、クォート内・エスケープされたグロブ文字を無害化したもの
 #   expand_view: シングルクォート内（変数展開されない部分）を無害化したもの
+#   dequoted:    クォート文字とバックスラッシュを除いただけのもの（後段の fail closed 判定用）
 glob_msg=".env を参照し得るグロブ・ブレース・変数展開を含むコマンドはブロックされています。"
 glob_view=''
 expand_view=''
+dequoted=''
 state=none
 LC_ALL=C
 n=${#stripped}
 i=0
 while ((i < n)); do
   c=${stripped:i:1}
+  case $c in \' | \" | \\) ;; *) dequoted+=$c ;; esac
   case $state in
     none)
       case $c in
         \\)
           next=${stripped:i+1:1}
+          case $next in \' | \" | \\) ;; *) dequoted+=$next ;; esac
           case $next in [*?[{]) next=_ ;; esac
           glob_view+=$next
           expand_view+=__
@@ -78,6 +82,8 @@ while ((i < n)); do
       case $c in
         \") state=none ;;
         \\)
+          next=${stripped:i+1:1}
+          case $next in \' | \" | \\) ;; *) dequoted+=$next ;; esac
           glob_view+=__
           expand_view+=__
           ((i += 2))
@@ -97,8 +103,29 @@ while ((i < n)); do
   ((i += 1))
 done
 
-env_glob_re='(^|[[:space:]/:=<>;|&(){},`])\.(e|en|env)?[*?[{]'
-if [[ "$glob_view" =~ $env_glob_re || "$expand_view" =~ \$\{ ]]; then
+# 単語の区切りになり得る文字
+b='(^|[[:space:]/:=<>;|&(){},`])'
+
+# クォートやエスケープで分割した .env（'.'env / .e""nv / .e\nv）
+if [[ "$glob_view" =~ $env_path_re ]]; then
+  block ".env ファイルを参照するコマンドはブロックされています（.env.example は可）。"
+fi
+
+# 1. シェルが展開する形（クォート解釈あり）
+#    .en* / .e?v / .{env} / .* / .[e]nv、未定義変数を挟む .$x* / .e$x*、${...}
+env_glob_re="$b"'\.(e|en|env)?[*?[{]'
+env_var_re="$b"'\.(e|en|env)?\$'
+if [[ "$glob_view" =~ $env_glob_re || "$expand_view" =~ $env_var_re ||
+  "$expand_view" =~ \$\{ ]]; then
+  block "$glob_msg"
+fi
+
+# 2. クォートを無視した判定（fail closed）。クォートしたパターンを find / bash -c / eval が
+#    展開する形、$(...) 内、コメント・ヒアドキュメントで走査がずれる形を拾う。
+#    jq の '.[]'、'*.test.*'、'tsx?$' には一致しない
+if [[ "$dequoted" =~ \.(e|en|env)[*?[{] ||
+  "$dequoted" =~ $b\.[*?] ||
+  "$dequoted" =~ $b\.env[^[:space:]\;\|\&\<\>\(\)]*[*?[{] ]]; then
   block "$glob_msg"
 fi
 

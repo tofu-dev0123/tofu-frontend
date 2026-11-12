@@ -32,6 +32,22 @@ block	cat {x,.e*}
 block	cat {.e*,}
 block	cat x{,.e?v}
 block	cat `echo .e*`
+block	cat .env.*
+block	cat .env.l*
+block	cat .env.[l]ocal
+block	cat .env.{local,x}
+block	cat .env.local?
+block	cat '.'env
+block	cat .e""nv
+block	cat .e\nv
+block	cat .$x*
+block	cat .e$x*
+block	find . -name '.e*'
+block	find . -name '.*'
+block	bash -c 'cat .e*'
+block	echo "$(cat .e*)"
+block	echo "$(cat '.e'*)"
+block	grep -r x . --include='.env*'
 
 # 許可
 allow	cat .env.example

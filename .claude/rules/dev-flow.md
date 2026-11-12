@@ -28,7 +28,7 @@
 | skill    | `.claude/skills/implement/`                     | 計画 → 実装・UT → チェック → レビュー → PR                                                                                                                                |
 | skill    | `.claude/skills/cleanup/`                       | マージ後の後片付け                                                                                                                                                        |
 | agent    | `.claude/agents/code-reviewer.md`               | 差分レビュー（読み取り専用）                                                                                                                                              |
-| script   | `scripts/check.sh`                              | lint + type + prettier --check + vitest。成功時に HEAD の sha を `.claude/.last-check` に記録                                                                             |
+| script   | `scripts/check.sh`                              | lint + type + prettier --check + vitest + guard-bash の判定テスト（`.claude/hooks/guard-bash.cases`）。成功時に HEAD の sha を `.claude/.last-check` に記録               |
 | hook     | `.claude/hooks/require-check.sh`                | `feature/*` `fix/*` での `git push` / `gh pr create` を、HEAD でチェック未通過ならブロック                                                                                |
 | hook     | `.claude/hooks/guard-bash.sh`                   | 多重防御（ベストエフォート）。`.env` 参照・グロブ / 展開、git の `--no-index` / `--output` をブロック。jq 不在時は fail closed。主たる防御は allow を固定形に限定すること |
 | rule     | `.claude/rules/testing-guidelines.md`           | テスト設計・UT の方針                                                                                                                                                     |

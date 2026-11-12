@@ -1,9 +1,5 @@
-import BooksMain from '@/components/features/public/books/BooksMain';
+import { redirect } from 'next/navigation';
 
 export default function Page() {
-  return (
-    <div>
-      <BooksMain />
-    </div>
-  );
+  redirect('/maintenance');
 }

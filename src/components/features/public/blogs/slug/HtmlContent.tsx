@@ -2,9 +2,23 @@
 
 import { useEffect, useRef } from 'react';
 import { renderMermaid } from '@/lib/mermaid';
+import { extractHeadings } from '@/lib/utils/headings';
+import type { Heading } from '@/lib/utils/headings';
 
-export default function HtmlContent({ html }: { html: string }) {
+export default function HtmlContent({
+  html,
+  onHeadingsChange,
+}: {
+  html: string;
+  onHeadingsChange?: (headings: Heading[]) => void;
+}) {
   const containerRef = useRef<HTMLElement>(null);
+
+  // 見出しに id を付与し、目次用の一覧を親へ渡す
+  useEffect(() => {
+    if (!containerRef.current) return;
+    onHeadingsChange?.(extractHeadings(containerRef.current));
+  }, [html, onHeadingsChange]);
 
   // サーバ生成 HTML 内の ```mermaid ブロックを図に差し替える。
   // 個別ブロックの構文エラーは握りつぶし、本文全体は壊さない。

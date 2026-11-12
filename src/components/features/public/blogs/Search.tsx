@@ -22,7 +22,10 @@ export default function Search() {
   };
 
   const handleSearch = () => {
-    router.push(`/blogs?keyword=${keyword}`);
+    const trimmed = keyword.trim();
+    if (!trimmed) return;
+    const params = new URLSearchParams({ keyword: trimmed });
+    router.push(`/blogs?${params.toString()}`);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {

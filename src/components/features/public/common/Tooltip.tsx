@@ -1,6 +1,6 @@
 'use client';
 
-import { ReactNode, useState } from 'react';
+import { CSSProperties, ReactNode, useState } from 'react';
 import { motion } from 'framer-motion';
 import useIsMobile from '@/hooks/public/common/useIsMobile';
 
@@ -26,10 +26,17 @@ export default function Tooltip({
     'absolute z-50 whitespace-nowrap rounded bg-white px-2 py-1 text-xs shadow border border-black/10';
 
   const positionMap: Record<Placement, string> = {
-    top: `bottom-full left-1/2 -translate-x-1/2 mb-${offset}`,
-    bottom: `top-full left-1/2 -translate-x-1/2 mt-${offset}`,
-    left: `right-full top-1/2 -translate-y-1/2 mr-${offset}`,
-    right: `left-full top-1/2 -translate-y-1/2 ml-${offset}`,
+    top: 'bottom-full left-1/2 -translate-x-1/2',
+    bottom: 'top-full left-1/2 -translate-x-1/2',
+    left: 'right-full top-1/2 -translate-y-1/2',
+    right: 'left-full top-1/2 -translate-y-1/2',
+  };
+
+  const offsetStyleMap: Record<Placement, CSSProperties> = {
+    top: { marginBottom: offset },
+    bottom: { marginTop: offset },
+    left: { marginRight: offset },
+    right: { marginLeft: offset },
   };
 
   return (
@@ -50,6 +57,7 @@ export default function Tooltip({
           transition={{ duration: 0.2, delay: 0.2 }}
           role="tooltip"
           className={`${basePosition} ${positionMap[placement]}`}
+          style={offsetStyleMap[placement]}
         >
           {content}
         </motion.span>

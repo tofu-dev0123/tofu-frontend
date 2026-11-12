@@ -134,6 +134,11 @@ body {
   padding-left: 2em;
 }
 
+/* 目次から移動したとき、見出しが画面上端に張り付かないようにする */
+.markdown-body :is(h1, h2, h3) {
+  scroll-margin-top: 6rem;
+}
+
 .mermaid {
   display: flex;
   justify-content: center;

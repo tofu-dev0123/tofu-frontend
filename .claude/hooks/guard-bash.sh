@@ -28,10 +28,78 @@ if [[ "$stripped" =~ $env_path_re ]]; then
   block ".env ファイルを参照するコマンドはブロックされています（.env.example は可）。"
 fi
 
-# .en* / .e?v / .{env} / $'...' / ${...} などで .env を組み立てる形
-env_glob_re='\.(e|en|env)?[*?[{]|\.e[*?[{]|\$'"'"'|\$\{'
-if [[ "$stripped" =~ $env_glob_re ]]; then
-  block ".env を参照し得るグロブ・ブレース・変数展開を含むコマンドはブロックされています。"
+# .en* / .e?v / .{env} / .* / $'...' / ${...} などで .env を組み立てる形。
+# クォートを解釈し、シェルが展開しない部分（'.[]' や '*.test.*' など）は対象外にする。
+#   glob_view:   クォート文字を除き、クォート内・エスケープされたグロブ文字を無害化したもの
+#   expand_view: シングルクォート内（変数展開されない部分）を無害化したもの
+glob_msg=".env を参照し得るグロブ・ブレース・変数展開を含むコマンドはブロックされています。"
+glob_view=''
+expand_view=''
+state=none
+LC_ALL=C
+n=${#stripped}
+i=0
+while ((i < n)); do
+  c=${stripped:i:1}
+  case $state in
+    none)
+      case $c in
+        \\)
+          next=${stripped:i+1:1}
+          case $next in [*?[{]) next=_ ;; esac
+          glob_view+=$next
+          expand_view+=__
+          ((i += 2))
+          continue
+          ;;
+        \') state=single ;;
+        \") state=double ;;
+        \$)
+          # ANSI-C クォート $'...' はエスケープで任意の文字を組み立てられる
+          [[ ${stripped:i+1:1} == \' ]] && block "$glob_msg"
+          glob_view+=$c
+          expand_view+=$c
+          ;;
+        *)
+          glob_view+=$c
+          expand_view+=$c
+          ;;
+      esac
+      ;;
+    single)
+      if [[ $c == \' ]]; then
+        state=none
+      else
+        case $c in [*?[{]) glob_view+=_ ;; *) glob_view+=$c ;; esac
+        expand_view+=_
+      fi
+      ;;
+    double)
+      case $c in
+        \") state=none ;;
+        \\)
+          glob_view+=__
+          expand_view+=__
+          ((i += 2))
+          continue
+          ;;
+        [*?[{])
+          glob_view+=_
+          expand_view+=$c
+          ;;
+        *)
+          glob_view+=$c
+          expand_view+=$c
+          ;;
+      esac
+      ;;
+  esac
+  ((i += 1))
+done
+
+env_glob_re='(^|[[:space:]/:=<>;|&(])\.(e|en|env)?[*?[{]'
+if [[ "$glob_view" =~ $env_glob_re || "$expand_view" =~ \$\{ ]]; then
+  block "$glob_msg"
 fi
 
 if [[ "$cmd" =~ (^|[^[:alnum:]_-])git[[:space:]] ]]; then

@@ -1,0 +1,44 @@
+# guard-bash.sh の判定ケース（.claude/hooks/guard-bash.test.sh で検証する）
+# 形式: <block|allow><TAB><コマンド>。空行と # で始まる行は無視する
+
+# git の --no-index / --output（省略形を含む）
+block	git diff --no-index /tmp/a /tmp/b
+block	git diff --no-ind /tmp/a /tmp/b
+block	git log --output=/tmp/x
+block	git show --outp /tmp/x HEAD
+
+# .env 系ファイルの参照
+block	git show HEAD:.env
+block	cat ./.env
+block	cat .env.local
+block	head .env
+
+# .env を組み立てるグロブ・ブレース・変数展開
+block	cat .en*
+block	cat .e?v
+block	cat .{env,x}
+block	cat $'\x2eenv'
+block	cat ${HOME}/x
+block	f=.e; cat ${f}nv
+block	cat .*
+block	cat .??v
+block	cat .[e]nv
+block	cat ./.e*
+block	cat '.'*
+block	cat ".e"*
+block	cat x/$'\x2e'env
+block	cat "${HOME}/.e"*
+
+# 許可
+allow	cat .env.example
+allow	grep -rn process.env src
+allow	git diff
+allow	git log --oneline -10
+allow	ls src/*.ts
+allow	git commit -F /tmp/msg.txt
+allow	gh issue view 1 --json comments --jq '.[] | .body'
+allow	gh pr list --json title --jq '.[0].title'
+allow	find src -name '*.test.*'
+allow	grep -E 'tsx?$' files.txt
+allow	gh pr view 1 --json body --jq '"${x}"'
+allow	echo 'it'"'"'s'

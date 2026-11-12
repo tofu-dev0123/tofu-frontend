@@ -4,8 +4,15 @@ import Image from 'next/image';
 import HtmlContent from '@/components/features/public/blogs/slug/HtmlContent';
 import { formatDate } from '@/lib/utils/dateFormat';
 import type { PostDetailResponse } from '@/types/api/public/posts';
+import type { Heading } from '@/lib/utils/headings';
 
-function BlogContent({ blogDetail }: { blogDetail: PostDetailResponse }) {
+function BlogContent({
+  blogDetail,
+  onHeadingsChange,
+}: {
+  blogDetail: PostDetailResponse;
+  onHeadingsChange?: (headings: Heading[]) => void;
+}) {
   return (
     <>
       <div className="w-full aspect-video overflow-hidden relative">
@@ -28,7 +35,10 @@ function BlogContent({ blogDetail }: { blogDetail: PostDetailResponse }) {
         </p>
       </div>
       <div className="w-full my-10">
-        <HtmlContent html={blogDetail.content_html} />
+        <HtmlContent
+          html={blogDetail.content_html}
+          onHeadingsChange={onHeadingsChange}
+        />
       </div>
       <div className="w-full flex flex-wrap gap-2">
         {blogDetail.tags.map((tag) => (

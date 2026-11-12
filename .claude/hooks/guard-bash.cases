@@ -28,6 +28,10 @@ block	cat '.'*
 block	cat ".e"*
 block	cat x/$'\x2e'env
 block	cat "${HOME}/.e"*
+block	cat {x,.e*}
+block	cat {.e*,}
+block	cat x{,.e?v}
+block	cat `echo .e*`
 
 # 許可
 allow	cat .env.example

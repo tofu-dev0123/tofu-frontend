@@ -97,7 +97,7 @@ while ((i < n)); do
   ((i += 1))
 done
 
-env_glob_re='(^|[[:space:]/:=<>;|&(])\.(e|en|env)?[*?[{]'
+env_glob_re='(^|[[:space:]/:=<>;|&(){},`])\.(e|en|env)?[*?[{]'
 if [[ "$glob_view" =~ $env_glob_re || "$expand_view" =~ \$\{ ]]; then
   block "$glob_msg"
 fi

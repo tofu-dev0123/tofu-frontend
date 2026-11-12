@@ -2,24 +2,34 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { act, renderHook } from '@testing-library/react';
 import useActiveHeading from '@/hooks/public/blogs/useActiveHeading';
 
-const setWindow = (key: 'innerHeight' | 'scrollY', value: number) => {
-  Object.defineProperty(window, key, { configurable: true, value });
+type ScrollMetrics = {
+  scrollTop: number;
+  scrollHeight: number;
+  clientHeight: number;
 };
 
-const setScrollHeight = (value: number) => {
-  Object.defineProperty(document.documentElement, 'scrollHeight', {
-    configurable: true,
-    value,
+const setScrollMetrics = (el: Element, metrics: ScrollMetrics) => {
+  Object.entries(metrics).forEach(([key, value]) => {
+    Object.defineProperty(el, key, { configurable: true, value });
   });
 };
 
+const resetScrollMetrics = (el: Element) => {
+  ['scrollTop', 'scrollHeight', 'clientHeight'].forEach((key) =>
+    Reflect.deleteProperty(el, key)
+  );
+};
+
 // 見出し要素を作り、画面上端からの位置（top）を差し替えられるようにする
-const createHeadings = (tops: Record<string, number>) => {
+const createHeadings = (
+  tops: Record<string, number>,
+  parent: HTMLElement = document.body
+) => {
   Object.entries(tops).forEach(([id, top]) => {
     const el = document.createElement('h2');
     el.id = id;
     el.getBoundingClientRect = () => ({ top }) as DOMRect;
-    document.body.appendChild(el);
+    parent.appendChild(el);
   });
 };
 
@@ -30,12 +40,18 @@ const setTop = (id: string, top: number) => {
 
 describe('useActiveHeading', () => {
   const originalInnerHeight = window.innerHeight;
-  const originalScrollY = window.scrollY;
+  const root = document.scrollingElement ?? document.documentElement;
 
   beforeEach(() => {
-    setWindow('innerHeight', 1000);
-    setWindow('scrollY', 0);
-    setScrollHeight(5000);
+    Object.defineProperty(window, 'innerHeight', {
+      configurable: true,
+      value: 1000,
+    });
+    setScrollMetrics(root, {
+      scrollTop: 0,
+      scrollHeight: 5000,
+      clientHeight: 1000,
+    });
     vi.spyOn(window, 'requestAnimationFrame').mockImplementation((cb) => {
       cb(0);
       return 0;
@@ -44,9 +60,11 @@ describe('useActiveHeading', () => {
 
   afterEach(() => {
     document.body.innerHTML = '';
-    setWindow('innerHeight', originalInnerHeight);
-    setWindow('scrollY', originalScrollY);
-    Reflect.deleteProperty(document.documentElement, 'scrollHeight');
+    Object.defineProperty(window, 'innerHeight', {
+      configurable: true,
+      value: originalInnerHeight,
+    });
+    resetScrollMetrics(root);
     vi.restoreAllMocks();
   });
 
@@ -73,7 +91,7 @@ describe('useActiveHeading', () => {
     act(() => {
       setTop('a', -400);
       setTop('b', 100);
-      window.dispatchEvent(new Event('scroll'));
+      document.dispatchEvent(new Event('scroll'));
     });
 
     expect(result.current).toBe('b');
@@ -81,9 +99,37 @@ describe('useActiveHeading', () => {
 
   it('最下部までスクロールしたら最後の見出しの id を返す', () => {
     createHeadings({ a: -400, b: 100, c: 800 });
-    setWindow('scrollY', 4000);
+    setScrollMetrics(root, {
+      scrollTop: 4000,
+      scrollHeight: 5000,
+      clientHeight: 1000,
+    });
 
     const { result } = renderHook(() => useActiveHeading(['a', 'b', 'c']));
+
+    expect(result.current).toBe('c');
+  });
+
+  it('スクロールする要素の中でも、最下部では最後の見出しの id を返す', () => {
+    const container = document.createElement('div');
+    container.style.overflowY = 'auto';
+    document.body.appendChild(container);
+    createHeadings({ a: -400, b: 100, c: 800 }, container);
+    setScrollMetrics(container, {
+      scrollTop: 0,
+      scrollHeight: 5000,
+      clientHeight: 1000,
+    });
+    const { result } = renderHook(() => useActiveHeading(['a', 'b', 'c']));
+
+    act(() => {
+      setScrollMetrics(container, {
+        scrollTop: 4000,
+        scrollHeight: 5000,
+        clientHeight: 1000,
+      });
+      container.dispatchEvent(new Event('scroll'));
+    });
 
     expect(result.current).toBe('c');
   });

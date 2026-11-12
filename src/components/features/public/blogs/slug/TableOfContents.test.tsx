@@ -90,4 +90,15 @@ describe('TableOfContents', () => {
     expect(scrollIntoView).toHaveBeenCalled();
     expect(decodeURIComponent(window.location.hash)).toBe('#課題');
   });
+
+  it('クリックすると移動先の見出しにフォーカスを移す', async () => {
+    const user = userEvent.setup();
+    const [, target] = createHeadingElements([0, 600, 1200]);
+    target.scrollIntoView = vi.fn();
+
+    render(<TableOfContents headings={HEADINGS} />);
+    await user.click(screen.getByRole('link', { name: '課題' }));
+
+    expect(target).toHaveFocus();
+  });
 });

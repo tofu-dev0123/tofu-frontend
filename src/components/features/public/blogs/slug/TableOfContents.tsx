@@ -18,18 +18,29 @@ function TableOfContents({ headings }: { headings: Heading[] }) {
   const listRef = useRef<HTMLOListElement>(null);
   const markerRef = useRef<HTMLSpanElement>(null);
 
-  // 現在の項目に縦線上のマーカーを合わせる
+  // 現在の項目に縦線上のマーカーを合わせる。
+  // 幅の変化やフォント読み込みで項目の折り返しが変わったときも位置を取り直す
   useLayoutEffect(() => {
     const marker = markerRef.current;
-    if (!marker) return;
-    const link = listRef.current?.querySelector<HTMLAnchorElement>(
-      '[aria-current="location"]'
-    );
-    marker.hidden = !link;
-    if (link) {
-      marker.style.top = `${link.offsetTop}px`;
-      marker.style.height = `${link.offsetHeight}px`;
-    }
+    const list = listRef.current;
+    if (!marker || !list) return;
+
+    const updateMarker = () => {
+      const link = list.querySelector<HTMLAnchorElement>(
+        '[aria-current="location"]'
+      );
+      marker.hidden = !link;
+      if (link) {
+        marker.style.top = `${link.offsetTop}px`;
+        marker.style.height = `${link.offsetHeight}px`;
+      }
+    };
+
+    updateMarker();
+    if (typeof ResizeObserver === 'undefined') return;
+    const observer = new ResizeObserver(updateMarker);
+    observer.observe(list);
+    return () => observer.disconnect();
   }, [activeId, headings, isMobile]);
 
   if (isMobile || headings.length === 0) return null;
@@ -39,9 +50,12 @@ function TableOfContents({ headings }: { headings: Heading[] }) {
     const reduceMotion = window.matchMedia?.(
       '(prefers-reduced-motion: reduce)'
     ).matches;
-    document
-      .getElementById(id)
-      ?.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth' });
+    const target = document.getElementById(id);
+    if (!target) return;
+    target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth' });
+    // キーボード操作で次の Tab が移動先の続きから始まるよう、フォーカスも移す
+    target.tabIndex = -1;
+    target.focus({ preventScroll: true });
     window.history.replaceState(null, '', `#${id}`);
   };
 

@@ -56,35 +56,45 @@ export default function Search() {
           }}
           transition={{ duration: 0.5, ease: 'easeInOut' }}
         >
-          <Image
-            src={searchIcon}
-            alt="cancel"
-            width={14}
-            height={14}
-            className="opacity-50 ml-2 hover:opacity-100 cursor-pointer transition-all duration-300"
+          <button
+            type="button"
+            aria-label="検索"
+            className="ml-2 flex items-center"
             onClick={handleSearch}
-          />
+          >
+            <Image
+              src={searchIcon}
+              alt=""
+              width={14}
+              height={14}
+              className="opacity-50 hover:opacity-100 cursor-pointer transition-all duration-300"
+            />
+          </button>
           <input
             type="text"
             placeholder="Search"
+            aria-label="記事を検索"
             className="h-full flex-1 text-sm outline-none border-none"
             value={keyword}
             onChange={handleChange}
             onKeyDown={handleKeyDown}
           />
         </motion.div>
-        <div
+        <button
+          type="button"
+          aria-label={isOpen ? '検索を閉じる' : '検索を開く'}
+          aria-expanded={isOpen}
           className="w-5 h-5 flex items-center justify-center m-2"
           onClick={handleClick}
         >
           <Image
             src={isOpen ? cancelIcon : searchIcon}
-            alt="search"
+            alt=""
             width={14}
             height={14}
             className="opacity-50 hover:opacity-100 cursor-pointer transition-all duration-300"
           />
-        </div>
+        </button>
       </motion.div>
     </div>
   );

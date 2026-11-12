@@ -10,11 +10,18 @@ vi.mock('next/navigation', () => ({
 
 const push = vi.fn();
 
-const searchWith = async (input: string) => {
+const openSearch = async () => {
   const user = userEvent.setup();
   render(<Search />);
-  await user.click(screen.getByAltText('search'));
-  const textbox = screen.getByPlaceholderText('Search');
+  await user.click(screen.getByRole('button', { name: '検索を開く' }));
+  // 開くアニメーションで入力欄が display: none から表示されるまで待つ
+  await screen.findByRole('textbox', { name: '記事を検索' });
+  return user;
+};
+
+const searchWith = async (input: string) => {
+  const user = await openSearch();
+  const textbox = screen.getByRole('textbox', { name: '記事を検索' });
   if (input) await user.type(textbox, input);
   await user.type(textbox, '{Enter}');
 };
@@ -28,6 +35,73 @@ describe('Search', () => {
 
   afterEach(() => {
     vi.clearAllMocks();
+  });
+
+  it('初期状態では開閉トグルが閉じたボタンとして表示される', () => {
+    render(<Search />);
+    expect(screen.getByRole('button', { name: '検索を開く' })).toHaveAttribute(
+      'aria-expanded',
+      'false'
+    );
+  });
+
+  it('開閉トグルをクリックすると開き、名前が「検索を閉じる」になる', async () => {
+    await openSearch();
+    expect(
+      screen.getByRole('button', { name: '検索を閉じる' })
+    ).toHaveAttribute('aria-expanded', 'true');
+  });
+
+  it('開いた状態で開閉トグルをクリックすると閉じる', async () => {
+    const user = await openSearch();
+    await user.click(screen.getByRole('button', { name: '検索を閉じる' }));
+    expect(screen.getByRole('button', { name: '検索を開く' })).toHaveAttribute(
+      'aria-expanded',
+      'false'
+    );
+  });
+
+  it('Tab でフォーカスして Enter で開ける', async () => {
+    const user = userEvent.setup();
+    render(<Search />);
+    await user.tab();
+    await user.keyboard('{Enter}');
+    expect(
+      screen.getByRole('button', { name: '検索を閉じる' })
+    ).toHaveAttribute('aria-expanded', 'true');
+  });
+
+  it('Tab でフォーカスして Space で開ける', async () => {
+    const user = userEvent.setup();
+    render(<Search />);
+    await user.tab();
+    await user.keyboard(' ');
+    expect(
+      screen.getByRole('button', { name: '検索を閉じる' })
+    ).toHaveAttribute('aria-expanded', 'true');
+  });
+
+  it('入力欄に「記事を検索」という名前が付いている', async () => {
+    await openSearch();
+    expect(
+      screen.getByRole('textbox', { name: '記事を検索' })
+    ).toBeInTheDocument();
+  });
+
+  it('検索ボタンのクリックで遷移する', async () => {
+    const user = await openSearch();
+    await user.type(
+      screen.getByRole('textbox', { name: '記事を検索' }),
+      'react'
+    );
+    await user.click(screen.getByRole('button', { name: '検索' }));
+    expect(push).toHaveBeenCalledWith('/blogs?keyword=react');
+  });
+
+  it('検索ボタンでもキーワードが空なら遷移しない', async () => {
+    const user = await openSearch();
+    await user.click(screen.getByRole('button', { name: '検索' }));
+    expect(push).not.toHaveBeenCalled();
   });
 
   it('& を含むキーワードをエンコードして遷移する', async () => {

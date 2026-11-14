@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# lint / 型チェック / フォーマットチェック / UT を実行し、成功したら HEAD の sha を
+# lint / 型チェック / フォーマットチェック / UT / hook の判定テストを実行し、成功したら HEAD の sha を
 # .claude/.last-check に記録する。
 # .claude/hooks/require-check.sh が git push / gh pr create 時にこの記録と HEAD を照合する。
 #
@@ -25,6 +25,9 @@ npx prettier --check .
 
 echo "==> test"
 npm test
+
+echo "==> hooks"
+.claude/hooks/guard-bash.test.sh
 
 if [ -n "$(git status --porcelain --untracked-files=no)" ]; then
   echo "==> チェックは成功しましたが、未コミットの変更があるため記録しません。コミット後に再実行してください。" >&2
